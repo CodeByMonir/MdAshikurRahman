@@ -73,9 +73,9 @@ export default function Hero() {
                                 Master Trainer (ICT),
                             </span>
                             <br />
-                            Demonstrator (ICT),
+                            Lecturer (ICT),
                             <br />
-                            & Advisor.
+                            Demonstrator (ICT).
                         </h1>
                     </div>
 
@@ -117,10 +117,10 @@ export default function Hero() {
                         </a>
 
                         <a
-                            href="#projects"
+                            href="/achievements"
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-white dark:bg-[rgba(15,23,42,0.75)] text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors active:scale-98"
                         >
-                            View Work
+                            Achievements
                         </a>
                     </div>
                 </motion.div>
