@@ -1,18 +1,18 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Briefcase, ArrowRight } from 'lucide-react';
+import { ArrowRight, Briefcase, Calendar, MapPin } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Hero() {
     const birthYear = '19**'; // Update with your actual birth year
 
     return (
-        <section className="relative overflow-hidden bg-[#F8FAFC] dark:bg-[#090D16] min-h-[calc(100vh-4rem)] flex items-center py-10 sm:py-16 px-4 sm:px-6 lg:px-12 transition-colors duration-300">
+        <section className="relative overflow-hidden bg-transparent min-h-[calc(100vh-4rem)] flex items-center py-10 sm:py-16 px-4 sm:px-6 lg:px-12 transition-colors duration-300">
             {/* Background Ambient Glow Orb */}
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 sm:w-[450px] sm:h-[450px] lg:w-[550px] lg:h-[550px] rounded-full blur-3xl opacity-60 sm:opacity-70"
+                className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 sm:w-112.5 sm:h-112.5 lg:w-137.5 lg:h-137.5 rounded-full blur-3xl opacity-60 sm:opacity-70"
                 style={{
                     background:
                         'radial-gradient(circle, rgba(56,189,248,0.18) 0%, rgba(74,222,128,0.08) 60%)',
@@ -46,7 +46,7 @@ export default function Hero() {
 
                     {/* Subtitle / Role Tag */}
                     <p className="mt-1 text-xs sm:text-sm font-semibold text-[#0284C7] dark:text-[#38BDF8]">
-                        Master Trainer (ICT)
+                        Academic Planner and Advisor
                     </p>
 
                     {/* Birth Year / Meta Pill */}
@@ -69,18 +69,18 @@ export default function Hero() {
                         </span>
 
                         <h1 className="mt-3 sm:mt-4 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0F172A] dark:text-[#F8FAFC] leading-tight sm:leading-tight lg:leading-tight">
-                            Academic Planner, Demonstrator (ICT),{' '}
-                            <span className="bg-gradient-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] bg-clip-text text-transparent">
-                                Master Trainer
-                            </span>{' '}
-                            (ICT) & Advisor.
+                            <span className="bg-linear-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] bg-clip-text text-transparent">
+                                Master Trainer (ICT),
+                            </span>
+                            <br />
+                            Demonstrator (ICT),
+                            <br />
+                            & Advisor.
                         </h1>
                     </div>
 
                     <p className="text-sm sm:text-base lg:text-lg text-[#334155] dark:text-[#94A3B8] leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                        I am working as an ICT teacher of Nayabazar Degree College, Ati,
-                        Keraniganj, Dhaka-1312 since 01 January 2020. I am a truth seeker and
-                        try to obey Islamic Laws.
+                        I have been serving as an ICT Teacher at Nayabazar Degree College, Ati, Keraniganj, Dhaka-1312, since January 2020. I am passionate about teaching, learning, and seeking truth, while striving to live and work with integrity and in accordance with Islamic values.
                     </p>
 
                     {/* Basic Information Cards */}
@@ -110,7 +110,7 @@ export default function Hero() {
                     <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
                         <a
                             href="#contact"
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] dark:text-[#090D16] shadow-md hover:shadow-hover-light dark:hover:shadow-hover-dark transition-all duration-300 active:scale-98"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-linear-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] dark:text-[#090D16] shadow-md hover:shadow-hover-light dark:hover:shadow-hover-dark transition-all duration-300 active:scale-98"
                         >
                             Get In Touch
                             <ArrowRight className="w-4 h-4" />

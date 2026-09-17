@@ -1,10 +1,16 @@
-import Hero from "@/Compnents/Home/Hero";
-import Image from "next/image";
+// app/page.js
+
+import Hero from "@/Components/Home/Hero";
+import HeroBackground from "@/Components/Home/HeroBG";
 
 export default function Home() {
   return (
-    <div>
-      <Hero />   
-    </div>
+    <main className="relative min-h-screen overflow-hidden">
+      {/* Background layer */}
+      <HeroBackground />
+
+      {/* Hero content */}
+      <Hero />
+    </main>
   );
 }
