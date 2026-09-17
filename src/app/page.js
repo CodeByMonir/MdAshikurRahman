@@ -1,7 +1,7 @@
 // app/page.js
 
-import Hero from "@/Components/Home/Hero";
 import HeroBackground from "@/Components/Home/HeroBG";
+import HomeContainer from "@/Components/Home/HomeContainer";
 
 export default function Home() {
   return (
@@ -9,8 +9,8 @@ export default function Home() {
       {/* Background layer */}
       <HeroBackground />
 
-      {/* Hero content */}
-      <Hero />
+      {/* Home content */}
+      <HomeContainer />
     </main>
   );
 }

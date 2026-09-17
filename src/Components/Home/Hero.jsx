@@ -8,7 +8,7 @@ export default function Hero() {
     const birthYear = '19**'; // Update with your actual birth year
 
     return (
-        <section className="relative overflow-hidden bg-transparent min-h-[calc(100vh-4rem)] flex items-center py-10 sm:py-16 px-4 sm:px-6 lg:px-12 transition-colors duration-300">
+        <section className="relative overflow-hidden bg-transparent flex items-center py-10 sm:py-16 px-4 sm:px-6 lg:px-12 transition-colors duration-300">
             {/* Background Ambient Glow Orb */}
             <div
                 aria-hidden="true"

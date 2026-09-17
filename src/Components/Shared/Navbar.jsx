@@ -3,7 +3,18 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Sun, Moon, User, Settings, LogOut, Menu, X } from 'lucide-react';
+import {
+    Sun,
+    Moon,
+    User,
+    Settings,
+    LogOut,
+    Menu,
+    X,
+    Home as HomeIcon,
+    Info,
+    LayoutDashboard
+} from 'lucide-react';
 
 export default function Navbar() {
     const [theme, setTheme] = useState('dark');
@@ -70,10 +81,11 @@ export default function Navbar() {
         }
     };
 
+    // Nav links with associated Lucide React icon components
     const navLinks = [
-        { label: 'Home', href: '/' },
-        { label: 'About', href: '/about' },
-        ...(isLoggedIn ? [{ label: 'Dashboard', href: '/dashboard' }] : []),
+        { label: 'Home', href: '/', icon: HomeIcon },
+        { label: 'About', href: '/about', icon: Info },
+        ...(isLoggedIn ? [{ label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard }] : []),
     ];
 
     return (
@@ -92,17 +104,21 @@ export default function Navbar() {
                         />
                     </Link>
 
-                    {/* Middle: Desktop Nav Links */}
-                    <nav className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.label}
-                                href={link.href}
-                                className="text-sm font-medium transition-colors text-[#334155] hover:text-[#0284C7] dark:text-[#94A3B8] dark:hover:text-[#38BDF8]"
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
+                    {/* Middle: Desktop Nav Links with Icons */}
+                    <nav className="hidden md:flex items-center gap-7">
+                        {navLinks.map((link) => {
+                            const Icon = link.icon;
+                            return (
+                                <Link
+                                    key={link.label}
+                                    href={link.href}
+                                    className="group flex items-center gap-2 text-sm font-medium transition-colors text-[#334155] hover:text-[#0284C7] dark:text-[#94A3B8] dark:hover:text-[#38BDF8]"
+                                >
+                                    <Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[#64748B] group-hover:text-[#0284C7] dark:group-hover:text-[#38BDF8]" />
+                                    <span>{link.label}</span>
+                                </Link>
+                            );
+                        })}
                     </nav>
 
                     {/* Right: Actions */}
@@ -275,18 +291,22 @@ export default function Navbar() {
                             </div>
                         )}
 
-                        {/* Nav Links */}
+                        {/* Nav Links with Icons */}
                         <nav className="flex flex-col py-3 space-y-1">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.label}
-                                    href={link.href}
-                                    onClick={() => setIsMobileModalOpen(false)}
-                                    className="px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-[#334155] hover:text-[#0284C7] hover:bg-[#F0F9FF] dark:text-[#94A3B8] dark:hover:text-[#38BDF8] dark:hover:bg-[#0F172A]"
-                                >
-                                    {link.label}
-                                </Link>
-                            ))}
+                            {navLinks.map((link) => {
+                                const Icon = link.icon;
+                                return (
+                                    <Link
+                                        key={link.label}
+                                        href={link.href}
+                                        onClick={() => setIsMobileModalOpen(false)}
+                                        className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-[#334155] hover:text-[#0284C7] hover:bg-[#F0F9FF] dark:text-[#94A3B8] dark:hover:text-[#38BDF8] dark:hover:bg-[#0F172A]"
+                                    >
+                                        <Icon className="w-4 h-4 text-[#64748B]" />
+                                        <span>{link.label}</span>
+                                    </Link>
+                                );
+                            })}
                         </nav>
 
                         {/* User Actions */}
