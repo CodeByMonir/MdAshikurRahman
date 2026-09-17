@@ -35,7 +35,7 @@ export default function CampusSection() {
                     repeat: Infinity,
                     ease: 'easeInOut',
                 }}
-                className="pointer-events-none absolute -top-40 -right-20 w-[600px] h-[350px] rounded-full blur-[110px] opacity-40 select-none"
+                className="pointer-events-none absolute -top-40 -right-20 w-150 h-87.5 rounded-full blur-[110px] opacity-40 select-none"
                 style={{
                     background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(74, 222, 128, 0.12) 100%)',
                 }}
@@ -52,7 +52,7 @@ export default function CampusSection() {
                     repeat: Infinity,
                     ease: 'easeInOut',
                 }}
-                className="pointer-events-none absolute -bottom-32 -left-24 w-[500px] h-[350px] rounded-full blur-[100px] opacity-35 select-none"
+                className="pointer-events-none absolute -bottom-32 -left-24 w-125 h-87.5 rounded-full blur-[100px] opacity-35 select-none"
                 style={{
                     background: 'linear-gradient(45deg, rgba(2, 132, 199, 0.18) 0%, rgba(22, 163, 74, 0.08) 100%)',
                 }}
@@ -102,7 +102,7 @@ export default function CampusSection() {
 
                         {/* Institution Subtitle */}
                         <p className="mt-0.5 text-sm sm:text-base font-semibold text-[#0284C7] dark:text-[#38BDF8]">
-                            Nayabazar University College
+                            Nayabazar Degree College
                         </p>
                     </div>
 
@@ -160,10 +160,10 @@ export default function CampusSection() {
                     transition={{ duration: 0.8, ease: 'easeOut' }}
                     className="lg:col-span-6 flex justify-center order-1 lg:order-2"
                 >
-                    <div className="relative w-full max-w-lg lg:max-w-xl aspect-[4/3] rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
+                    <div className="relative w-full max-w-lg lg:max-w-xl aspect-4/3 rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
                         <Image
                             src="/university.jpg"
-                            alt="Nayabazar University College Campus"
+                            alt="Nayabazar Degree College Campus"
                             fill
                             sizes="(max-width: 1024px) 100vw, 550px"
                             priority
@@ -171,14 +171,14 @@ export default function CampusSection() {
                         />
 
                         {/* Subtle Gradient Overlay on Hover */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-85" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent opacity-85" />
 
                         {/* Bottom Photo Caption Tag */}
                         <div className="absolute bottom-3.5 left-4 right-4 flex items-center justify-between text-white">
                             <div className="flex items-center gap-2">
                                 <Award className="w-4 h-4 text-[#38BDF8]" />
                                 <span className="text-xs font-medium drop-shadow-sm">
-                                    Nayabazar University College Campus
+                                    Nayabazar Degree College Campus
                                 </span>
                             </div>
                         </div>

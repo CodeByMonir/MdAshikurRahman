@@ -87,7 +87,7 @@ export default function TeacherSection() {
                         repeat: Infinity,
                         ease: 'easeInOut',
                     }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[750px] h-[350px] sm:h-[550px] lg:h-[750px] rounded-full blur-3xl opacity-40"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-87.5 sm:w-137.5 lg:w-187.5 h-87.5 sm:h-137.5 lg:h-187.5 rounded-full blur-3xl opacity-40"
                     style={{
                         background:
                             'radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(74, 222, 128, 0.08) 55%, transparent 75%)',
@@ -173,7 +173,7 @@ export default function TeacherSection() {
                     transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
                     className="w-full"
                 >
-                    <div className="relative w-full h-64 sm:h-80 md:h-[400px] rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
+                    <div className="relative w-full h-64 sm:h-80 md:h-100 rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
                         <Image
                             src="/teachers.jpg"
                             alt="Faculty and Educators Group Photo"
@@ -184,7 +184,7 @@ export default function TeacherSection() {
                         />
 
                         {/* Depth Gradients */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent" />
 
                         {/* Floating Badge */}
                         <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-black/40 backdrop-blur-md border border-white/20 text-white">
@@ -196,7 +196,7 @@ export default function TeacherSection() {
                         <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-white">
                             <div>
                                 <p className="text-[11px] uppercase tracking-wider font-semibold text-[#38BDF8]">
-                                    Nayabazar Degree College & Training Hubs
+                                    Nayabazar Degree College
                                 </p>
                                 <h3 className="text-base sm:text-xl font-bold drop-shadow-sm">
                                     Faculty Assembly & Teacher Development Workshops
