@@ -52,9 +52,9 @@ export default function AboutSection() {
             color: 'text-sky-600 dark:text-[#38BDF8]',
         },
         {
-            label: 'Mailing Address',
-            value: 'H-21, Ho-199, R-3, Boro Joynagar, Keraniganj, Dhaka-1312',
-            href: '#',
+            label: 'Workplace',
+            value: 'Nayabazar Degree College, Ati, Keraniganj.',
+            href: 'https://maps.app.goo.gl/6qVyuF7FY71tcMqD6',
             icon: MapPin,
             color: 'text-emerald-600 dark:text-[#4ADE80]',
         },
@@ -152,14 +152,14 @@ export default function AboutSection() {
             designation: 'Principal',
             institution: 'Nayabazar Degree College, Ati, Keraniganj, Dhaka-1312',
             email: 'principalmalek@yahoo.com',
-            mobile: '01712106204',
+            mobile: '+880 1712-106204',
         },
         {
             name: 'Maruf Rajon',
             designation: 'Principal Officer',
             institution: 'Sonali Bank PLC (Ati Bazar Branch), Keraniganj, Dhaka-1312',
             email: 'marufrajon111@gmail.com',
-            mobile: '01824135635',
+            mobile: '+880 1824-135635',
         },
     ];
 
@@ -309,7 +309,7 @@ export default function AboutSection() {
                     </h2>
 
                     <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed">
-                        Demonstrator (ICT), Master Trainer, and CSE graduate dedicated to academic advancement,
+                        Master Trainer, Lecturer, Demonstrator at ICT and CSE graduate dedicated to academic advancement,
                         interactive computing education, and ethical professional integrity.
                     </p>
                 </div>
