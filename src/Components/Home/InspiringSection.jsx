@@ -53,7 +53,7 @@ export default function InspiringSection() {
                 >
                     <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
                         <Image
-                            src="/teacher-banner.jpg" // replace with your wide classroom or teaching photograph
+                            src="/inspiring.jpg" // replace with your wide classroom or teaching photograph
                             alt="Classroom Lecture and ICT Training Session"
                             fill
                             sizes="(max-width: 1024px) 100vw, 1024px"
@@ -62,7 +62,7 @@ export default function InspiringSection() {
                         />
 
                         {/* Gradient Overlays for Depth and Readable Badges */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-transparent" />
 
                         {/* Floating Top-Right Badge */}
                         <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 backdrop-blur-md border border-white/20 text-white">
