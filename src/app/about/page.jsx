@@ -1,20 +1,21 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
     CheckCircle2,
+    Loader2,
     Mail,
     MapPin,
     MessageCircle,
     Phone,
     Send,
     User,
-    X,
-    Loader2
+    X
 } from 'lucide-react';
-import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa6';
-import emailjs from '@emailjs/browser';
+import { useRef, useState } from 'react';
+import { FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa6';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,29 +27,29 @@ export default function AboutSection() {
     const contactChannels = [
         {
             label: 'Phone Call',
-            value: '+880 1700-000000',
-            href: 'tel:+8801700000000',
+            value: '+880 01822-961027',
+            href: 'tel:+88001822961027',
             icon: Phone,
             color: 'text-sky-500 dark:text-[#38BDF8]',
         },
         {
             label: 'WhatsApp',
-            value: '+880 1700-000000',
-            href: 'https://wa.me/8801700000000',
+            value: '+880 01822-961027',
+            href: 'https://wa.me/88001822961027',
             icon: MessageCircle,
             color: 'text-emerald-500 dark:text-[#4ADE80]',
         },
         {
             label: 'Email',
-            value: 'ashikur.ict@example.com',
-            href: 'mailto:ashikur.ict@example.com',
+            value: 'ashik.6310@gmail.com',
+            href: 'mailto:ashik.6310@gmail.com',
             icon: Mail,
             color: 'text-sky-600 dark:text-[#38BDF8]',
         },
         {
             label: 'Workplace',
             value: 'Nayabazar Degree College, Keraniganj',
-            href: '#campus',
+            href: 'https://maps.app.goo.gl/6qVyuF7FY71tcMqD6',
             icon: MapPin,
             color: 'text-emerald-600 dark:text-[#4ADE80]',
         },
@@ -57,13 +58,13 @@ export default function AboutSection() {
     const socialLinks = [
         {
             name: 'Facebook',
-            href: 'https://facebook.com',
+            href: 'http://www.fb.com/arashik2019',
             icon: FaFacebookF,
             hoverClass: 'hover:text-[#1877F2] hover:border-[#1877F2]/40',
         },
         {
             name: 'Instagram',
-            href: 'https://instagram.com',
+            href: 'https://instagram.com/ashik.6310',
             icon: FaInstagram,
             hoverClass: 'hover:text-[#E4405F] hover:border-[#E4405F]/40',
         },
@@ -74,10 +75,10 @@ export default function AboutSection() {
             hoverClass: 'hover:text-[#0A66C2] hover:border-[#0A66C2]/40',
         },
         {
-            name: 'GitHub',
-            href: 'https://github.com',
-            icon: FaGithub,
-            hoverClass: 'hover:text-black dark:hover:text-white hover:border-black/40 dark:hover:border-white/40',
+            name: 'YouTube',
+            href: 'https://www.youtube.com/c/ashiksir',
+            icon: FaYoutube,
+            hoverClass: 'hover:text-[#FF0000] hover:border-[#FF0000]/40',
         },
     ];
 
@@ -408,7 +409,7 @@ export default function AboutSection() {
                                         type="text"
                                         name="from_name"
                                         required
-                                        placeholder="e.g. Tanvir Ahmed"
+                                        placeholder="e.g. Monir Hossen"
                                         className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F8FAFC] dark:bg-[#090D16] border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] text-[#0F172A] dark:text-[#F8FAFC] focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8]"
                                     />
                                 </div>
@@ -421,7 +422,7 @@ export default function AboutSection() {
                                         type="email"
                                         name="from_email"
                                         required
-                                        placeholder="tanvir@example.com"
+                                        placeholder="codebymonir@gmail.com"
                                         className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F8FAFC] dark:bg-[#090D16] border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] text-[#0F172A] dark:text-[#F8FAFC] focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8]"
                                     />
                                 </div>
