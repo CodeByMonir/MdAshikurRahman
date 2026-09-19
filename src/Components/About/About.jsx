@@ -163,6 +163,7 @@ export default function AboutSection() {
                 'Computer Hardware, Network & Troubleshooting Training for Teachers',
             organizer: 'BANBEIS (Bangladesh Bureau of Educational Information and Statistics)',
             duration: '15 Days (11 November 2020 – 28 November 2020)',
+            achievement: '1st Place in Training',
         },
     ];
 
