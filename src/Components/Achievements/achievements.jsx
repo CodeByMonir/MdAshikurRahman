@@ -97,7 +97,7 @@ export default function Achievements() {
             degree: 'Higher Secondary Certificate (HSC)',
             institution: 'Dhaka Residential Model College (DRMC), Dhaka',
             score: 'GPA 5.00',
-            scale: 'Golden / Perfect Score',
+            scale: 'Perfect Score',
             year: 'Passing Year: 2012',
             level: 'Higher Secondary',
             badgeColor: 'text-emerald-600 dark:text-[#4ADE80] border-emerald-400/30 bg-emerald-500/10',
