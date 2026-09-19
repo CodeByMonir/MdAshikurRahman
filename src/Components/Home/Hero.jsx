@@ -105,7 +105,7 @@ export default function Hero() {
                             <div>
                                 <p className="text-xs text-[#64748B]">Location</p>
                                 <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC]">
-                                    Nayabazar Degree College, Ati, Keraniganj
+                                    Nayabazar Degree College, Keraniganj, Dhaka-1312.
                                 </p>
                             </div>
                         </div>

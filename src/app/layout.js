@@ -1,6 +1,7 @@
+import Footer from "@/Components/Shared/Footer";
+import Navbar from "@/Components/Shared/Navbar";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/Components/Shared/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Md. Ashikur Rahman | Computer Engineer | Lecturer ICT",
-  description: "Md. Ashikur Rahman Is a Computer Engineer and Lecturer at the Department of ICT, Nayabazar University, Bangladesh. He is passionate about technology, programming, and education.",
+  description:
+    "Md. Ashikur Rahman Is a Computer Engineer and Lecturer at the Department of ICT, Nayabazar University, Bangladesh. He is passionate about technology, programming, and education.",
 };
 
 export default function RootLayout({ children }) {
@@ -25,8 +27,9 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar />
-        {children}
-        </body>
+          {children}
+        <Footer />
+    </body>
     </html>
   );
 }
