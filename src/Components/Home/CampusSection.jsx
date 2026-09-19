@@ -120,9 +120,8 @@ export default function CampusSection() {
                     </div>
 
                     {/* Experience Description */}
-                    <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed">
-                        Serving as an academic planner and ICT demonstrator, focusing on computer
-                        architecture, web fundamentals, digital literacy, and modern pedagogical development.
+                    <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed text-justify">
+                        Serving as an Academic Planner, Lecturer, and Demonstrator in ICT for HSC and Honours students, with a focus on computer lab sessions, web fundamentals, digital literacy, and modern pedagogical practices.
                     </p>
 
                     {/* Key Responsibilities / Experience Highlights */}
@@ -143,7 +142,7 @@ export default function CampusSection() {
                     {/* Actions */}
                     <div className="pt-1">
                         <a
-                            href="#contact"
+                            href="/contacts"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-white dark:bg-[rgba(9,13,22,0.7)] text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors active:scale-98"
                         >
                             Academic Inquiries
@@ -162,7 +161,7 @@ export default function CampusSection() {
                 >
                     <div className="relative w-full max-w-lg lg:max-w-xl aspect-4/3 rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
                         <Image
-                            src="/university.jpg"
+                            src="/campus.jpg"
                             alt="Nayabazar Degree College Campus"
                             fill
                             sizes="(max-width: 1024px) 100vw, 550px"

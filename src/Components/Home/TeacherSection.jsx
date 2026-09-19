@@ -22,7 +22,7 @@ export default function TeacherSection() {
     const collaborationMetrics = [
         { label: 'Educators Mentored', value: '120+' },
         { label: 'Faculty Workshops', value: '25+' },
-        { label: 'Training Hubs', value: '5+' },
+        { label: 'Training Hubs', value: '12+' },
         { label: 'Collaborative Projects', value: '15+' },
     ];
 
@@ -175,7 +175,7 @@ export default function TeacherSection() {
                 >
                     <div className="relative w-full h-64 sm:h-80 md:h-100 rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
                         <Image
-                            src="/teachers.jpg"
+                            src="/Teachers1.jpg"
                             alt="Faculty and Educators Group Photo"
                             fill
                             sizes="(max-width: 1024px) 100vw, 1024px"

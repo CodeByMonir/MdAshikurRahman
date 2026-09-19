@@ -81,7 +81,7 @@ export default function Hero() {
                         </h1>
                     </div>
 
-                    <p className="text-sm sm:text-base lg:text-lg text-[#334155] dark:text-[#94A3B8] leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                    <p className="text-sm sm:text-base lg:text-lg text-[#334155] dark:text-[#94A3B8] leading-relaxed max-w-2xl mx-auto lg:mx-0 text-justify">
                         I have been serving as an ICT Teacher at Nayabazar Degree College, Ati,
                         Keraniganj, Dhaka-1312, since January 2020. I am passionate about
                         teaching, learning, and seeking truth, while striving to live and work

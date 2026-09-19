@@ -46,8 +46,8 @@ export default function Footer() {
         },
         {
             icon: Mail,
-            label: 'ashik.6310@gmail.com',
-            href: 'mailto:ashik.6310@gmail.com',
+            label: 'ashiksirict@gmail.com',
+            href: 'mailto:ashiksirict@gmail.com',
         },
         {
             icon: MapPin,
@@ -59,19 +59,19 @@ export default function Footer() {
     const socialLinks = [
         {
             name: 'Facebook',
-            href: 'http://www.fb.com/arashik2019',
+            href: 'http://www.fb.com/ashiksirict',
             icon: FaFacebookF,
             hoverClass: 'hover:text-[#1877F2] hover:border-[#1877F2]/40',
         },
         {
             name: 'Instagram',
-            href: 'https://instagram.com/im.arashik',
+            href: 'https://instagram.com/ashiksirict',
             icon: FaInstagram,
             hoverClass: 'hover:text-[#E4405F] hover:border-[#E4405F]/40',
         },
         {
             name: 'LinkedIn',
-            href: 'https://www.linkedin.com/in/ashik-rahman-0ba47511b/',
+            href: 'https://www.linkedin.com/in/ashiksir/',
             icon: FaLinkedinIn,
             hoverClass: 'hover:text-[#0A66C2] hover:border-[#0A66C2]/40',
         },
@@ -106,13 +106,13 @@ export default function Footer() {
                         <div className="space-y-1.5">
                             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider bg-[#F0F9FF] dark:bg-[#0F172A] text-[#0284C7] dark:text-[#38BDF8] border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)]">
                                 <GraduationCap className="w-3.5 h-3.5" />
-                                <span>Academic & ICT Portfolio</span>
+                                <span>Academic & Professional Portfolio</span>
                             </div>
                             <h2 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">
                                 Engr. Md. Ashikur Rahman
                             </h2>
                             <p className="text-xs sm:text-sm font-semibold text-[#0284C7] dark:text-[#38BDF8]">
-                                Master Trainer (ICT) &bull; Lecturer & Demonstrator
+                                Master Trainer &bull; Lecturer & Demonstrator (ICT)
                             </p>
                         </div>
 

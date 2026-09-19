@@ -39,8 +39,8 @@ export default function ContactSection() {
         },
         {
             label: 'Email',
-            value: 'ashik.6310@gmail.com',
-            href: 'mailto:ashik.6310@gmail.com',
+            value: 'ashiksirict@gmail.com',
+            href: 'mailto:ashiksirict@gmail.com',
             icon: Mail,
             color: 'text-sky-600 dark:text-[#38BDF8]',
         },
@@ -63,13 +63,13 @@ export default function ContactSection() {
         },
         {
             name: 'Instagram',
-            href: 'https://instagram.com/imarashik',
+            href: 'https://instagram.com/ashiksirict',
             icon: FaInstagram,
             hoverClass: 'hover:text-[#E4405F] hover:border-[#E4405F]/40',
         },
         {
             name: 'LinkedIn',
-            href: 'https://www.linkedin.com/in/imarashik/',
+            href: 'https://www.linkedin.com/in/ashiksir/',
             icon: FaLinkedinIn,
             hoverClass: 'hover:text-[#0A66C2] hover:border-[#0A66C2]/40',
         },

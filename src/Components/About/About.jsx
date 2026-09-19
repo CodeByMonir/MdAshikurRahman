@@ -287,12 +287,12 @@ export default function AboutSection() {
                     </span>
 
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0F172A] dark:text-[#F8FAFC]">
-                        Md. Ashikur Rahman
+                        Engr. Md. Ashikur Rahman
                     </h2>
 
                     <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed">
-                        Master Trainer (ICT), Lecturer & Demonstrator at Nayabazar Degree College. CSE Graduate (UIU),
-                        researcher, and academic advisor.
+                        Master Trainer, Lecturer & Demonstrator (ICT) at Nayabazar Degree College. <br />
+                        CSE graduate, Researcher, Academic Planner & Advisor, Author etc.
                     </p>
                 </div>
 
@@ -310,7 +310,7 @@ export default function AboutSection() {
                             Career Objective
                         </h3>
                     </div>
-                    <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed  text-justify">
                         {careerObjective}
                     </p>
                 </motion.div>

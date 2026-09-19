@@ -234,7 +234,7 @@ export default function Achievements() {
                     </span>
 
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0F172A] dark:text-[#F8FAFC]">
-                        Honors, Research & Milestones
+                        Training, Research & Milestones
                     </h1>
 
                     <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed">
@@ -248,7 +248,7 @@ export default function Achievements() {
                     <div className="flex items-center gap-2.5 pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
                         <Award className="w-5 h-5 text-[#0284C7] dark:text-[#38BDF8]" />
                         <h2 className="text-lg sm:text-xl font-bold tracking-tight text-[#0F172A] dark:text-[#F8FAFC]">
-                            Training & Capacity Building Honors
+                            Professional Training Experiences
                         </h2>
                     </div>
 
@@ -266,7 +266,7 @@ export default function Achievements() {
                                     }`}
                             >
                                 {item.isFirstPlace && (
-                                    <div className="absolute -top-3 right-5 inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wide bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-md">
+                                    <div className="absolute -top-3 right-5 inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wide bg-linear-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-md">
                                         <Sparkles className="w-3.5 h-3.5" />
                                         Top Performer
                                     </div>
@@ -433,7 +433,7 @@ export default function Achievements() {
                     <div className="flex items-center gap-2.5 pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
                         <Medal className="w-5 h-5 text-amber-500 dark:text-yellow-400" />
                         <h2 className="text-lg sm:text-xl font-bold tracking-tight text-[#0F172A] dark:text-[#F8FAFC]">
-                            Government Scholarships & Competitive Academic Honors
+                            Government Scholarships & Other Achievements
                         </h2>
                     </div>
 

@@ -13,7 +13,7 @@ import {
 
 export default function InspiringSection() {
     const pedagogicalStats = [
-        { label: 'Years Teaching', value: '5+ Years' },
+        { label: 'Years Teaching', value: '7+ Years' },
         { label: 'Students Guided', value: '1,500+' },
         { label: 'Training Workshops', value: '40+' },
         { label: 'Curriculum Modules', value: '12+' },
