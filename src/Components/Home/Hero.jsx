@@ -95,7 +95,7 @@ export default function Hero() {
                             <div>
                                 <p className="text-xs text-[#64748B]">Experience</p>
                                 <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC]">
-                                    Lecturer (ICT)
+                                    Lecturer & Demonstrator (ICT)
                                 </p>
                             </div>
                         </div>
@@ -114,10 +114,10 @@ export default function Hero() {
                     {/* Call to Actions */}
                     <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
                         <a
-                            href="/about"
+                            href="/contacts"
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-linear-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] dark:text-[#090D16] shadow-md hover:shadow-hover-light dark:hover:shadow-hover-dark transition-all duration-300 active:scale-98"
                         >
-                            Get In Touch
+                            Contact Me
                             <ArrowRight className="w-4 h-4" />
                         </a>
 
@@ -126,6 +126,12 @@ export default function Hero() {
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-white dark:bg-[rgba(15,23,42,0.75)] text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors active:scale-98"
                         >
                             Achievements
+                        </a>
+                        <a
+                            href="/about"
+                            className="w-full sm:w-auto md:hidden inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-white dark:bg-[rgba(15,23,42,0.75)] text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors active:scale-98"
+                        >
+                            More About Me
                         </a>
                     </div>
                 </motion.div>
