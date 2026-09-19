@@ -68,7 +68,7 @@ export default function AboutSection() {
     const socialLinks = [
         {
             name: 'Facebook',
-            href: 'http://www.fb.com/arashik2019',
+            href: 'http://www.fb.com/ashiksirict',
             icon: FaFacebookF,
             hoverClass: 'hover:text-[#1877F2] hover:border-[#1877F2]/40',
         },
