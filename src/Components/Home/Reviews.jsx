@@ -16,14 +16,14 @@ import {
 const reviewsData = [
     {
         id: 1,
-        name: 'Tanvir Ahmed',
+        name: 'Monir Hossen',
         role: 'Student',
-        program: 'HSC Science (Batch 2024)',
+        program: 'HSC Commerce (Batch 2021)',
         rating: 5,
-        date: '2 months ago',
-        avatar: '/teachers.jpg',
+        date: '5 years ago',
+        avatar: 'https://codebymonir.vercel.app/profile.webp',
         comment:
-            'The multimedia ICT labs and demonstrator guidance made practical programming and digital classes enjoyable. Teachers take personal care of every student before board examinations.',
+            'He was new when I was student, but his guidance and mentorship helped me to motivate in my life. His supportive nature and dedicated faculty made my academic journey truly enriching.',
     },
     {
         id: 2,
@@ -127,7 +127,8 @@ export default function TestimonialsSection() {
                                     <div className="flex items-center justify-between gap-3">
                                         <div className="flex items-center gap-3">
                                             <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-300/50 dark:border-white/20 shrink-0">
-                                                <Image
+                                            {/* It must need to be updated */}
+                                                <img
                                                     src={item.avatar}
                                                     alt={item.name}
                                                     fill
