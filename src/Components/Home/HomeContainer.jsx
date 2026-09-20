@@ -1,9 +1,9 @@
-import React from 'react';
-import Hero from './Hero';
 import CampusSection from './CampusSection';
+import GalleryMosaic from './GalleryMosaic';
+import GalleryShowcase from './GalleryShowcase';
+import Hero from './Hero';
 import InspiringSection from './InspiringSection';
 import TeacherSection from './TeacherSection';
-import ImageGallery from './ImageGallery';
 
 const HomeContainer = () => {
     return (
@@ -12,7 +12,8 @@ const HomeContainer = () => {
             <CampusSection />
             <InspiringSection />
             <TeacherSection />
-            <ImageGallery />
+            <GalleryShowcase />
+            <GalleryMosaic />
         </div>
     );
 };
