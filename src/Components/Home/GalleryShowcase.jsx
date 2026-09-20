@@ -203,7 +203,7 @@ export default function GalleryShowcase() {
     return (
         <section
             id="personal-moments"
-            className="relative overflow-hidden py-12 sm:py-20 px-3 sm:px-6 lg:px-12 bg-[#F8FAFC] dark:bg-[#090D16] transition-colors duration-300 select-none"
+            className="relative overflow-hidden py-12 sm:py-20 px-3 sm:px-6 lg:px-12 bg-transparent transition-colors duration-300 select-none"
         >
             {/* Ambient Glow Background */}
             <div

@@ -161,7 +161,7 @@ export default function CampusSection() {
                 >
                     <div className="relative w-full max-w-lg lg:max-w-xl aspect-4/3 rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-card-light dark:shadow-card-dark group">
                         <Image
-                            src="/campus.jpg"
+                            src="/college.png"
                             alt="Nayabazar Degree College Campus"
                             fill
                             sizes="(max-width: 1024px) 100vw, 550px"

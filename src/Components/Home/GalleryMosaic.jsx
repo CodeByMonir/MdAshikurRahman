@@ -291,18 +291,74 @@ export default function GalleryMosaic() {
     return (
         <section
             id="institute-gallery"
-            className="relative overflow-hidden py-12 sm:py-20 px-3 sm:px-6 lg:px-12 bg-transparent transition-colors duration-300"
+            className="relative overflow-hidden py-12 sm:py-20 px-3 sm:px-6 lg:px-12 bg-[#F8FAFC] dark:bg-[#070B14] transition-colors duration-500"
         >
-            {/* Ambient Glow */}
+            {/* ================= UNIQUE ARCHITECTURAL DRAFTING MATRIX BACKGROUND ================= */}
             <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 select-none overflow-hidden"
             >
+                {/* Precision Geometric Micro-Dot Matrix */}
                 <div
-                    className="absolute -bottom-24 right-1/4 w-72 sm:w-[480px] h-72 sm:h-[480px] rounded-full blur-[130px] opacity-25 dark:opacity-15"
+                    className="absolute inset-0 opacity-[0.4] dark:opacity-[0.22]"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at 1px 1px, rgba(56, 189, 248, 0.45) 1px, transparent 0)`,
+                        backgroundSize: '28px 28px',
+                        maskImage: 'radial-gradient(ellipse 80% 60% at 50% 35%, black 40%, transparent 100%)',
+                        WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 35%, black 40%, transparent 100%)',
+                    }}
+                />
+
+                {/* Technical Campus Blueprint Grid Overlay */}
+                <svg
+                    className="absolute inset-0 w-full h-full stroke-sky-400/10 dark:stroke-sky-400/[0.05]"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <pattern id="campus-mosaic-grid" width="112" height="112" patternUnits="userSpaceOnUse">
+                            <path d="M 112 0 L 0 0 0 112" fill="none" strokeWidth="0.8" />
+                            <circle cx="0" cy="0" r="1.5" className="fill-sky-400/30" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#campus-mosaic-grid)" />
+                </svg>
+
+                {/* Technical Blueprint Floating Annotations */}
+                <div className="absolute top-10 left-8 text-sky-500/25 font-mono text-[10px] tracking-widest uppercase select-none">
+                    + NDC_CAMPUS_ARCHIVE // SECT_01
+                </div>
+                <div className="absolute top-1/3 right-8 text-emerald-500/25 font-mono text-[10px] tracking-widest uppercase select-none">
+                    [ICT_ACADEMIC_FACILITIES]
+                </div>
+                <div className="absolute bottom-12 left-10 text-slate-400/25 font-mono text-[10px] tracking-widest uppercase select-none">
+                    GEO: NAYABAZAR_KERANIGANJ
+                </div>
+
+                {/* Primary Specular Glow: Sky Blue Top Bloom */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0.25, 0.38, 0.25],
+                    }}
+                    transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[360px] sm:h-[460px] rounded-full blur-[140px]"
                     style={{
                         background:
-                            'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(2, 132, 199, 0.08) 60%, transparent 80%)',
+                            'radial-gradient(ellipse at center, rgba(56, 189, 248, 0.3) 0%, rgba(2, 132, 199, 0.08) 55%, transparent 75%)',
+                    }}
+                />
+
+                {/* Secondary Specular Glow: Emerald Bottom Accent */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.12, 1],
+                        opacity: [0.18, 0.3, 0.18],
+                    }}
+                    transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+                    className="absolute -bottom-28 right-1/4 w-[420px] sm:w-[620px] h-[420px] rounded-full blur-[150px]"
+                    style={{
+                        background:
+                            'radial-gradient(circle at center, rgba(74, 222, 128, 0.18) 0%, rgba(22, 163, 74, 0.05) 60%, transparent 80%)',
                     }}
                 />
             </div>
