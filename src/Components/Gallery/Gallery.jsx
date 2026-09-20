@@ -12,11 +12,9 @@ import {
     MapPin,
     Calendar,
     Layers,
-    ArrowRight,
 } from 'lucide-react';
-import Link from 'next/link';
 
-export default function GalleryMosaic() {
+export default function GalleryPage() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(null);
     const miniTrackRef = useRef(null);
 
@@ -291,18 +289,74 @@ export default function GalleryMosaic() {
     return (
         <section
             id="institute-gallery"
-            className="relative overflow-hidden py-12 sm:py-20 px-3 sm:px-6 lg:px-12 bg-transparent transition-colors duration-300"
+            className="relative overflow-hidden py-12 sm:py-20 px-3 sm:px-6 lg:px-12 bg-[#F8FAFC] dark:bg-[#070B14] transition-colors duration-500"
         >
-            {/* Ambient Glow */}
+            {/* Ambient Background Architecture */}
             <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 select-none overflow-hidden"
             >
+                {/* Precision Geometric Micro-Dot Matrix */}
                 <div
-                    className="absolute -bottom-24 right-1/4 w-72 sm:w-[480px] h-72 sm:h-[480px] rounded-full blur-[130px] opacity-25 dark:opacity-15"
+                    className="absolute inset-0 opacity-[0.42] dark:opacity-[0.22]"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at 1px 1px, rgba(56, 189, 248, 0.45) 1px, transparent 0)`,
+                        backgroundSize: '28px 28px',
+                        maskImage: 'radial-gradient(ellipse 80% 60% at 50% 35%, black 40%, transparent 100%)',
+                        WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 35%, black 40%, transparent 100%)',
+                    }}
+                />
+
+                {/* Technical Campus Blueprint Grid Overlay */}
+                <svg
+                    className="absolute inset-0 w-full h-full stroke-sky-400/10 dark:stroke-sky-400/[0.05]"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <pattern id="campus-blueprint-matrix" width="112" height="112" patternUnits="userSpaceOnUse">
+                            <path d="M 112 0 L 0 0 0 112" fill="none" strokeWidth="0.8" />
+                            <circle cx="0" cy="0" r="1.5" className="fill-sky-400/30" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#campus-blueprint-matrix)" />
+                </svg>
+
+                {/* Technical Blueprint Coordinates */}
+                <div className="absolute top-10 left-8 text-sky-500/20 font-mono text-[10px] tracking-widest uppercase select-none">
+                    + NDC_INSTITUTE_ARCHIVE // ELEVATION_01
+                </div>
+                <div className="absolute top-1/3 right-8 text-emerald-500/20 font-mono text-[10px] tracking-widest uppercase select-none">
+                    [REF: ICT_ACADEMIC_WING]
+                </div>
+                <div className="absolute bottom-12 left-10 text-slate-400/20 font-mono text-[10px] tracking-widest uppercase select-none">
+                    LOC: NAYABAZAR_KERANIGANJ
+                </div>
+
+                {/* Primary Specular Glow: Top Center Sky Flare */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0.25, 0.38, 0.25],
+                    }}
+                    transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[360px] sm:h-[460px] rounded-full blur-[140px]"
                     style={{
                         background:
-                            'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(2, 132, 199, 0.08) 60%, transparent 80%)',
+                            'radial-gradient(ellipse at center, rgba(56, 189, 248, 0.28) 0%, rgba(2, 132, 199, 0.08) 55%, transparent 75%)',
+                    }}
+                />
+
+                {/* Secondary Specular Glow: Bottom Emerald Light */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.12, 1],
+                        opacity: [0.18, 0.3, 0.18],
+                    }}
+                    transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+                    className="absolute -bottom-28 right-1/4 w-[420px] sm:w-[620px] h-[420px] rounded-full blur-[150px]"
+                    style={{
+                        background:
+                            'radial-gradient(circle at center, rgba(74, 222, 128, 0.18) 0%, rgba(22, 163, 74, 0.05) 60%, transparent 80%)',
                     }}
                 />
             </div>
@@ -336,9 +390,8 @@ export default function GalleryMosaic() {
                 </div>
 
                 {/* Minimum 3 Images per Row: grid-cols-3 (mobile), grid-cols-4 (tablet), grid-cols-6 (desktop) */}
-                {/* Grid restricted to maximum 9 items */}
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
-                    {instituteItems.slice(0, 9).map((item, index) => (
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-4">
+                    {instituteItems.map((item, index) => (
                         <motion.div
                             key={item.id}
                             initial={{ opacity: 0, scale: 0.95 }}
@@ -348,7 +401,7 @@ export default function GalleryMosaic() {
                             onClick={() => setSelectedImageIndex(index)}
                             className="group relative cursor-pointer overflow-hidden rounded-xl border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.18)] bg-white dark:bg-[rgba(15,23,42,0.75)] dark:backdrop-blur-md shadow-xs hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all duration-300 hover:-translate-y-0.5"
                         >
-                            <div className="relative w-full aspect-square sm:aspect-4/3 overflow-hidden">
+                            <div className="relative w-full aspect-square sm:aspect-[4/3] overflow-hidden">
                                 <Image
                                     src={item.src}
                                     alt={item.title}
@@ -384,17 +437,6 @@ export default function GalleryMosaic() {
                             </div>
                         </motion.div>
                     ))}
-                </div>
-
-                {/* View All Button Redirecting to /gallery */}
-                <div className="flex justify-center pt-2">
-                    <Link
-                        href="/gallery"
-                        className="inline-flex items-center gap-2 px-5 py-2 sm:px-6 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-linear-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] dark:text-[#090D16] border border-transparent shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
-                    >
-                        <span>View All Campus Photos</span>
-                        <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </Link>
                 </div>
             </div>
 
