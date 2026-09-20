@@ -64,47 +64,111 @@ export default function Footer() {
             name: 'Facebook',
             href: 'http://www.fb.com/ashiksirict',
             icon: FaFacebookF,
-            hoverClass: 'hover:text-[#1877F2] hover:border-[#1877F2]/40',
+            color: 'text-[#1877F2]',
+            bg: 'bg-[#1877F2]/10 hover:bg-[#1877F2]/15',
+            border: 'border-[#1877F2]/25 hover:border-[#1877F2]/60',
         },
         {
             name: 'Instagram',
             href: 'https://instagram.com/ashiksirict',
             icon: FaInstagram,
-            hoverClass: 'hover:text-[#E4405F] hover:border-[#E4405F]/40',
+            color: 'text-[#E4405F]',
+            bg: 'bg-[#E4405F]/10 hover:bg-[#E4405F]/15',
+            border: 'border-[#E4405F]/25 hover:border-[#E4405F]/60',
         },
         {
             name: 'LinkedIn',
             href: 'https://www.linkedin.com/in/ashiksir/',
             icon: FaLinkedinIn,
-            hoverClass: 'hover:text-[#0A66C2] hover:border-[#0A66C2]/40',
+            color: 'text-[#0A66C2]',
+            bg: 'bg-[#0A66C2]/10 hover:bg-[#0A66C2]/15',
+            border: 'border-[#0A66C2]/25 hover:border-[#0A66C2]/60',
         },
         {
             name: 'YouTube',
             href: 'https://www.youtube.com/c/ashiksir',
             icon: FaYoutube,
-            hoverClass: 'hover:text-[#FF0000] hover:border-[#FF0000]/40',
+            color: 'text-[#FF0000]',
+            bg: 'bg-[#FF0000]/10 hover:bg-[#FF0000]/15',
+            border: 'border-[#FF0000]/25 hover:border-[#FF0000]/60',
         },
     ];
 
     return (
         <footer className="relative overflow-hidden bg-[#F8FAFC] dark:bg-[#090D16] border-t border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] transition-colors duration-300">
             {/* Top Accent Gradient Border */}
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#0284C7] dark:via-[#38BDF8] to-transparent opacity-80" />
+            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#0284C7] dark:via-[#38BDF8] to-transparent opacity-90" />
 
-            {/* Subtle Ambient Glow */}
+            {/* ================= UNIQUE BACKGROUND SYSTEM ================= */}
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full blur-3xl opacity-30 dark:opacity-15 select-none"
-                style={{
-                    background:
-                        'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(74, 222, 128, 0.1) 60%, transparent 100%)',
-                }}
-            />
+                className="pointer-events-none absolute inset-0 select-none overflow-hidden"
+            >
+                {/* 1. Circuit Traces & Terminal Nodes */}
+                <svg
+                    className="absolute inset-0 w-full h-full opacity-[0.04] dark:opacity-[0.08]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1440 600"
+                    fill="none"
+                    stroke="url(#footer-circuit-grad)"
+                    strokeWidth="1.5"
+                >
+                    <defs>
+                        <linearGradient id="footer-circuit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#0284C7" />
+                            <stop offset="50%" stopColor="#38BDF8" />
+                            <stop offset="100%" stopColor="#4ADE80" />
+                        </linearGradient>
+                    </defs>
+
+                    {/* Circuit Busses */}
+                    <path d="M-50 120 H 320 L 410 210 H 780 L 840 150 H 1500" />
+                    <path d="M-50 480 H 420 L 530 370 H 960 L 1020 430 H 1500" strokeDasharray="6 8" />
+                    <path d="M220 -20 V 160 L 300 240 V 620" />
+                    <path d="M1180 -20 V 220 L 1100 300 V 620" strokeDasharray="4 6" />
+
+                    {/* Circuit Terminals / Solder Pads */}
+                    <circle cx="320" cy="120" r="4" fill="#38BDF8" />
+                    <circle cx="780" cy="210" r="3.5" fill="#4ADE80" />
+                    <circle cx="420" cy="480" r="4" fill="#0284C7" />
+                    <circle cx="960" cy="370" r="3.5" fill="#38BDF8" />
+                    <circle cx="1100" cy="300" r="3" fill="#4ADE80" />
+                </svg>
+
+                {/* 2. Micro-Dot Matrix Overlay */}
+                <div
+                    className="absolute inset-0 opacity-[0.035] dark:opacity-[0.06]"
+                    style={{
+                        backgroundImage: `radial-gradient(circle, #38BDF8 1px, transparent 1px)`,
+                        backgroundSize: '28px 28px',
+                        maskImage: 'radial-gradient(ellipse 75% 70% at 50% 60%, #000 40%, transparent 90%)',
+                        WebkitMaskImage: 'radial-gradient(ellipse 75% 70% at 50% 60%, #000 40%, transparent 90%)',
+                    }}
+                />
+
+                {/* 3. Left Ambient Pulse Beacon (Sky Blue) */}
+                <div
+                    className="absolute -bottom-24 -left-20 w-80 sm:w-[480px] h-80 sm:h-[480px] rounded-full blur-[130px] opacity-35 dark:opacity-20 animate-[pulse_8s_ease-in-out_infinite]"
+                    style={{
+                        background:
+                            'radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(2, 132, 199, 0.1) 60%, transparent 80%)',
+                    }}
+                />
+
+                {/* 4. Right Ambient Pulse Beacon (Emerald) */}
+                <div
+                    className="absolute -top-28 -right-20 w-72 sm:w-[450px] h-72 sm:h-[450px] rounded-full blur-[130px] opacity-25 dark:opacity-15 animate-[pulse_10s_ease-in-out_infinite_2s]"
+                    style={{
+                        background:
+                            'radial-gradient(circle, rgba(74, 222, 128, 0.3) 0%, rgba(22, 163, 74, 0.08) 60%, transparent 80%)',
+                    }}
+                />
+            </div>
+            {/* ============================================================= */}
 
             <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 pt-14 pb-8 flex flex-col space-y-12">
                 {/* Main Footer Directory Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-10 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]">
-
                     {/* Identity & Bio Column (Span 5) */}
                     <div className="lg:col-span-5 flex flex-col space-y-4">
                         <div className="flex flex-col items-start space-y-2">
@@ -126,7 +190,7 @@ export default function Footer() {
                             ethical academic leadership.
                         </p>
 
-                        {/* Social Channels Pill Badges */}
+                        {/* Social Channels Pill Badges with Brand Colors */}
                         <div className="flex flex-wrap gap-2 pt-1">
                             {socialLinks.map((social) => {
                                 const Icon = social.icon;
@@ -137,10 +201,10 @@ export default function Footer() {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         aria-label={`Visit ${social.name}`}
-                                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-white dark:bg-[rgba(15,23,42,0.7)] text-[#64748B] text-xs font-medium transition-all duration-300 hover:scale-105 shadow-xs ${social.hoverClass}`}
+                                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all duration-300 hover:scale-105 shadow-xs ${social.bg} ${social.border} ${social.color}`}
                                     >
-                                        <Icon className="w-3.5 h-3.5" />
-                                        <span className="text-[11px]">{social.name}</span>
+                                        <Icon className="w-3.5 h-3.5 shrink-0" />
+                                        <span className="text-[11px] tracking-wide">{social.name}</span>
                                     </a>
                                 );
                             })}
@@ -210,7 +274,7 @@ export default function Footer() {
                         />
 
                         {/* Inner Content Box with Center Alignment */}
-                        <div className="relative text-center flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-[11px] bg-[#F8FAFC]/95 dark:bg-[#090D16]/95 backdrop-blur-md text-center">
+                        <div className="relative text-center flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-[11px] bg-[#F8FAFC]/95 dark:bg-[#090D16]/95 backdrop-blur-md">
                             <Terminal className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
                             <span className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">Crafted by</span>
                             <a
@@ -219,7 +283,7 @@ export default function Footer() {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-1 font-semibold text-[#0F172A] dark:text-[#F8FAFC] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-colors"
                             >
-                                <span className='text-[14px]'>Monir Hossen</span>
+                                <span className="text-[14px]">Monir Hossen</span>
                                 <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />
                             </a>
                         </div>
