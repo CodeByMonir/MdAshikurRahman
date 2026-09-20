@@ -4,6 +4,7 @@ import GalleryShowcase from './GalleryShowcase';
 import Hero from './Hero';
 import InspiringSection from './InspiringSection';
 import TeacherSection from './TeacherSection';
+import TravelParallaxExperience from './TravelParallaxExperience';
 
 const HomeContainer = () => {
     return (
@@ -14,6 +15,7 @@ const HomeContainer = () => {
             <TeacherSection />
             <GalleryShowcase />
             <GalleryMosaic />
+            <TravelParallaxExperience />
         </div>
     );
 };
