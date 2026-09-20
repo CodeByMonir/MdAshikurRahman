@@ -58,6 +58,7 @@ const travelStories = [
 export default function TravelExperienceShowcase() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const trackRef = useRef(null);
+    const isFirstMount = useRef(true);
 
     const handlePrev = () => {
         setCurrentIndex((prev) => (prev - 1 + travelStories.length) % travelStories.length);
@@ -67,17 +68,26 @@ export default function TravelExperienceShowcase() {
         setCurrentIndex((prev) => (prev + 1) % travelStories.length);
     };
 
-    // Center active indicator pill
+    // Center active indicator pill strictly within its own track, never moving the window
     useEffect(() => {
-        if (trackRef.current) {
-            const activeEl = trackRef.current.children[currentIndex];
-            if (activeEl) {
-                activeEl.scrollIntoView({
-                    inline: 'center',
-                    block: 'nearest',
-                    behavior: 'smooth',
-                });
-            }
+        if (isFirstMount.current) {
+            isFirstMount.current = false;
+            return;
+        }
+
+        const track = trackRef.current;
+        if (!track) return;
+
+        const activeEl = track.children[currentIndex];
+        if (activeEl) {
+            const trackCenter = track.clientWidth / 2;
+            const targetLeft =
+                activeEl.offsetLeft + activeEl.clientWidth / 2 - trackCenter;
+
+            track.scrollTo({
+                left: targetLeft,
+                behavior: 'smooth',
+            });
         }
     }, [currentIndex]);
 
@@ -121,7 +131,7 @@ export default function TravelExperienceShowcase() {
                 </span>
             </div>
 
-            {/* Side Navigation Stepper Buttons: Completely Transparent Background */}
+            {/* Side Navigation Stepper Buttons */}
             <div className="absolute inset-y-0 inset-x-2 sm:inset-x-3 flex items-center justify-between z-30 pointer-events-none">
                 <button
                     type="button"
@@ -162,7 +172,7 @@ export default function TravelExperienceShowcase() {
                             <span>{activeStory.tag}</span>
                         </div>
 
-                        {/* Title: Capped strictly at max 14px, almost zero line-height on mobile */}
+                        {/* Title */}
                         <h3 className="text-[12px] sm:text-[14px] font-extrabold text-white leading-none sm:leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-1">
                             {activeStory.title}
                         </h3>
@@ -172,7 +182,7 @@ export default function TravelExperienceShowcase() {
                             {activeStory.subtitle}
                         </p>
 
-                        {/* Story Text: ultra-tight leading-[1.1] on mobile */}
+                        {/* Story Text */}
                         <p className="text-[9px] sm:text-[12px] text-slate-100 leading-[1.1] sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] line-clamp-2 sm:line-clamp-3">
                             {activeStory.story}
                         </p>
@@ -190,11 +200,11 @@ export default function TravelExperienceShowcase() {
                 </AnimatePresence>
             </div>
 
-            {/* Bottom-Right Thumbnail Indicator Strip: Fully Transparent */}
+            {/* Bottom-Right Thumbnail Indicator Strip */}
             <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 z-20">
                 <div
                     ref={trackRef}
-                    className="flex items-center gap-1.5 p-1 rounded-full bg-transparent border border-white/25 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]"
+                    className="flex items-center gap-1.5 p-1 rounded-full bg-transparent border border-white/25 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                 >
                     {travelStories.map((story, idx) => {
                         const isSelected = idx === currentIndex;
@@ -204,7 +214,7 @@ export default function TravelExperienceShowcase() {
                                 onClick={() => setCurrentIndex(idx)}
                                 aria-label={`Go to slide ${idx + 1}`}
                                 className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${isSelected
-                                        ? 'w-5 bg-linear-to-r from-[#38BDF8] to-[#4ADE80] shadow-[0_0_8px_rgba(56,189,248,0.9)]'
+                                        ? 'w-5 bg-gradient-to-r from-[#38BDF8] to-[#4ADE80] shadow-[0_0_8px_rgba(56,189,248,0.9)]'
                                         : 'w-2 bg-white/40 hover:bg-white/75'
                                     }`}
                             />
