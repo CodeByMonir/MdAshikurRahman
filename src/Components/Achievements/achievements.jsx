@@ -115,7 +115,7 @@ export default function Achievements() {
             icon: Compass,
             badgeStyle: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20',
             title: 'Personal Leadership',
-            recipient: 'Md. Ashikur Rahman',
+            recipient: 'Engr. Md. Ashikur Rahman',
             organization: 'Robi 10 Minute School • MuktoPaath',
             description:
                 'Executive self-development course focusing on professional initiative, habit architecture, structured time governance, and ethical leadership.',

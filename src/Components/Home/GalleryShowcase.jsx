@@ -33,7 +33,7 @@ export default function GalleryShowcase() {
             tag: 'Life & Roots',
             location: 'Keraniganj, Dhaka',
             date: 'Personal Archive',
-            src: '/university.jpg',
+            src: '/img1.jpg',
         },
         {
             id: 2,
@@ -42,7 +42,7 @@ export default function GalleryShowcase() {
             tag: 'Leisure & Study',
             location: 'Home Study',
             date: 'Leisure Hours',
-            src: '/teachers.jpg',
+            src: '/img2.jpg',
         },
         {
             id: 3,
@@ -51,7 +51,7 @@ export default function GalleryShowcase() {
             tag: 'Alumni Memoir',
             location: 'United International University',
             date: 'Campus Life',
-            src: '/university.jpg',
+            src: '/img3.jpg',
         },
         {
             id: 4,
@@ -60,7 +60,7 @@ export default function GalleryShowcase() {
             tag: 'Recreation',
             location: 'Nayabazar Grounds',
             date: 'Sports Afternoon',
-            src: '/teachers.jpg',
+            src: '/img4.jpg',
         },
         {
             id: 5,
@@ -69,7 +69,7 @@ export default function GalleryShowcase() {
             tag: 'Journeys',
             location: 'Riverway Trails',
             date: 'Expeditions',
-            src: '/university.jpg',
+            src: '/img5.jpg',
         },
         {
             id: 6,
@@ -78,7 +78,7 @@ export default function GalleryShowcase() {
             tag: 'Academic Milestones',
             location: 'Nayabazar Degree College',
             date: 'Campus Life',
-            src: '/teachers.jpg',
+            src: '/img6.jpg',
         },
         {
             id: 7,
@@ -87,7 +87,7 @@ export default function GalleryShowcase() {
             tag: 'Life & Roots',
             location: 'Keraniganj, Dhaka',
             date: 'Personal Archive',
-            src: '/university.jpg',
+            src: '/img7.jpg',
         },
         {
             id: 8,
@@ -96,7 +96,7 @@ export default function GalleryShowcase() {
             tag: 'Leisure & Study',
             location: 'Home Study',
             date: 'Leisure Hours',
-            src: '/teachers.jpg',
+            src: '/img8.jpg',
         },
         {
             id: 9,
@@ -105,7 +105,7 @@ export default function GalleryShowcase() {
             tag: 'Alumni Memoir',
             location: 'United International University',
             date: 'Campus Life',
-            src: '/university.jpg',
+            src: '/img9.jpg',
         },
         {
             id: 10,
@@ -114,7 +114,7 @@ export default function GalleryShowcase() {
             tag: 'Recreation',
             location: 'Nayabazar Grounds',
             date: 'Sports Afternoon',
-            src: '/teachers.jpg',
+            src: '/img10.jpg',
         },
         {
             id: 11,
@@ -123,7 +123,7 @@ export default function GalleryShowcase() {
             tag: 'Journeys',
             location: 'Riverway Trails',
             date: 'Expeditions',
-            src: '/university.jpg',
+            src: '/img11.jpg',
         },
         {
             id: 12,
@@ -132,7 +132,7 @@ export default function GalleryShowcase() {
             tag: 'Academic Milestones',
             location: 'Nayabazar Degree College',
             date: 'Campus Life',
-            src: '/teachers.jpg',
+            src: '/img12.jpg',
         },
     ];
 
