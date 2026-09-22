@@ -4,9 +4,7 @@ import { motion } from 'framer-motion';
 import {
     Award,
     BarChart3,
-    BookOpen,
     Calendar,
-    CheckCircle,
     CheckCircle2,
     Compass,
     Cpu,
@@ -27,69 +25,100 @@ import {
 import { FaYoutube } from 'react-icons/fa';
 
 export default function Achievements() {
-    // 1. Professional & Pedagogical Certificates (Unified 3-Column Grid)
-    const certificateAchievements = [
+    // 1. Institutional, Pedagogical & Government Accreditations (Sorted with clear timeline dates)
+    const institutionalCertificates = [
         {
             id: 1,
-            tag: 'Pedagogy & ICT',
+            tag: 'Government Digital Lab',
+            icon: Cpu,
+            badgeStyle: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20',
+            title: 'ICT in Education Literacy, Troubleshooting & Maintenance',
+            recipient: 'Md. Ashikur Rahman (Lecturer, Nayabazar College)',
+            organization: 'DoICT • Sheikh Russel Digital Lab (2nd Phase)',
+            date: '07 Nov 2023 – 17 Nov 2023',
+            description:
+                '10-day intensive government training on hardware diagnostics, network topologies, smart classroom maintenance, and ICT pedagogical literacy.',
+            signatory: 'S. A. M. Rafiqunnabi & Md. Mostafa Kamal',
+            credentialId: 'DoICT Project Phase-02',
+        },
+        {
+            id: 2,
+            tag: 'Teacher Pedagogy',
             icon: Award,
             badgeStyle: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
             title: 'Basic Teacher Training Course - 5th Batch',
             recipient: 'Md. Ashikur Rahman',
-            organization: 'a2i • ICT Division • USAID • UNDP',
+            organization: 'a2i Programme • ICT Division • USAID • UNDP',
+            date: 'Professional Batch 05',
             description:
-                'Completed blended e-learning pedagogy course on modern classroom delivery, interactive module design, and ICT instructional methods.',
-            metadata: 'Prof. Faruque Ahmed (e-Learning Specialist)',
+                'Blended e-learning pedagogy course on modern classroom delivery, interactive module design, and ICT instructional methodology.',
+            signatory: 'Prof. Faruque Ahmed (e-Learning Specialist)',
             credentialId: 'Verified a2i Batch-05',
         },
         {
-            id: 2,
+            id: 3,
+            tag: 'Cyber Security',
+            icon: Shield,
+            badgeStyle: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
+            title: 'Digital Security Essentials',
+            recipient: 'Md. Ashikur Rahman',
+            organization: 'Digital Security Agency • a2i • ICT Division',
+            date: 'held on 8th April, 2020',
+            description:
+                'Blended e-learning certification on digital security safeguards, threat recognition, cyber hygiene protocols, and institutional asset security.',
+            signatory: 'Dr. Md. Abdul Mannan, PAA & Md. Rashadul Islam',
+            credentialId: 'MC-N472108T820518J106Q',
+        },
+        {
+            id: 4,
+            tag: 'Multimedia Content',
+            icon: Film,
+            badgeStyle: 'bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20',
+            title: 'Multimedia Content Development',
+            recipient: 'Md. Ashikur Rahman',
+            organization: 'a2i Programme • MuktoPaath • ICT Division',
+            date: 'National e-Learning Registry',
+            description:
+                'Certified blended course covering digital classroom pedagogy, interactive asset authoring, and multimedia learning resource creation.',
+            signatory: 'Dr. Md. Abdul Mannan (PAA)',
+            credentialId: 'MC-O472108D815991P125W',
+        },
+        {
+            id: 5,
             tag: 'Language Qualification',
             icon: Globe,
             badgeStyle: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20',
             title: 'General English — S.S.C. Pre-Intermediate 1',
             recipient: 'Md. Ashikur Rahman',
             organization: 'British Council Bangladesh',
+            date: '12/04/2010 – 06/06/2010',
             description:
-                'Accredited English course focusing on listening comprehension, communicative syntax, and formal verbal interactions.',
-            metadata: 'Teaching Centre Manager',
-            duration: 'between the dates 12/04/2010 and 06/06/2010',
+                'Accredited language qualification completed with the British Council at the S.S.C. Pre-Intermediate 1 standard.',
+            signatory: 'Teaching Centre Manager',
             credentialId: 'BC-BD End of Course',
         },
+    ];
+
+    // 2. Dedicated Robi 10 Minute School & MuktoPaath Professional Suite
+    const robiCertificates = [
         {
-            id: 3,
+            id: 1,
             tag: 'Digital Marketing',
             icon: Megaphone,
             badgeStyle: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
             title: 'Digital Marketing: Campaign Planning',
-            recipient: 'Md. Ashikur Rahman',
             organization: 'Robi- 10 Minute School • MuktoPaath',
             description:
-                'Online certification covering marketing lifecycle strategy, targeted campaign execution, digital funnels, and brand engagement.',
+                'Online certification covering marketing lifecycle strategy, targeted campaign execution, digital funnels, and audience engagement.',
             metadata: 'Ayman Sadiq & Dr. Md. Abdul Mannan, PAA',
             credentialId: 'MC-B472108M839197X185L',
         },
         {
-            id: 4,
-            tag: 'Cyber Security',
-            icon: Shield,
-            badgeStyle: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-            title: 'Digital Security Essentials',
-            recipient: 'Md. Ashikur Rahman',
-            organization: 'Digital Security Agency • a2i',
-            description:
-                'Blended learning on information asset protection, threat recognition, privacy protocols, and safe digital infrastructure maintenance.',
-            metadata: 'Dr. Md. Abdul Mannan, PAA & Md. Rashadul Islam',
-            duration: 'held on 8th April, 2020',
-            credentialId: 'MC-N472108T820518J106Q',
-        },
-        {
-            id: 5,
+            id: 2,
             tag: 'Analytics & Insights',
             icon: BarChart3,
             badgeStyle: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
             title: 'Google Analytics',
-            recipient: 'Md. Ashikur Rahman',
             organization: 'Robi 10 Minute School • MuktoPaath',
             description:
                 'Web analytics course mastering user behavior metrics, traffic tracking, conversion goals, and institutional reporting dashboard creation.',
@@ -97,52 +126,23 @@ export default function Achievements() {
             credentialId: 'MC-M472108A838563P189U',
         },
         {
-            id: 6,
-            tag: 'Multimedia Pedagogy',
-            icon: Film,
-            badgeStyle: 'bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20',
-            title: 'Multimedia Content Development',
-            recipient: 'Md. Ashikur Rahman',
-            organization: 'a2i Programme • MuktoPaath • ICT Division',
-            description:
-                'Blended e-learning course covering interactive digital teaching content, visual classroom media creation, and instructional multimedia tools.',
-            metadata: 'Dr. Md. Abdul Mannan (PAA)',
-            credentialId: 'MC-O472108D815991P125W',
-        },
-        {
-            id: 7,
+            id: 3,
             tag: 'Leadership & Soft Skills',
             icon: Compass,
             badgeStyle: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20',
             title: 'Personal Leadership',
-            recipient: 'Md. Ashikur Rahman',
             organization: 'Robi 10 Minute School • MuktoPaath',
             description:
-                'Executive self-development course focusing on professional initiative, habit architecture, structured time governance, and ethical leadership.',
+                'Executive self-development course focusing on professional initiative, habit architecture, structured time governance, and proactive leadership.',
             metadata: 'Ayman Sadiq & Dr. Md. Abdul Mannan, PAA',
             credentialId: 'MC-G472108H899888U198J',
         },
         {
-            id: 8,
-            tag: 'Government Technical Lab',
-            icon: Cpu,
-            badgeStyle: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20',
-            title: 'ICT in Education Literacy, Troubleshooting & Maintenance',
-            recipient: 'Md. Ashikur Rahman (Lecturer, Nayabazar College)',
-            organization: 'Department of ICT (DoICT) • Sheikh Russel Digital Lab',
-            description:
-                '10-day intensive hardware diagnostics, network layout setup, lab preventive maintenance, and smart classroom maintenance training.',
-            metadata: 'DoICT • S. A. M. Rafiqunnabi & Md. Mostafa Kamal',
-            duration: '07 Nov 2023 – 17 Nov 2023',
-            credentialId: 'Govt. Project Phase 2',
-        },
-        {
-            id: 9,
+            id: 4,
             tag: 'Content Strategy',
             icon: FaYoutube,
             badgeStyle: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20',
             title: 'YouTubing',
-            recipient: 'Md. Ashikur Rahman',
             organization: 'Robi 10 Minute School • MuktoPaath',
             description:
                 'Comprehensive curriculum addressing video production, pedagogical channel development, audience analytics, and educational outreach.',
@@ -151,7 +151,7 @@ export default function Achievements() {
         },
     ];
 
-    // 2. Training & Capacity Building Achievements
+    // 3. Training & Capacity Building Achievements
     const trainingAchievements = [
         {
             title: 'ICT in Education Literacy, Troubleshooting & Maintenance',
@@ -185,7 +185,7 @@ export default function Achievements() {
         },
     ];
 
-    // 3. Research & Projects
+    // 4. Research & Projects
     const researchAchievements = [
         {
             title: 'Bolbo Kotha : A Communication Aid For Non-Verbal People',
@@ -219,7 +219,7 @@ export default function Achievements() {
         },
     ];
 
-    // 4. Academic Milestones
+    // 5. Academic Milestones
     const academicAchievements = [
         {
             degree: 'B.Sc. in Computer Science & Engineering (CSE)',
@@ -250,7 +250,7 @@ export default function Achievements() {
         },
     ];
 
-    // 5. Government Scholarships & Early Academic Honors
+    // 6. Government Scholarships & Early Academic Honors
     const scholarshipAchievements = [
         {
             title: 'Govt. Junior Scholarship Examination',
@@ -361,17 +361,22 @@ export default function Achievements() {
                     </p>
                 </div>
 
-                {/* ================= 1. VERIFIED CERTIFICATES (3-COLUMN MATRIX) ================= */}
+                {/* ================= 1. INSTITUTIONAL & GOVERNMENT CERTIFICATIONS (TIMELINE MANAGED) ================= */}
                 <div className="space-y-5 sm:space-y-6">
-                    <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
-                        <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-[#0284C7] dark:text-[#38BDF8]" />
-                        <h2 className="text-[14px] sm:text-lg md:text-xl font-bold tracking-tight text-[#0F172A] dark:text-[#F8FAFC]">
-                            Verified Pedagogical & Professional Certificates
-                        </h2>
+                    <div className="flex items-center justify-between pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
+                        <div className="flex items-center gap-2">
+                            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-[#0284C7] dark:text-[#38BDF8]" />
+                            <h2 className="text-[14px] sm:text-lg md:text-xl font-bold tracking-tight text-[#0F172A] dark:text-[#F8FAFC]">
+                                Institutional & Pedagogical Accreditations
+                            </h2>
+                        </div>
+                        <span className="text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                            Verified Government & Language Credentials
+                        </span>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
-                        {certificateAchievements.map((cert, idx) => {
+                        {institutionalCertificates.map((cert, idx) => {
                             const IconComp = cert.icon;
 
                             return (
@@ -380,11 +385,11 @@ export default function Achievements() {
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.45, delay: idx * 0.05 }}
+                                    transition={{ duration: 0.45, delay: idx * 0.06 }}
                                     className="group relative flex flex-col justify-between p-3.5 sm:p-5 rounded-2xl bg-white/70 dark:bg-[rgba(15,23,42,0.65)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.18)] shadow-xs hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                                 >
-                                    <div className="space-y-2 sm:space-y-3">
-                                        {/* Badge / Tag Header */}
+                                    <div className="space-y-2 sm:space-y-2.5">
+                                        {/* Badge Row with Timeline Date */}
                                         <div className="flex items-center justify-between gap-1.5">
                                             <span
                                                 className={`inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border ${cert.badgeStyle}`}
@@ -399,7 +404,15 @@ export default function Achievements() {
                                             </span>
                                         </div>
 
-                                        {/* Title (strictly capped at max 14px on mobile) */}
+                                        {/* Timeline Date Tag */}
+                                        <div className="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-slate-400">
+                                            <Calendar className="w-3 h-3 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
+                                            <span className="font-semibold text-slate-700 dark:text-slate-300 truncate">
+                                                {cert.date}
+                                            </span>
+                                        </div>
+
+                                        {/* Title: Capped strictly at max 14px on mobile */}
                                         <div>
                                             <h3 className="text-[12px] sm:text-[14px] font-extrabold text-[#0F172A] dark:text-[#F8FAFC] leading-tight group-hover:text-[#0284C7] dark:group-hover:text-[#38BDF8] transition-colors line-clamp-2">
                                                 {cert.title}
@@ -409,28 +422,96 @@ export default function Achievements() {
                                             </p>
                                         </div>
 
-                                        {/* Description (max 14px on mobile, tight line-height) */}
+                                        {/* Description: Tight leading on mobile */}
                                         <p className="text-[9px] sm:text-[12px] text-[#334155] dark:text-[#94A3B8] leading-tight sm:leading-relaxed line-clamp-3">
                                             {cert.description}
                                         </p>
-
-                                        {/* Optional single duration date mention */}
-                                        {cert.duration && (
-                                            <div className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100/60 dark:bg-slate-800/40 px-2 py-0.5 rounded">
-                                                <Calendar className="w-2.5 h-2.5 text-sky-500 shrink-0" />
-                                                <span className="truncate">{cert.duration}</span>
-                                            </div>
-                                        )}
                                     </div>
 
                                     {/* Card Footer: Signatory & Credential ID */}
                                     <div className="pt-2.5 sm:pt-3 mt-3 border-t border-[#E2E8F0]/70 dark:border-white/10 space-y-1 font-mono text-[8px] sm:text-[10px] text-slate-500 dark:text-slate-400 leading-none">
                                         <p className="truncate text-slate-700 dark:text-slate-300 font-medium">
-                                            {cert.metadata}
+                                            {cert.signatory}
                                         </p>
                                         <div className="flex items-center justify-between pt-0.5">
                                             <span className="text-[#0284C7] dark:text-[#38BDF8] truncate max-w-[70%]">
                                                 {cert.credentialId}
+                                            </span>
+                                            <span className="inline-flex items-center gap-1 text-slate-400 shrink-0">
+                                                <QrCode className="w-3 h-3" />
+                                                Official
+                                            </span>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* ================= 2. ROBI 10 MINUTE SCHOOL & MUKTOPAATH SUITE (DEDICATED SECTION) ================= */}
+                <div className="space-y-5 sm:space-y-6">
+                    <div className="flex items-center justify-between pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
+                        <div className="flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-rose-500 dark:text-rose-400" />
+                            <h2 className="text-[14px] sm:text-lg md:text-xl font-bold tracking-tight text-[#0F172A] dark:text-[#F8FAFC]">
+                                Robi 10 Minute School & MuktoPaath Professional Suite
+                            </h2>
+                        </div>
+                        <span className="text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                            e-Learning Competencies
+                        </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+                        {robiCertificates.map((item, idx) => {
+                            const IconComp = item.icon;
+
+                            return (
+                                <motion.div
+                                    key={item.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.45, delay: idx * 0.06 }}
+                                    className="group relative flex flex-col justify-between p-3.5 sm:p-5 rounded-2xl bg-white/70 dark:bg-[rgba(15,23,42,0.65)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.18)] shadow-xs hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                                >
+                                    <div className="space-y-2 sm:space-y-2.5">
+                                        <div className="flex items-center justify-between gap-1.5">
+                                            <span
+                                                className={`inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border ${item.badgeStyle}`}
+                                            >
+                                                <IconComp className="w-3 h-3" />
+                                                <span>{item.tag}</span>
+                                            </span>
+
+                                            <span className="inline-flex items-center gap-0.5 text-[9px] sm:text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
+                                                <CheckCircle2 className="w-3 h-3" />
+                                                Verified
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-[12px] sm:text-[14px] font-extrabold text-[#0F172A] dark:text-[#F8FAFC] leading-tight group-hover:text-[#0284C7] dark:group-hover:text-[#38BDF8] transition-colors line-clamp-2">
+                                                {item.title}
+                                            </h3>
+                                            <p className="text-[10px] sm:text-[11px] text-[#0284C7] dark:text-[#38BDF8] font-semibold mt-0.5 truncate">
+                                                {item.organization}
+                                            </p>
+                                        </div>
+
+                                        <p className="text-[9px] sm:text-[12px] text-[#334155] dark:text-[#94A3B8] leading-tight sm:leading-relaxed line-clamp-3">
+                                            {item.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-2.5 sm:pt-3 mt-3 border-t border-[#E2E8F0]/70 dark:border-white/10 space-y-1 font-mono text-[8px] sm:text-[10px] text-slate-500 dark:text-slate-400 leading-none">
+                                        <p className="truncate text-slate-700 dark:text-slate-300 font-medium">
+                                            {item.metadata}
+                                        </p>
+                                        <div className="flex items-center justify-between pt-0.5">
+                                            <span className="text-rose-600 dark:text-rose-400 truncate max-w-[70%] font-semibold">
+                                                {item.credentialId}
                                             </span>
                                             <span className="inline-flex items-center gap-1 text-slate-400 shrink-0">
                                                 <QrCode className="w-3 h-3" />
@@ -444,7 +525,7 @@ export default function Achievements() {
                     </div>
                 </div>
 
-                {/* ================= 2. TRAINING & HONORS ================= */}
+                {/* ================= 3. TRAINING EXPERIENCES & MASTER TRAINER HONORS ================= */}
                 <div className="space-y-5 sm:space-y-6">
                     <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
                         <Award className="w-4 h-4 sm:w-5 sm:h-5 text-[#0284C7] dark:text-[#38BDF8]" />
@@ -512,7 +593,7 @@ export default function Achievements() {
                     </div>
                 </div>
 
-                {/* ================= 3. ACADEMIC RESEARCH & PROJECTS ================= */}
+                {/* ================= 4. ACADEMIC RESEARCH & INNOVATIONS ================= */}
                 <div className="space-y-5 sm:space-y-6">
                     <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
                         <FolderGit2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#0284C7] dark:text-[#38BDF8]" />
@@ -580,7 +661,7 @@ export default function Achievements() {
                     </div>
                 </div>
 
-                {/* ================= 4. ACADEMIC BACKGROUND & GPAS ================= */}
+                {/* ================= 5. ACADEMIC DEGREES & EXCELLENCE ================= */}
                 <div className="space-y-5 sm:space-y-6">
                     <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
                         <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-[#0284C7] dark:text-[#38BDF8]" />
@@ -631,7 +712,7 @@ export default function Achievements() {
                     </div>
                 </div>
 
-                {/* ================= 5. GOVT. SCHOLARSHIP EXAMINATIONS ================= */}
+                {/* ================= 6. GOVT. SCHOLARSHIP EXAMINATIONS ================= */}
                 <div className="space-y-5 sm:space-y-6">
                     <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.12)]">
                         <Medal className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 dark:text-yellow-400" />
