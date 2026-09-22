@@ -1,17 +1,16 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
-    Star,
-    Quote,
-    GraduationCap,
-    Users,
-    PenSquare,
     ArrowRight,
     CheckCircle2,
+    GraduationCap,
+    PenSquare,
+    Quote,
+    Star,
+    Users,
 } from 'lucide-react';
+import Link from 'next/link';
 
 const reviewsData = [
     {
@@ -27,58 +26,107 @@ const reviewsData = [
     },
     {
         id: 2,
-        name: 'Abdur Rahim Howlader',
-        role: 'Parent',
-        program: 'Father of HSC Examinee',
+        name: 'Sumaiya Rahman',
+        role: 'Student',
+        program: 'HSC-2023 Batch (Science)',
         rating: 5,
         date: '1 month ago',
         avatar: '/university.jpg',
-        comment:
-            'The academic discipline and campus security give us complete peace of mind. Regular progress tracking and guardian meetings keep us informed about our daughter’s collegiate progress.',
+        comment: `Ashik Sir has always been my favorite teacher. I've had a very warm and close relationship with him since the very beginning of my college life. I enjoyed his classes the most during my college days, and even now, I really miss those classes. There was always something special about the way he taught and connected with us.`,
     },
     {
         id: 3,
-        name: 'Nusrat Jahan',
+        name: 'Sifat Anowar',
         role: 'Student',
-        program: 'Degree (B.A. 2nd Year)',
+        program: 'HSC-2024 Batch (Business Studies)',
         rating: 5,
         date: '3 weeks ago',
         avatar: '/teachers.jpg',
-        comment:
-            'The seminar library and supportive faculty created an inspiring atmosphere for our higher studies. Cultural events and sports tournaments balance academic rigor perfectly.',
+        comment: `As a student, I wasn't always very attentive to my studies. I was more interested in extracurricular activities, especially drawing and cultural activities. Ashik Sir never discouraged me or showed any annoyance toward these interests. Instead, he always supported and encouraged me.
+        And whenever I tried to seek the truth or understand things for myself, Ashik Sir       always tried to guide me in the right direction. I'm truly grateful for his     support, encouragement, and guidance throughout my college life.`,
     },
     {
         id: 4,
-        name: 'Farhana Yasmin',
-        role: 'Parent',
-        program: 'Mother of Science Student',
+        name: 'Mahmuda Akter Munni',
+        role: 'Guardian',
+        program: 'Sister of 2 Students',
         rating: 5,
         date: '1 month ago',
         avatar: '/university.jpg',
-        comment:
-            'Nayabazar Degree College has transformed my son into a curious, dedicated learner. The ICT training and science lab equipment provide practical exposure beyond textbooks.',
+        comment: `My younger brother and sister have also been students of Ashik Sir. I truly feel fortunate to have had the opportunity to entrust their education to a teacher like him. He is a very dedicated and hardworking teacher who genuinely cares about his students and always puts in his best effort for them.`,
     },
     {
         id: 5,
-        name: 'Mahfuzur Rahman',
-        role: 'Student',
-        program: 'HSC Business Studies',
-        rating: 4,
+        name: 'Noni Gopal Saha',
+        role: 'Teacher',
+        program: 'Father of Science Student',
+        rating: 4.5,
         date: '2 weeks ago',
         avatar: '/teachers.jpg',
-        comment:
-            'Co-curricular debates, annual assemblies, and experienced accounting instructors gave me the confidence to prepare effectively for university admission tests.',
+        comment: `Ashik was once my student, and today, he has become a teacher himself. It fills my heart with immense pride to see how far he has come. He has also taught my son and still keeps in touch and checks on his progress from time to time.
+        Seeing one of my former students grow into a dedicated and capable teacher gives        me a deep sense of peace and satisfaction. It is truly one of the most rewarding    feelings a teacher can have.`,
     },
     {
         id: 6,
-        name: 'Sultana Begum',
-        role: 'Parent',
-        program: 'Guardian of Degree Student',
+        name: 'Hashem Ali',
+        role: 'Teacher',
+        program: 'Colleague of Ashik Sir',
         rating: 5,
         date: '4 days ago',
         avatar: '/university.jpg',
-        comment:
-            'Accessible location, affordable tuition, and high moral standards make this institute a cornerstone for education across Keraniganj and neighboring regions.',
+        comment: `Ashik Sir is a popular teacher, but what makes him truly special is the kind of person he is. He is one of the most polite, warm-hearted, and helpful people I have ever known. I have rarely come across someone as humble, kind, and genuinely caring as him.`,
+    },
+    {
+        id: 7,
+        name: 'Samaniya Aaka',
+        role: 'Student',
+        program: 'HSC-2026 Batch (Business Studies)',
+        rating: 5,
+        date: '4 days ago',
+        avatar: '/university.jpg',
+        comment: `Ashik Sir is an extremely honest and friendly person. We always felt safe and comfortable around him, and we could openly share any personal problems with him without hesitation. He never made us feel uncomfortable or annoyed. Instead, he would listen to us patiently and sincerely and always try to offer helpful advice and solutions.`,
+    },
+    {
+        id: 8,
+        name: 'Shahinur Akter Ratri',
+        role: 'Student',
+        program: 'HSC-2026 Batch (Humanities)',
+        rating: 5,
+        date: '4 days ago',
+        avatar: '/university.jpg',
+        comment: `Ashik Sir is my favorite teacher from my college days. I always attended his classes with great interest and attention. He had a wonderful way of explaining even the most difficult topics in a very simple and understandable manner. I truly enjoyed his classes, and I still miss having him as my teacher.`,
+    },
+    {
+        id: 9,
+        name: 'Tasnim Kabir',
+        role: 'Student',
+        program: 'HSC-2026 Batch (Science)',
+        rating: 5,
+        date: '4 days ago',
+        avatar: '/university.jpg',
+        comment: `Ashik Sir's classes were always full of fun and memorable moments. I used to have a lot of fun and mischief in his classes, and Sir would often joke around and have fun with us too. The time we spent in his classes was not only enjoyable but also very meaningful and valuable. Those moments are still some of my favorite memories.`,
+    },
+    {
+        id: 10,
+        name: 'Mumtahina Momo',
+        role: 'Student',
+        program: 'HSC-2026 Batch (Humanities)',
+        rating: 5,
+        date: '4 days ago',
+        avatar: '/university.jpg',
+        comment: `Ashik Sir is truly the best teacher. He was also the teacher of my elder brother and my cousin, so he has always had a close and warm relationship with our family. We have a lot of respect and affection for him. I always pray for his well-being, success, and happiness.`,
+    },
+
+    {
+        id: 11,
+        name: 'Tasin Ahmed',
+        role: 'Student',
+        program: 'HSC-2023 Batch (Humanities)',
+        rating: 5,
+        date: '2 months ago',
+        avatar: '/teachers.jpg',
+        comment: `There's actually a funny story behind how my relationship with Ashik Sir began, but I'd rather keep that story to myself. 😄
+        I've rarely come across a teacher who is as friendly, approachable, caring, and         genuine as he is. What I appreciate most about him is how easily he connects with       his students and makes them feel comfortable. He is not just a teacher to me; he    is someone I genuinely respect and feel lucky to have known.`,
     },
 ];
 

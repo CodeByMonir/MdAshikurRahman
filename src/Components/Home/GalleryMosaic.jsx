@@ -311,7 +311,7 @@ export default function GalleryMosaic() {
 
                 {/* Technical Campus Blueprint Grid Overlay */}
                 <svg
-                    className="absolute inset-0 w-full h-full stroke-sky-400/10 dark:stroke-sky-400/[0.05]"
+                    className="absolute inset-0 w-full h-full stroke-sky-400/10 dark:stroke-sky-400/0.05"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <defs>
@@ -394,7 +394,7 @@ export default function GalleryMosaic() {
                 {/* Minimum 3 Images per Row: grid-cols-3 (mobile), grid-cols-4 (tablet), grid-cols-6 (desktop) */}
                 {/* Grid restricted to maximum 9 items */}
                 <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
-                    {instituteItems.slice(0, 9).map((item, index) => (
+                    {instituteItems.slice(0, 6).map((item, index) => (
                         <motion.div
                             key={item.id}
                             initial={{ opacity: 0, scale: 0.95 }}
