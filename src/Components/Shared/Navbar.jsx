@@ -26,7 +26,7 @@ export default function Navbar() {
     // Authentication state
 
     const loginValidation = process.env.NEXT_PUBLIC_LOGIN_VALIDATION;
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(loginValidation);
 
     // User details placeholder
     const user = {
