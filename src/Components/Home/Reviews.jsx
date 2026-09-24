@@ -31,7 +31,7 @@ const reviewsData = [
         program: 'HSC-2023 Batch (Science)',
         rating: 5,
         date: '1 month ago',
-        avatar: '/university.jpg',
+        avatar: '',
         comment: `Ashik Sir has always been my favorite teacher. I've had a very warm and close relationship with him since the very beginning of my college life. I enjoyed his classes the most during my college days, and even now, I really miss those classes. There was always something special about the way he taught and connected with us.`,
     },
     {
@@ -41,7 +41,7 @@ const reviewsData = [
         program: 'HSC-2024 Batch (Business Studies)',
         rating: 5,
         date: '3 weeks ago',
-        avatar: '/teachers.jpg',
+        avatar: '',
         comment: `As a student, I wasn't always very attentive to my studies. I was more interested in extracurricular activities, especially drawing and cultural activities. Ashik Sir never discouraged me or showed any annoyance toward these interests. Instead, he always supported and encouraged me.
         And whenever I tried to seek the truth or understand things for myself, Ashik Sir always tried to guide me in the right direction. I'm truly grateful for his support, encouragement, and guidance throughout my college life.`,
     },
@@ -52,7 +52,7 @@ const reviewsData = [
         program: 'Sister of 2 Students',
         rating: 5,
         date: '1 month ago',
-        avatar: '/university.jpg',
+        avatar: '',
         comment: `My younger brother and sister have also been students of Ashik Sir. I truly feel fortunate to have had the opportunity to entrust their education to a teacher like him. He is a very dedicated and hardworking teacher who genuinely cares about his students and always puts in his best effort for them.`,
     },
     {
@@ -62,7 +62,7 @@ const reviewsData = [
         program: 'Father of Science Student',
         rating: 4.5,
         date: '2 weeks ago',
-        avatar: '/teachers.jpg',
+        avatar: '',
         comment: `Ashik was once my student, and today, he has become a teacher himself. It fills my heart with immense pride to see how far he has come. He has also taught my son and still keeps in touch and checks on his progress from time to time.
         Seeing one of my former students grow into a dedicated and capable teacher gives me a deep sense of peace and satisfaction. It is truly one of the most rewarding feelings a teacher can have.`,
     },
@@ -73,7 +73,7 @@ const reviewsData = [
         program: 'Colleague of Ashik Sir',
         rating: 5,
         date: '4 days ago',
-        avatar: '/university.jpg',
+        avatar: '',
         comment: `Ashik Sir is a popular teacher, but what makes him truly special is the kind of person he is. He is one of the most polite, warm-hearted, and helpful people I have ever known. I have rarely come across someone as humble, kind, and genuinely caring as him.`,
     },
     {
@@ -83,7 +83,7 @@ const reviewsData = [
         program: 'HSC-2026 Batch (Business Studies)',
         rating: 5,
         date: '4 days ago',
-        avatar: '/university.jpg',
+        avatar: '',
         comment: `Ashik Sir is an extremely honest and friendly person. We always felt safe and comfortable around him, and we could openly share any personal problems with him without hesitation. He never made us feel uncomfortable or annoyed. Instead, he would listen to us patiently and sincerely and always try to offer helpful advice and solutions.`,
     },
     {
@@ -93,7 +93,7 @@ const reviewsData = [
         program: 'HSC-2026 Batch (Humanities)',
         rating: 5,
         date: '4 days ago',
-        avatar: '/university.jpg',
+        avatar: '',
         comment: `Ashik Sir is my favorite teacher from my college days. I always attended his classes with great interest and attention. He had a wonderful way of explaining even the most difficult topics in a very simple and understandable manner. I truly enjoyed his classes, and I still miss having him as my teacher.`,
     },
     {
@@ -103,7 +103,7 @@ const reviewsData = [
         program: 'HSC-2026 Batch (Science)',
         rating: 5,
         date: '4 days ago',
-        avatar: '/university.jpg',
+        avatar: '',
         comment: `Ashik Sir's classes were always full of fun and memorable moments. I used to have a lot of fun and mischief in his classes, and Sir would often joke around and have fun with us too. The time we spent in his classes was not only enjoyable but also very meaningful and valuable. Those moments are still some of my favorite memories.`,
     },
     {
@@ -113,7 +113,7 @@ const reviewsData = [
         program: 'HSC-2026 Batch (Humanities)',
         rating: 5,
         date: '4 days ago',
-        avatar: '/university.jpg',
+        avatar: '',
         comment: `Ashik Sir is truly the best teacher. He was also the teacher of my elder brother and my cousin, so he has always had a close and warm relationship with our family. We have a lot of respect and affection for him. I always pray for his well-being, success, and happiness.`,
     },
     {
@@ -123,7 +123,7 @@ const reviewsData = [
         program: 'HSC-2023 Batch (Humanities)',
         rating: 5,
         date: '2 months ago',
-        avatar: '/teachers.jpg',
+        avatar: '',
         comment: `There's actually a funny story behind how my relationship with Ashik Sir began, but I'd rather keep that story to myself. 😄
         I've rarely come across a teacher who is as friendly, approachable, caring, and genuine as he is. What I appreciate most about him is how easily he connects with his students and makes them feel comfortable. He is not just a teacher to me; he is someone I genuinely respect and feel lucky to have known.`,
     },
@@ -171,7 +171,7 @@ export default function TestimonialsSection() {
                                         <div className="flex items-center gap-3 min-w-0">
                                             <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-300/50 dark:border-white/20 shrink-0">
                                                 <Image
-                                                    src={item.avatar}
+                                                    src={item.avatar || '/CollegeLogo.jpg'}
                                                     alt={item.name}
                                                     fill
                                                     sizes="40px"
@@ -244,7 +244,7 @@ export default function TestimonialsSection() {
 
                     <Link
                         href="/reviews"
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] dark:text-[#090D16] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-linear-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] dark:text-[#090D16] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
                     >
                         <span>View All Reviews</span>
                         <ArrowRight className="w-4 h-4" />
