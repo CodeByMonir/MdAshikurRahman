@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
     Heart,
     Sparkles,
@@ -23,6 +22,7 @@ export default function GalleryShowcase() {
     const [isPressHolding, setIsPressHolding] = useState(false);
     const [timerKey, setTimerKey] = useState(0); // Resets interval & countdown bar on click
     const thumbTrackRef = useRef(null);
+    const isFirstMount = useRef(true);
 
     // Personal Memoirs & Life Photographs
     const personalMoments = [
@@ -148,8 +148,13 @@ export default function GalleryShowcase() {
         return () => clearInterval(interval);
     }, [isPlaying, isPressHolding, lightboxOpen, timerKey, personalMoments.length]);
 
-    // Keep active thumbnail scrolled into view smoothly
+    // Keep active thumbnail scrolled into view smoothly without window page-jumps
     useEffect(() => {
+        if (isFirstMount.current) {
+            isFirstMount.current = false;
+            return;
+        }
+
         if (thumbTrackRef.current) {
             const track = thumbTrackRef.current;
             const activeThumb = track.children[heroIndex];
@@ -165,23 +170,37 @@ export default function GalleryShowcase() {
         }
     }, [heroIndex]);
 
+    // Keyboard navigation for lightbox
+    useEffect(() => {
+        if (!lightboxOpen) return;
+
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') setLightboxOpen(false);
+            if (e.key === 'ArrowRight') handleNext();
+            if (e.key === 'ArrowLeft') handlePrev();
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [lightboxOpen]);
+
     const activeHeroItem = personalMoments[heroIndex] || personalMoments[0];
 
     const handlePrev = (e) => {
         if (e) e.stopPropagation();
         setHeroIndex((prev) => (prev - 1 + personalMoments.length) % personalMoments.length);
-        setTimerKey((k) => k + 1); // Reset animation & timer
+        setTimerKey((k) => k + 1);
     };
 
     const handleNext = (e) => {
         if (e) e.stopPropagation();
         setHeroIndex((prev) => (prev + 1) % personalMoments.length);
-        setTimerKey((k) => k + 1); // Reset animation & timer
+        setTimerKey((k) => k + 1);
     };
 
     const handleSelectIndex = (idx) => {
         setHeroIndex(idx);
-        setTimerKey((k) => k + 1); // Reset animation & timer
+        setTimerKey((k) => k + 1);
     };
 
     const scrollThumbnails = (direction) => {
@@ -191,7 +210,6 @@ export default function GalleryShowcase() {
         }
     };
 
-    // Click on main stage advances image and resets timer
     const handleMainFrameClick = () => {
         handleNext();
     };
@@ -205,6 +223,20 @@ export default function GalleryShowcase() {
             id="personal-moments"
             className="relative overflow-hidden py-12 sm:py-20 px-3 sm:px-6 lg:px-12 bg-transparent transition-colors duration-300 select-none"
         >
+            <style jsx>{`
+                @keyframes countdown {
+                    from {
+                        width: 0%;
+                    }
+                    to {
+                        width: 100%;
+                    }
+                }
+                .animate-countdown {
+                    animation: countdown 5s linear forwards;
+                }
+            `}</style>
+
             {/* Ambient Glow Background */}
             <div
                 aria-hidden="true"
@@ -218,7 +250,7 @@ export default function GalleryShowcase() {
                     }}
                 />
                 <div
-                    className="absolute top-20 left-1/3 -translate-x-1/2 w-80 sm:w-[500px] h-80 sm:h-[500px] rounded-full blur-[130px] opacity-30 dark:opacity-20 animate-[pulse_9s_ease-in-out_infinite]"
+                    className="absolute top-20 left-1/3 -translate-x-1/2 w-80 sm:w-[500px] h-80 sm:h-[500px] rounded-full blur-[130px] opacity-30 dark:opacity-20 animate-pulse duration-1000"
                     style={{
                         background:
                             'radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(74, 222, 128, 0.1) 60%, transparent 80%)',
@@ -257,41 +289,36 @@ export default function GalleryShowcase() {
                             onTouchEnd={handlePressEnd}
                             className="relative w-full h-[340px] sm:h-[440px] md:h-[540px] rounded-3xl overflow-hidden border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-2xl bg-black cursor-pointer flex items-center justify-center group"
                         >
-                            {/* Dual-Layer Responsive Container */}
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeHeroItem.id}
-                                    initial={{ opacity: 0, scale: 1.05 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.96 }}
-                                    transition={{ duration: 0.65, ease: 'easeInOut' }}
-                                    className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
-                                >
-                                    {/* Layer 1: Ambient Blurred Backdrop */}
+                            {/* Dual-Layer Responsive Image Container */}
+                            <div
+                                key={activeHeroItem.id}
+                                className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden transition-all duration-700 ease-out"
+                            >
+                                {/* Layer 1: Ambient Blurred Backdrop */}
+                                <Image
+                                    src={activeHeroItem.src}
+                                    alt=""
+                                    fill
+                                    priority
+                                    aria-hidden="true"
+                                    className="object-cover object-center blur-2xl opacity-40 scale-110 pointer-events-none transition-opacity duration-500"
+                                />
+
+                                {/* Layer 2: Main Foreground Image */}
+                                <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-4 z-10">
                                     <Image
                                         src={activeHeroItem.src}
                                         alt={activeHeroItem.title}
                                         fill
                                         priority
-                                        aria-hidden="true"
-                                        className="object-cover object-center blur-2xl opacity-40 scale-110 pointer-events-none"
+                                        sizes="(max-width: 1024px) 100vw, 1200px"
+                                        className="object-contain object-center pointer-events-none transition-transform duration-700 group-hover:scale-[1.01]"
                                     />
+                                </div>
+                            </div>
 
-                                    {/* Layer 2: Main Image - 100% fits centered within container */}
-                                    <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-4 z-1">
-                                        <Image
-                                            src={activeHeroItem.src}
-                                            alt={activeHeroItem.title}
-                                            fill
-                                            priority
-                                            className="object-contain object-center pointer-events-none transition-transform duration-700 group-hover:scale-[1.01]"
-                                        />
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-
-                            {/* Gradient Vignette */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none z-10" />
+                            {/* Gradient Vignette Under Main Foreground Image */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none z-[5]" />
 
                             {/* Top Floating Controls */}
                             <div className="absolute top-3 sm:top-5 inset-x-3 sm:inset-x-5 flex items-center justify-between z-20">
@@ -307,7 +334,7 @@ export default function GalleryShowcase() {
                                             e.stopPropagation();
                                             setIsPlaying((prev) => !prev);
                                         }}
-                                        className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[10px] flex items-center gap-1 cursor-pointer"
+                                        className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[10px] flex items-center gap-1 cursor-pointer transition-colors hover:bg-black/80"
                                     >
                                         {isPlaying && !isPressHolding ? (
                                             <>
@@ -325,6 +352,7 @@ export default function GalleryShowcase() {
 
                                 {/* Full View Button */}
                                 <button
+                                    type="button"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setLightboxOpen(true);
@@ -359,9 +387,10 @@ export default function GalleryShowcase() {
                                     </p>
                                 </div>
 
-                                {/* Left/Right Steppers (Reset timer on click) */}
+                                {/* Stepper Buttons */}
                                 <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                                     <button
+                                        type="button"
                                         onClick={handlePrev}
                                         className="p-1.5 sm:p-2 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 text-white transition-all active:scale-95 cursor-pointer"
                                         aria-label="Previous moment"
@@ -374,6 +403,7 @@ export default function GalleryShowcase() {
                                     </span>
 
                                     <button
+                                        type="button"
                                         onClick={handleNext}
                                         className="p-1.5 sm:p-2 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 text-white transition-all active:scale-95 cursor-pointer"
                                         aria-label="Next moment"
@@ -383,24 +413,19 @@ export default function GalleryShowcase() {
                                 </div>
                             </div>
 
-                            {/* Story Countdown Bar (Resets on timerKey change) */}
+                            {/* Story Countdown Bar */}
                             <div className="absolute bottom-0 inset-x-0 h-1 bg-white/15 overflow-hidden z-30 pointer-events-none">
-                                <motion.div
+                                <div
                                     key={`${activeHeroItem.id}-${timerKey}`}
-                                    initial={{ width: '0%' }}
-                                    animate={{
-                                        width: isPressHolding ? undefined : '100%',
+                                    style={{
+                                        animationPlayState: isPressHolding || !isPlaying ? 'paused' : 'running',
                                     }}
-                                    transition={{
-                                        duration: 5,
-                                        ease: 'linear',
-                                    }}
-                                    className="h-full bg-gradient-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80]"
+                                    className="h-full w-0 bg-gradient-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] animate-countdown"
                                 />
                             </div>
                         </div>
 
-                        {/* Full-width Thumbnail Track Container with Hidden Scrollbar & Desktop Navigation Buttons */}
+                        {/* Full-width Thumbnail Track Container */}
                         <div className="relative w-full px-2 sm:px-6 lg:px-10 flex items-center justify-center">
                             {/* Left Scroll Button (Desktop Only) */}
                             <button
@@ -412,7 +437,7 @@ export default function GalleryShowcase() {
                                 <ChevronLeft className="w-4 h-4" />
                             </button>
 
-                            {/* Thumbnail Row: Side Scroller Hidden (`[scrollbar-width:none] [&::-webkit-scrollbar]:hidden`) */}
+                            {/* Thumbnail Row: Native scrollable track with hidden scrollbars */}
                             <div
                                 ref={thumbTrackRef}
                                 className="w-full flex items-center gap-2.5 sm:gap-3 py-2 px-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth"
@@ -421,11 +446,12 @@ export default function GalleryShowcase() {
                                     const isSelected = idx === heroIndex;
                                     return (
                                         <button
+                                            type="button"
                                             key={item.id}
                                             onClick={() => handleSelectIndex(idx)}
                                             className={`relative shrink-0 w-20 sm:w-28 h-14 sm:h-18 rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer ${isSelected
-                                                ? 'border-[#0284C7] dark:border-[#38BDF8] ring-1 ring-sky-400/40 scale-105 shadow-md'
-                                                : 'border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] opacity-60 hover:opacity-100 hover:border-slate-400'
+                                                    ? 'border-[#0284C7] dark:border-[#38BDF8] ring-1 ring-sky-400/40 scale-105 shadow-md'
+                                                    : 'border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] opacity-60 hover:opacity-100 hover:border-slate-400'
                                                 }`}
                                         >
                                             <Image
@@ -456,52 +482,48 @@ export default function GalleryShowcase() {
             </div>
 
             {/* Fullscreen Lightbox Preview */}
-            <AnimatePresence>
-                {lightboxOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/95 backdrop-blur-md"
+            {lightboxOpen && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/95 backdrop-blur-md transition-opacity duration-300"
+                    onClick={() => setLightboxOpen(false)}
+                >
+                    <button
+                        type="button"
                         onClick={() => setLightboxOpen(false)}
+                        className="absolute top-4 right-4 p-1.5 sm:p-2 rounded-xl border border-white/20 bg-white/10 text-white hover:bg-white/20 transition-colors z-50 cursor-pointer"
+                        aria-label="Close image preview"
                     >
-                        <button
-                            onClick={() => setLightboxOpen(false)}
-                            className="absolute top-4 right-4 p-1.5 sm:p-2 rounded-xl border border-white/20 bg-white/10 text-white hover:bg-white/20 transition-colors z-50 cursor-pointer"
-                            aria-label="Close image preview"
-                        >
-                            <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                        </button>
+                        <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </button>
 
-                        <div
-                            className="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center justify-center"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="relative w-full h-[50vh] sm:h-[70vh] flex items-center justify-center rounded-2xl overflow-hidden border border-[rgba(56,189,248,0.3)] shadow-2xl bg-black/60">
-                                <Image
-                                    src={activeHeroItem.src}
-                                    alt={activeHeroItem.title}
-                                    fill
-                                    priority
-                                    className="object-contain object-center"
-                                />
-                            </div>
-
-                            <div className="mt-2.5 text-center px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white space-y-0.5">
-                                <p className="text-[13px] sm:text-[14px] font-bold">
-                                    {activeHeroItem.title}
-                                </p>
-                                <p className="text-[10px] sm:text-[12px] text-[#38BDF8]">
-                                    {activeHeroItem.subtitle}
-                                </p>
-                                <p className="text-[10px] sm:text-[11px] text-[#94A3B8]">
-                                    {activeHeroItem.location} &bull; {activeHeroItem.date}
-                                </p>
-                            </div>
+                    <div
+                        className="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center justify-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="relative w-full h-[50vh] sm:h-[70vh] flex items-center justify-center rounded-2xl overflow-hidden border border-[rgba(56,189,248,0.3)] shadow-2xl bg-black/60">
+                            <Image
+                                src={activeHeroItem.src}
+                                alt={activeHeroItem.title}
+                                fill
+                                priority
+                                className="object-contain object-center"
+                            />
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+
+                        <div className="mt-2.5 text-center px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white space-y-0.5">
+                            <p className="text-[13px] sm:text-[14px] font-bold">
+                                {activeHeroItem.title}
+                            </p>
+                            <p className="text-[10px] sm:text-[12px] text-[#38BDF8]">
+                                {activeHeroItem.subtitle}
+                            </p>
+                            <p className="text-[10px] sm:text-[11px] text-[#94A3B8]">
+                                {activeHeroItem.location} &bull; {activeHeroItem.date}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

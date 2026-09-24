@@ -24,13 +24,15 @@ export default function Navbar() {
     const profileRef = useRef(null);
 
     // Authentication state
+
+    const loginValidation = process.env.NEXT_PUBLIC_LOGIN_VALIDATION;
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     // User details placeholder
     const user = {
-        name: 'Monir',
-        email: 'monir@example.com',
-        avatar: '/avatar.webp',
+        name: process.env.NEXT_PUBLIC_USER_NAME,
+        email: process.env.NEXT_PUBLIC_USER_EMAIL,
+        avatar: process.env.NEXT_PUBLIC_USER_AVATAR,
     };
 
     useEffect(() => {

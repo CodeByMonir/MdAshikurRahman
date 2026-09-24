@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "codebymonir.vercel.app",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

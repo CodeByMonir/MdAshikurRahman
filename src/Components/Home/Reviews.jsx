@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
     ArrowRight,
     CheckCircle2,
@@ -10,7 +11,6 @@ import {
     Star,
     Users,
 } from 'lucide-react';
-import Link from 'next/link';
 
 const reviewsData = [
     {
@@ -43,7 +43,7 @@ const reviewsData = [
         date: '3 weeks ago',
         avatar: '/teachers.jpg',
         comment: `As a student, I wasn't always very attentive to my studies. I was more interested in extracurricular activities, especially drawing and cultural activities. Ashik Sir never discouraged me or showed any annoyance toward these interests. Instead, he always supported and encouraged me.
-        And whenever I tried to seek the truth or understand things for myself, Ashik Sir       always tried to guide me in the right direction. I'm truly grateful for his     support, encouragement, and guidance throughout my college life.`,
+        And whenever I tried to seek the truth or understand things for myself, Ashik Sir always tried to guide me in the right direction. I'm truly grateful for his support, encouragement, and guidance throughout my college life.`,
     },
     {
         id: 4,
@@ -64,7 +64,7 @@ const reviewsData = [
         date: '2 weeks ago',
         avatar: '/teachers.jpg',
         comment: `Ashik was once my student, and today, he has become a teacher himself. It fills my heart with immense pride to see how far he has come. He has also taught my son and still keeps in touch and checks on his progress from time to time.
-        Seeing one of my former students grow into a dedicated and capable teacher gives        me a deep sense of peace and satisfaction. It is truly one of the most rewarding    feelings a teacher can have.`,
+        Seeing one of my former students grow into a dedicated and capable teacher gives me a deep sense of peace and satisfaction. It is truly one of the most rewarding feelings a teacher can have.`,
     },
     {
         id: 6,
@@ -116,7 +116,6 @@ const reviewsData = [
         avatar: '/university.jpg',
         comment: `Ashik Sir is truly the best teacher. He was also the teacher of my elder brother and my cousin, so he has always had a close and warm relationship with our family. We have a lot of respect and affection for him. I always pray for his well-being, success, and happiness.`,
     },
-
     {
         id: 11,
         name: 'Tasin Ahmed',
@@ -126,7 +125,7 @@ const reviewsData = [
         date: '2 months ago',
         avatar: '/teachers.jpg',
         comment: `There's actually a funny story behind how my relationship with Ashik Sir began, but I'd rather keep that story to myself. 😄
-        I've rarely come across a teacher who is as friendly, approachable, caring, and         genuine as he is. What I appreciate most about him is how easily he connects with       his students and makes them feel comfortable. He is not just a teacher to me; he    is someone I genuinely respect and feel lucky to have known.`,
+        I've rarely come across a teacher who is as friendly, approachable, caring, and genuine as he is. What I appreciate most about him is how easily he connects with his students and makes them feel comfortable. He is not just a teacher to me; he is someone I genuinely respect and feel lucky to have known.`,
     },
 ];
 
@@ -153,18 +152,14 @@ export default function TestimonialsSection() {
                     </p>
                 </div>
 
-                {/* Reviews Grid: Fully transparent cards */}
+                {/* Reviews Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                    {reviewsData.slice(0, 6).map((item, index) => {
+                    {reviewsData.slice(0, 6).map((item) => {
                         const isStudent = item.role === 'Student';
 
                         return (
-                            <motion.div
+                            <div
                                 key={item.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: index * 0.05 }}
                                 className="group relative flex flex-col justify-between p-5 rounded-2xl border border-slate-300/40 dark:border-white/15 bg-transparent hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                             >
                                 {/* Subtle Watermark Quote */}
@@ -173,10 +168,9 @@ export default function TestimonialsSection() {
                                 <div className="space-y-3.5 relative z-10">
                                     {/* Header: Avatar, Info & Role Badge */}
                                     <div className="flex items-center justify-between gap-3">
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-3 min-w-0">
                                             <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-300/50 dark:border-white/20 shrink-0">
-                                            {/* It must need to be updated */}
-                                                <img
+                                                <Image
                                                     src={item.avatar}
                                                     alt={item.name}
                                                     fill
@@ -217,7 +211,7 @@ export default function TestimonialsSection() {
                                         {Array.from({ length: 5 }).map((_, i) => (
                                             <Star
                                                 key={i}
-                                                className={`w-3.5 h-3.5 ${i < item.rating
+                                                className={`w-3.5 h-3.5 ${i < Math.floor(item.rating)
                                                         ? 'fill-amber-400 text-amber-400'
                                                         : 'text-slate-300 dark:text-slate-600'
                                                     }`}
@@ -233,14 +227,13 @@ export default function TestimonialsSection() {
                                         “{item.comment}”
                                     </p>
                                 </div>
-                            </motion.div>
+                            </div>
                         );
                     })}
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
-                    {/* Write Review: Transparent button */}
                     <Link
                         href="/reviews/add"
                         className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 dark:text-white bg-transparent border border-slate-300/60 dark:border-white/20 hover:border-[#0284C7] dark:hover:border-[#38BDF8] shadow-xs hover:shadow-md active:scale-95 transition-all duration-300"
@@ -249,7 +242,6 @@ export default function TestimonialsSection() {
                         <span>Write a Review</span>
                     </Link>
 
-                    {/* View All Reviews */}
                     <Link
                         href="/reviews"
                         className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] dark:text-[#090D16] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
