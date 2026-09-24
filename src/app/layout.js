@@ -14,7 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Md. Ashikur Rahman | Computer Engineer | Lecturer ICT",
+  title: {
+    default: "Md. Ashikur Rahman | Lecturer ICT | Computer Engineer",
+    template: "%s | Md. Ashikur Rahman | Lecturer ICT",
+  },
   description:
     "Md. Ashikur Rahman Is a Computer Engineer and Lecturer at the Department of ICT, Nayabazar University, Bangladesh. He is passionate about technology, programming, and education.",
 };
