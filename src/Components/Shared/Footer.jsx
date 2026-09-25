@@ -10,6 +10,8 @@ import {
     GraduationCap,
     Terminal,
     ExternalLink,
+    Sparkles,
+    Cpu,
 } from 'lucide-react';
 import { FaYoutube } from 'react-icons/fa';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa6';
@@ -99,12 +101,12 @@ export default function Footer() {
             {/* Top Accent Gradient Border */}
             <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#0284C7] dark:via-[#38BDF8] to-transparent opacity-90" />
 
-            {/* ================= UNIQUE BACKGROUND SYSTEM ================= */}
+            {/* Background System */}
             <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 select-none overflow-hidden"
             >
-                {/* 1. Circuit Traces & Terminal Nodes */}
+                {/* Circuit Traces */}
                 <svg
                     className="absolute inset-0 w-full h-full opacity-[0.04] dark:opacity-[0.08]"
                     xmlns="http://www.w3.org/2000/svg"
@@ -120,14 +122,10 @@ export default function Footer() {
                             <stop offset="100%" stopColor="#4ADE80" />
                         </linearGradient>
                     </defs>
-
-                    {/* Circuit Busses */}
                     <path d="M-50 120 H 320 L 410 210 H 780 L 840 150 H 1500" />
                     <path d="M-50 480 H 420 L 530 370 H 960 L 1020 430 H 1500" strokeDasharray="6 8" />
                     <path d="M220 -20 V 160 L 300 240 V 620" />
                     <path d="M1180 -20 V 220 L 1100 300 V 620" strokeDasharray="4 6" />
-
-                    {/* Circuit Terminals / Solder Pads */}
                     <circle cx="320" cy="120" r="4" fill="#38BDF8" />
                     <circle cx="780" cy="210" r="3.5" fill="#4ADE80" />
                     <circle cx="420" cy="480" r="4" fill="#0284C7" />
@@ -135,7 +133,7 @@ export default function Footer() {
                     <circle cx="1100" cy="300" r="3" fill="#4ADE80" />
                 </svg>
 
-                {/* 2. Micro-Dot Matrix Overlay */}
+                {/* Micro-Dot Matrix */}
                 <div
                     className="absolute inset-0 opacity-[0.035] dark:opacity-[0.06]"
                     style={{
@@ -146,7 +144,7 @@ export default function Footer() {
                     }}
                 />
 
-                {/* 3. Left Ambient Pulse Beacon (Sky Blue) */}
+                {/* Beacons */}
                 <div
                     className="absolute -bottom-24 -left-20 w-80 sm:w-[480px] h-80 sm:h-[480px] rounded-full blur-[130px] opacity-35 dark:opacity-20 animate-[pulse_8s_ease-in-out_infinite]"
                     style={{
@@ -154,8 +152,6 @@ export default function Footer() {
                             'radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(2, 132, 199, 0.1) 60%, transparent 80%)',
                     }}
                 />
-
-                {/* 4. Right Ambient Pulse Beacon (Emerald) */}
                 <div
                     className="absolute -top-28 -right-20 w-72 sm:w-[450px] h-72 sm:h-[450px] rounded-full blur-[130px] opacity-25 dark:opacity-15 animate-[pulse_10s_ease-in-out_infinite_2s]"
                     style={{
@@ -164,10 +160,9 @@ export default function Footer() {
                     }}
                 />
             </div>
-            {/* ============================================================= */}
 
-            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 pt-14 pb-8 flex flex-col space-y-12">
-                {/* Main Footer Directory Grid */}
+            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 pt-14 pb-8 flex flex-col space-y-10">
+                {/* Main Directory Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-10 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]">
                     {/* Identity & Bio Column (Span 5) */}
                     <div className="lg:col-span-5 flex flex-col space-y-4">
@@ -190,7 +185,6 @@ export default function Footer() {
                             ethical academic leadership.
                         </p>
 
-                        {/* Social Channels Pill Badges with Brand Colors */}
                         <div className="flex flex-wrap gap-2 pt-1">
                             {socialLinks.map((social) => {
                                 const Icon = social.icon;
@@ -211,7 +205,7 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    {/* Quick Navigation Column (Span 3) */}
+                    {/* Navigation Column (Span 3) */}
                     <div className="lg:col-span-3 flex flex-col space-y-3.5">
                         <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A] dark:text-[#F8FAFC]">
                             Navigation
@@ -231,7 +225,7 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Direct Contact Details Column (Span 4) */}
+                    {/* Workplace Details Column (Span 4) */}
                     <div className="lg:col-span-4 flex flex-col space-y-3.5">
                         <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A] dark:text-[#F8FAFC]">
                             Direct Contact & Workplace
@@ -258,41 +252,64 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* Bottom Bar: Balanced 3-Point Layout */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#64748B] dark:text-[#94A3B8]">
-                    {/* Copyright Notice */}
-                    <p className="text-center md:text-left order-2 md:order-1">
-                        &copy; {currentYear} <span className="font-semibold text-[#0F172A] dark:text-[#F8FAFC]">Engr. Md. Ashikur Rahman</span>. All rights reserved.
-                    </p>
+                {/* Developer & AI Engineering Attribution Section */}
+                <div className="p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-transparent backdrop-blur-md shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                    <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-xl bg-transparent border border-sky-500/20 flex items-center justify-center shrink-0">
+                            <Terminal className="w-4 h-4 text-[#0284C7] dark:text-[#38BDF8]" />
+                        </div>
+                        <div className="space-y-0.5 text-left">
+                            <div className="text-[11px] sm:text-xs font-semibold text-[#0F172A] dark:text-[#F8FAFC]">
+                                Website is developed by{' '}
+                                <a
+                                    href="https://codebymonir.vercel.app"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="font-bold text-[#0284C7] dark:text-[#38BDF8] hover:underline inline-flex items-center gap-0.5"
+                                >
+                                    <div className="relative group inline-flex p-px rounded-lg overflow-hidden shadow-xs">
+                                        {/* Infinite Rotating Gradient Border */}
+                                        <div
+                                            aria-hidden="true"
+                                            className="absolute -inset-[150%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_280deg,#0284C7_320deg,#16A34A_340deg,#38BDF8_360deg)] dark:bg-[conic-gradient(from_0deg,transparent_0deg,transparent_280deg,#38BDF8_320deg,#4ADE80_340deg,#38BDF8_360deg)] opacity-70 group-hover:opacity-100 transition-opacity"
+                                        />
 
-                    {/* Developer Attribution Card with Infinite Rotating Border Glow */}
-                    <div className="relative group order-1 md:order-2 p-[1px] rounded-xl overflow-hidden shadow-xs">
-                        {/* Infinite Rotating Gradient Border */}
-                        <div
-                            aria-hidden="true"
-                            className="absolute -inset-[150%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_280deg,#0284C7_320deg,#16A34A_340deg,#38BDF8_360deg)] dark:bg-[conic-gradient(from_0deg,transparent_0deg,transparent_280deg,#38BDF8_320deg,#4ADE80_340deg,#38BDF8_360deg)] opacity-70 group-hover:opacity-100 transition-opacity"
-                        />
-
-                        {/* Inner Content Box with Center Alignment */}
-                        <div className="relative text-center flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-[11px] bg-[#F8FAFC]/95 dark:bg-[#090D16]/95 backdrop-blur-md">
-                            <Terminal className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
-                            <span className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">Crafted by</span>
-                            <a
-                                href="https://codebymonir.vercel.app"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 font-semibold text-[#0F172A] dark:text-[#F8FAFC] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-colors"
-                            >
-                                <span className="text-[14px]">Monir Hossen</span>
-                                <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />
-                            </a>
+                                        {/* Inner Content Box with Compact Height & Padding */}
+                                        <div className="relative flex items-center justify-center gap-1 px-2 py-0.5 rounded-[7px] bg-[#F8FAFC]/95 dark:bg-[#090D16]/95 backdrop-blur-md">
+                                            <span className="text-[11px] sm:text-xs font-semibold text-[#0F172A] dark:text-[#F8FAFC] leading-none">
+                                                Monir Hossen
+                                            </span>
+                                            <ExternalLink className="w-2.5 h-2.5 opacity-60 shrink-0 text-[#0F172A] dark:text-[#F8FAFC]" />
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <p className="text-[10px] text-[#64748B] dark:text-[#94A3B8] flex items-center gap-1.5 flex-wrap">
+                                <span>Designed and Code Assistant By</span>
+                                <span className="inline-flex items-center gap-1 font-semibold text-emerald-600 dark:text-[#4ADE80]">
+                                    <Sparkles className="w-3 h-3" />
+                                    <span>Gemini AI (3.8 Flash)</span>
+                                </span>
+                            </p>
                         </div>
                     </div>
 
-                    {/* Back to Top Trigger */}
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono text-slate-600 dark:text-slate-300 bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10">
+                        <Cpu className="w-3 h-3 text-[#0284C7] dark:text-[#38BDF8]" />
+                        <span>Next.js • Tailwind CSS</span>
+                    </div>
+                </div>
+
+                {/* Bottom Bar: Copyright & Scroll to Top */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B] dark:text-[#94A3B8]">
+                    <p className="text-center sm:text-left">
+                        &copy; {currentYear} <span className="font-semibold text-[#0F172A] dark:text-[#F8FAFC]">Engr. Md. Ashikur Rahman</span>. All rights reserved.
+                    </p>
+
                     <button
+                        type="button"
                         onClick={scrollToTop}
-                        className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-white dark:bg-[rgba(15,23,42,0.7)] text-[#334155] dark:text-[#94A3B8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all cursor-pointer shadow-xs active:scale-95 font-medium text-xs order-3"
+                        className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-white dark:bg-[rgba(15,23,42,0.7)] text-[#334155] dark:text-[#94A3B8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all cursor-pointer shadow-xs active:scale-95 font-medium text-xs"
                         aria-label="Scroll to top"
                     >
                         <span>Back to top</span>

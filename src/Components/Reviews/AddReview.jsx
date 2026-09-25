@@ -14,6 +14,7 @@ import {
     Image as ImageIcon,
     Loader2,
     Mail,
+    MessageSquare,
     Quote,
     Send,
     Star,
@@ -169,39 +170,50 @@ const AddReview = () => {
     };
 
     return (
-        <section className="relative min-h-screen py-10 sm:py-16 px-3 sm:px-6 lg:px-12 bg-transparent text-slate-800 dark:text-slate-100 flex items-center justify-center">
+        <section className="relative min-h-screen py-8 sm:py-16 px-3 sm:px-6 lg:px-12 bg-transparent text-slate-800 dark:text-slate-100 flex items-center justify-center">
             <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} theme="colored" />
-            <div className="relative z-10 w-full mx-auto flex flex-col space-y-5 max-w-6xl">
+            <div className="relative z-10 w-full mx-auto space-y-6 sm:space-y-10 max-w-6xl">
 
                 {/* Top Navigation Buttons */}
-                <div className="flex items-center justify-between gap-3 w-full">
-                    <button
-                        type="button"
-                        onClick={() => router.back()}
-                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-all duration-200 shadow-sm cursor-pointer"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        <span>Go Back</span>
-                    </button>
+                <div className="flex items-center justify-between gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
+                    <div className="flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => window.history.back()}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-[10px] sm:text-xs font-semibold hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors cursor-pointer"
+                        >
+                            <ArrowLeft className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
+                            <span>Back</span>
+                        </button>
+
+                        <Link
+                            href="/"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-[10px] sm:text-xs font-semibold hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors"
+                        >
+                            <Home className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
+                            <span>Home</span>
+                        </Link>
+                    </div>
+
                     <Link
-                        href="/"
-                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-all duration-200 shadow-sm"
+                        href="/reviews"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#0284C7] dark:border-[#38BDF8] text-[10px] sm:text-xs font-semibold text-[#0284C7] dark:text-[#38BDF8] hover:bg-[#0284C7]/10 transition-colors"
                     >
-                        <Home className="w-4 h-4" />
-                        <span>Go Home</span>
+                        <MessageSquare className="w-3.5 h-3.5" />
+                        <span>All Reviews</span>
                     </Link>
                 </div>
 
                 {/* Section Header */}
-                <div className="text-center space-y-1.5">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider bg-transparent text-[#0284C7] dark:text-[#38BDF8] border border-[#0284C7]/30 dark:border-[#38BDF8]/30">
+                <div className="text-center max-w-2xl mx-auto space-y-2">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#0284C7] dark:text-[#38BDF8] border border-[#0284C7]/30 dark:border-[#38BDF8]/30">
                         <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                         Community Testimonial
                     </span>
                     <h1 className="text-[14px] sm:text-2xl lg:text-3xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">
                         Submit Your Feedback
                     </h1>
-                    <p className="text-[11px] sm:text-xs text-[#64748B] dark:text-[#94A3B8] leading-relaxed">
+                    <p className="text-[10px] sm:text-xs text-[#64748B] dark:text-[#94A3B8] leading-tight sm:leading-relaxed">
                         Share your classroom, mentorship, or campus experience with Engr. Md. Ashikur Rahman.
                     </p>
                 </div>
@@ -215,11 +227,11 @@ const AddReview = () => {
                 </div>
 
                 {/* Layout Container: Top on mobile, right side on desktop */}
-                <div className="w-full flex flex-col-reverse lg:flex-row lg:items-start gap-6">
+                <div className="w-full flex flex-col-reverse lg:flex-row lg:items-start gap-3.5 sm:gap-5">
                     {/* Form Card */}
                     <form
                         onSubmit={handleSubmit}
-                        className="p-5 sm:p-7 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl shadow-lg space-y-4 text-left w-full lg:flex-1"
+                        className="group relative flex flex-col justify-between p-4 sm:p-5 rounded-2xl border border-slate-300/40 dark:border-white/15 bg-transparent hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all duration-300 hover:shadow-lg space-y-4 text-left w-full lg:flex-1"
                     >
                         {/* Name */}
                         <div className="space-y-1.5">
@@ -501,15 +513,15 @@ const AddReview = () => {
                             <CheckCircle2 className="w-4 h-4" />
                             Live Review Preview
                         </p>
-                        <div className="group relative flex flex-col justify-between p-5 rounded-2xl border border-slate-300/40 dark:border-white/15 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg text-left">
+                        <div className="group relative flex flex-col justify-between p-4 sm:p-5 rounded-2xl border border-slate-300/40 dark:border-white/15 bg-transparent hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg text-left">
                             {/* Subtle Watermark Quote */}
-                            <Quote className="absolute top-4 right-4 w-7 h-7 text-slate-400/20 dark:text-white/10 pointer-events-none group-hover:text-sky-500/20 transition-colors" />
+                            <Quote className="absolute top-4 right-4 w-6 h-6 text-slate-400/20 dark:text-white/10 pointer-events-none group-hover:text-sky-500/20 transition-colors" />
 
-                            <div className="space-y-3.5 relative z-10">
+                            <div className="space-y-3 relative z-10">
                                 {/* Header: Avatar, Info & Role Badge */}
-                                <div className="flex items-center justify-between gap-3">
-                                    <div className="flex items-center gap-3 min-w-0">
-                                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-300/50 dark:border-white/20 shrink-0">
+                                <div className="flex items-center justify-between gap-2.5">
+                                    <div className="flex items-center gap-2.5 min-w-0">
+                                        <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-slate-300/50 dark:border-white/20 shrink-0">
                                             <Image
                                                 src={previewItem.avatar}
                                                 alt={previewItem.name}
@@ -519,28 +531,28 @@ const AddReview = () => {
                                             />
                                         </div>
                                         <div className="min-w-0">
-                                            <div className="flex items-center gap-1.5">
-                                                <h4 className="text-[13px] sm:text-[14px] font-bold text-slate-900 dark:text-white truncate">
+                                            <div className="flex items-center gap-1">
+                                                <h4 className="text-[12px] sm:text-[14px] font-bold text-slate-900 dark:text-white truncate">
                                                     {previewItem.name}
                                                 </h4>
-                                                <CheckCircle2 className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
+                                                <CheckCircle2 className="w-3 h-3 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
                                             </div>
-                                            <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                                            <p className="text-[9px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate">
                                                 {previewItem.program}
                                             </p>
                                         </div>
                                     </div>
 
                                     <span
-                                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider shrink-0 bg-transparent ${previewItem.role === 'Student'
+                                        className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-bold uppercase tracking-wider shrink-0 bg-transparent ${previewItem.role === 'Student'
                                             ? 'text-[#0284C7] dark:text-[#38BDF8] border border-[#0284C7]/40 dark:border-[#38BDF8]/40'
                                             : 'text-emerald-600 dark:text-emerald-400 border border-emerald-500/40 dark:border-emerald-400/40'
                                             }`}
                                     >
                                         {previewItem.role === 'Student' ? (
-                                            <GraduationCap className="w-3 h-3" />
+                                            <GraduationCap className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                         ) : (
-                                            <Users className="w-3 h-3" />
+                                            <Users className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                         )}
                                         <span>{previewItem.role}</span>
                                     </span>
@@ -551,19 +563,19 @@ const AddReview = () => {
                                     {Array.from({ length: 5 }).map((_, i) => (
                                         <Star
                                             key={i}
-                                            className={`w-3.5 h-3.5 ${i < Math.floor(previewItem.rating)
+                                            className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${i < Math.floor(previewItem.rating)
                                                 ? 'fill-amber-400 text-amber-400'
                                                 : 'text-slate-300 dark:text-slate-600'
                                                 }`}
                                         />
                                     ))}
-                                    <span className="text-[10px] text-slate-400 ml-1.5 font-mono">
+                                    <span className="text-[9px] sm:text-[10px] text-slate-400 ml-1 font-mono">
                                         {previewItem.date}
                                     </span>
                                 </div>
 
                                 {/* Feedback Text */}
-                                <p className="text-[12px] sm:text-[13px] text-slate-700 dark:text-slate-300 leading-relaxed line-clamp-4">
+                                <p className="text-[10px] sm:text-[12px] text-slate-700 dark:text-slate-300 leading-tight sm:leading-relaxed line-clamp-4">
                                     “{previewItem.comment}”
                                 </p>
                             </div>
@@ -574,15 +586,15 @@ const AddReview = () => {
                 {/* Bottom Navigation Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 w-full">
                     <Link
-                        href="/achievement"
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-all duration-200 shadow-sm"
+                        href="/achievements"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-transparent border border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-all duration-200 shadow-sm"
                     >
                         <Award className="w-4 h-4 text-amber-500" />
                         <span>View Achievements</span>
                     </Link>
                     <Link
-                        href="/contact"
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-all duration-200 shadow-sm"
+                        href="/contacts"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-transparent border border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-all duration-200 shadow-sm"
                     >
                         <Mail className="w-4 h-4 text-[#0284C7] dark:text-[#38BDF8]" />
                         <span>Contact Ashikur Rahman</span>
