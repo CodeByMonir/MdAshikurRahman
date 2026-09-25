@@ -29,7 +29,7 @@ const AddReview = () => {
     // Conditional sub-fields
     const [studentInfo, setStudentInfo] = useState({ class: '', group: '', batch: '' });
     const [teacherInfo, setTeacherInfo] = useState({ title: '', teacherAt: '', Subject: '' });
-    const [guardianInfo, setGuardianInfo] = useState({ relation: '' });
+    const [guardianInfo, setGuardianInfo] = useState({ relation: '', studentName: '' });
 
     const monthsList = [
         'January', 'February', 'March', 'April', 'May', 'June',
@@ -78,9 +78,10 @@ const AddReview = () => {
                 teacherAt: teacherInfo.teacherAt,
                 Subject: teacherInfo.Subject,
             };
-        } else if (role === 'Gurdian') {
+        } else if (role === 'Guardian') {
             programPayload = {
                 relation: guardianInfo.relation,
+                studentName: guardianInfo.studentName,
             };
         }
 
@@ -158,8 +159,8 @@ const AddReview = () => {
                                     type="button"
                                     onClick={() => setRole(r)}
                                     className={`py-2 px-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all border ${role === r
-                                            ? 'bg-sky-500/10 border-[#0284C7] dark:border-[#38BDF8] text-[#0284C7] dark:text-[#38BDF8]'
-                                            : 'bg-transparent border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                                        ? 'bg-sky-500/10 border-[#0284C7] dark:border-[#38BDF8] text-[#0284C7] dark:text-[#38BDF8]'
+                                        : 'bg-transparent border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-slate-300'
                                         }`}
                                 >
                                     {r}
@@ -277,18 +278,33 @@ const AddReview = () => {
                                 <Users className="w-3.5 h-3.5" />
                                 Guardian Relationship
                             </p>
-                            <div>
-                                <label className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block mb-1">
-                                    Relationship to Student <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="Father, Mother, Brother, Sister, etc."
-                                    value={guardianInfo.relation}
-                                    onChange={(e) => setGuardianInfo({ relation: e.target.value })}
-                                    className="w-full px-2.5 py-1.5 rounded-lg text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-amber-500 text-slate-900 dark:text-white"
-                                />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <div>
+                                    <label className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block mb-1">
+                                        Relationship to Student <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="Father, Mother, Brother, Sister, etc."
+                                        value={guardianInfo.relation}
+                                        onChange={(e) => setGuardianInfo({ ...guardianInfo, relation: e.target.value })}
+                                        className="w-full px-2.5 py-1.5 rounded-lg text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-amber-500 text-slate-900 dark:text-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block mb-1">
+                                        Student Name <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="Name of the student"
+                                        value={guardianInfo.studentName}
+                                        onChange={(e) => setGuardianInfo({ ...guardianInfo, studentName: e.target.value })}
+                                        className="w-full px-2.5 py-1.5 rounded-lg text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-amber-500 text-slate-900 dark:text-white"
+                                    />
+                                </div>
                             </div>
                         </div>
                     )}
@@ -312,8 +328,8 @@ const AddReview = () => {
                                     >
                                         <Star
                                             className={`w-5 h-5 ${star <= (hoverRating || rating)
-                                                    ? 'fill-amber-400 text-amber-400'
-                                                    : 'text-slate-300 dark:text-slate-600'
+                                                ? 'fill-amber-400 text-amber-400'
+                                                : 'text-slate-300 dark:text-slate-600'
                                                 }`}
                                         />
                                     </button>
