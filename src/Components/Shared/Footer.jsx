@@ -253,7 +253,7 @@ export default function Footer() {
                 </div>
 
                 {/* Developer & AI Engineering Attribution Section */}
-                <div className="p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-transparent backdrop-blur-md shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                <div className="p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-transparent shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
                     <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-xl bg-transparent border border-sky-500/20 flex items-center justify-center shrink-0">
                             <Terminal className="w-4 h-4 text-[#0284C7] dark:text-[#38BDF8]" />
@@ -285,7 +285,7 @@ export default function Footer() {
                                 </a>
                             </div>
                             <p className="text-[10px] text-[#64748B] dark:text-[#94A3B8] flex items-center gap-1.5 flex-wrap">
-                                <span>Designed and Code Assistant By</span>
+                                <span>Code Assistant and Designed By</span>
                                 <span className="inline-flex items-center gap-1 font-semibold text-emerald-600 dark:text-[#4ADE80]">
                                     <Sparkles className="w-3 h-3" />
                                     <span>Gemini AI (3.8 Flash)</span>
