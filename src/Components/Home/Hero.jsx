@@ -35,7 +35,7 @@ export default function Hero() {
                             fill
                             sizes="(max-width: 640px) 192px, (max-width: 1024px) 240px, 288px"
                             priority
-                            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                            className="object-cover drop-shadow-2xl object-top transition-transform duration-500 group-hover:scale-105"
                         />
                     </div>
 
