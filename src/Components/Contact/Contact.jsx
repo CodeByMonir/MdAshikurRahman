@@ -122,7 +122,7 @@ export default function ContactSection() {
     return (
         <section
             id="contact"
-            className="relative overflow-hidden py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-[#F8FAFC] dark:bg-[#090D16] transition-colors duration-300"
+            className="relative overflow-hidden py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-transparent transition-colors duration-300"
         >
             <ToastContainer
                 position="top-right"

@@ -2,6 +2,7 @@ import Footer from "@/Components/Shared/Footer";
 import Navbar from "@/Components/Shared/Navbar";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import HeroBackground from "@/Components/Home/HeroBG";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +31,12 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar />
+        <div className="relative min-h-screen overflow-hidden">
+          <HeroBackground />
           {children}
+        </div>
         <Footer />
-    </body>
+      </body>
     </html>
   );
 }
