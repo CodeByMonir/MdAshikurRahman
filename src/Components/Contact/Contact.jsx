@@ -253,7 +253,7 @@ export default function ContactSection() {
                                 Send an Instant Message
                             </h3>
                             <p className="text-xs text-[#64748B]">
-                                Delivers directly to ashik.6310@gmail.com
+                                Delivers directly to ashiksirict@gmail.com
                             </p>
                         </div>
 
@@ -266,7 +266,7 @@ export default function ContactSection() {
                                     type="text"
                                     name="from_name"
                                     required
-                                    placeholder="e.g. Tanvir Ahmed"
+                                    placeholder="e.g. Monir Hossen"
                                     className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F8FAFC] dark:bg-[#090D16] border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] text-[#0F172A] dark:text-[#F8FAFC] focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8]"
                                 />
                             </div>
@@ -279,7 +279,7 @@ export default function ContactSection() {
                                     type="email"
                                     name="from_email"
                                     required
-                                    placeholder="tanvir@example.com"
+                                    placeholder="e.g. codebymonir@gmail.com"
                                     className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F8FAFC] dark:bg-[#090D16] border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] text-[#0F172A] dark:text-[#F8FAFC] focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8]"
                                 />
                             </div>
