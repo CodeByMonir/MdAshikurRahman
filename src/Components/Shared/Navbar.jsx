@@ -13,7 +13,9 @@ import {
     X,
     Home as HomeIcon,
     Info,
-    LayoutDashboard
+    LayoutDashboard,
+    Mail,
+    Bell
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -26,7 +28,7 @@ export default function Navbar() {
     // Authentication state
 
     const loginValidation = process.env.NEXT_PUBLIC_LOGIN_VALIDATION;
-    const [isLoggedIn, setIsLoggedIn] = useState(loginValidation);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     // User details placeholder
     const user = {
@@ -87,6 +89,8 @@ export default function Navbar() {
     const navLinks = [
         { label: 'Home', href: '/', icon: HomeIcon },
         { label: 'About', href: '/about', icon: Info },
+        { label: 'Contact', href: '/contacts', icon: Mail },
+        { label: 'Notice', href: '/notice', icon: Bell },
         ...(isLoggedIn ? [{ label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard }] : []),
     ];
 
