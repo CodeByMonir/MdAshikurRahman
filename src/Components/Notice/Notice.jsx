@@ -113,8 +113,8 @@ export default function NoticePage() {
     });
 
     return (
-        <section className="relative min-h-screen py-8 sm:py-16 px-3 sm:px-6 lg:px-12 bg-transparent text-slate-800 dark:text-slate-100">
-            <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
+        <section className="relative overflow-hidden py-8 sm:py-16 px-3 sm:px-6 lg:px-12 bg-transparent text-slate-800 dark:text-slate-100 transition-colors duration-300">
+            <div className="relative z-10 w-full max-w-[1154px] mx-auto flex flex-col space-y-6 sm:space-y-10">
                 {/* Navigation Bar */}
                 <div className="flex items-center justify-between gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
                     <div className="flex items-center gap-2">
@@ -182,8 +182,8 @@ export default function NoticePage() {
                                 type="button"
                                 onClick={() => setSelectedCategory(cat)}
                                 className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all border cursor-pointer ${selectedCategory === cat
-                                        ? 'border-[#0284C7] dark:border-[#38BDF8] text-[#0284C7] dark:text-[#38BDF8] bg-sky-500/10'
-                                        : 'border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-300'
+                                    ? 'border-[#0284C7] dark:border-[#38BDF8] text-[#0284C7] dark:text-[#38BDF8] bg-sky-500/10'
+                                    : 'border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-300'
                                     }`}
                             >
                                 {cat}

@@ -1,7 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
+    ArrowLeft,
+    Home,
+    Megaphone,
     Briefcase,
     GraduationCap,
     Heart,
@@ -192,7 +196,7 @@ export default function AboutSection() {
     return (
         <section
             id="about"
-            className="relative overflow-hidden py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-[#F8FAFC] dark:bg-[#090D16] transition-colors duration-300"
+            className="relative overflow-hidden py-8 sm:py-16 px-3 sm:px-6 lg:px-12 bg-[#F8FAFC] dark:bg-[#090D16] transition-colors duration-300"
         >
             {/* Background Matrix & Fiber Signals */}
             <div
@@ -278,7 +282,37 @@ export default function AboutSection() {
                 />
             </div>
 
-            <div className="relative z-10 max-w-6xl mx-auto flex flex-col space-y-10 sm:space-y-12">
+            <div className="relative z-10 w-full max-w-[1154px] mx-auto flex flex-col space-y-6 sm:space-y-10">
+                {/* Navigation Bar */}
+                <div className="flex items-center justify-between gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
+                    <div className="flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => window.history.back()}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-[10px] sm:text-xs font-semibold hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors cursor-pointer"
+                        >
+                            <ArrowLeft className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
+                            <span>Back</span>
+                        </button>
+
+                        <Link
+                            href="/"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-[10px] sm:text-xs font-semibold hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors"
+                        >
+                            <Home className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
+                            <span>Home</span>
+                        </Link>
+                    </div>
+
+                    <Link
+                        href="/reviews"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#0284C7] dark:border-[#38BDF8] text-[10px] sm:text-xs font-semibold text-[#0284C7] dark:text-[#38BDF8] hover:bg-[#0284C7]/10 transition-colors"
+                    >
+                        <Megaphone className="w-3.5 h-3.5" />
+                        <span>Community Feedback</span>
+                    </Link>
+                </div>
+
                 {/* Section Header */}
                 <div className="text-center max-w-2xl mx-auto space-y-3">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-semibold uppercase tracking-wider bg-[#F0F9FF] dark:bg-[#0F172A] text-[#0284C7] dark:text-[#38BDF8] border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] shadow-xs">
@@ -446,8 +480,8 @@ export default function AboutSection() {
                                     <div
                                         key={idx}
                                         className={`p-3.5 rounded-xl border space-y-1.5 transition-all ${t.achievement
-                                                ? 'bg-amber-500/5 dark:bg-amber-400/5 border-amber-500/30 dark:border-amber-400/25 shadow-xs'
-                                                : 'bg-[#F8FAFC] dark:bg-[rgba(9,13,22,0.6)] border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]'
+                                            ? 'bg-amber-500/5 dark:bg-amber-400/5 border-amber-500/30 dark:border-amber-400/25 shadow-xs'
+                                            : 'bg-[#F8FAFC] dark:bg-[rgba(9,13,22,0.6)] border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]'
                                             }`}
                                     >
                                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
@@ -606,7 +640,7 @@ export default function AboutSection() {
                                         key={idx}
                                         className="flex items-center gap-2 text-xs text-[#334155] dark:text-[#94A3B8]"
                                     >
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] dark:bg-[#38BDF8]" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] dark:bg-[#38BDF8] shrink-0 mt-1" />
                                         <span>{hobby}</span>
                                     </div>
                                 ))}
