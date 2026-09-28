@@ -107,7 +107,7 @@ export default function Register() {
                     </div>
 
                     <Link
-                        href="/login"
+                        href="/lInE/login"
                         className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#0284C7] dark:border-[#38BDF8] text-[10px] sm:text-xs font-semibold text-[#0284C7] dark:text-[#38BDF8] hover:bg-[#0284C7]/10 transition-colors"
                     >
                         <span>Already Registered? Log In</span>
