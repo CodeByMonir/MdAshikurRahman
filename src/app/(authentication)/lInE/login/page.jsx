@@ -1,3 +1,5 @@
+import LoginPage from "@/Components/Authentication/Login";
+
 export const metadata = {
     title: 'Login',
     description: 'Login page for the application',
@@ -6,7 +8,7 @@ export const metadata = {
 const page = () => {
     return (
         <div>
-            Login Page
+            <LoginPage />
         </div>
     );
 };
