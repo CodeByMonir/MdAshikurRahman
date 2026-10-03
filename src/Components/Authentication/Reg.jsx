@@ -5,6 +5,8 @@ import Link from 'next/link';
 import {
     ArrowLeft,
     CheckCircle2,
+    Eye,
+    EyeOff,
     Home,
     Image as ImageIcon,
     Loader2,
@@ -18,6 +20,7 @@ import {
 } from 'lucide-react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { authClient } from '@/app/lib/auth-client';
 
 export default function Register() {
     const [name, setName] = useState('');
@@ -28,6 +31,28 @@ export default function Register() {
     const [avatarUrl, setAvatarUrl] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [submittedData, setSubmittedData] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const getPasswordStrength = (pass) => {
+        if (!pass) return { score: 0, label: '', color: '', bg: '' };
+        let score = 0;
+        if (pass.length >= 6) score++;
+        if (pass.length >= 8) score++;
+        if (/[A-Z]/.test(pass)) score++;
+        if (/[0-9]/.test(pass)) score++;
+        if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+        if (score <= 2) {
+            return { score: 1, label: 'Weak', color: 'text-rose-500', bg: 'bg-rose-500' };
+        }
+        if (score <= 4) {
+            return { score: 2, label: 'Medium', color: 'text-amber-500', bg: 'bg-amber-500' };
+        }
+        return { score: 3, label: 'Strong', color: 'text-emerald-500', bg: 'bg-emerald-500' };
+    };
+
+    const passwordStrength = getPasswordStrength(password);
 
     const handleImageUpload = async (e) => {
         const file = e.target.files?.[0];
@@ -58,7 +83,7 @@ export default function Register() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
@@ -69,15 +94,58 @@ export default function Register() {
         const payload = {
             name: name.trim(),
             email: email.trim().toLowerCase(),
-            phone: phone.trim(),
             password,
-            avatar: avatarUrl || '',
-            registeredAt: new Date().toISOString(),
+            phone: phone.trim(),
+            image: avatarUrl || '',
         };
 
-        console.log('Registration Payload:', payload);
-        setSubmittedData(payload);
-        toast.success('Registration submitted successfully!');
+        const toastId = toast.loading('Registering your account...', {
+            position: 'top-right',
+        });
+
+        try {
+            const { data, error } = await authClient.signUp.email(payload);
+
+            if (error) {
+                console.log('Registration Error:', error);
+                toast.update(toastId, {
+                    render: error.message || 'Registration failed. Please try again.',
+                    type: 'error',
+                    isLoading: false,
+                    autoClose: 4000,
+                    closeOnClick: true,
+                });
+                return;
+            }
+
+            console.log('Registration Payload:', payload);
+            console.log('Registration Success Response:', data);
+
+            setSubmittedData({ ...payload, response: data });
+
+            toast.update(toastId, {
+                render: 'Registration successful! Welcome to the portal.',
+                type: 'success',
+                isLoading: false,
+                autoClose: 2500,
+                closeOnClick: true,
+            });
+
+            // Optional: Redirect to login or verification after success
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 2000);
+
+        } catch (err) {
+            console.error('Unexpected Registration Error:', err);
+            toast.update(toastId, {
+                render: err.message || 'An unexpected error occurred. Please try again.',
+                type: 'error',
+                isLoading: false,
+                autoClose: 4000,
+                closeOnClick: true,
+            });
+        }
     };
 
     return (
@@ -159,7 +227,7 @@ export default function Register() {
                             <input
                                 type="email"
                                 required
-                                placeholder="name@domain.com"
+                                placeholder="codebymonir@gmail.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
@@ -174,7 +242,7 @@ export default function Register() {
                             <input
                                 type="tel"
                                 required
-                                placeholder="+880 1XXXXXXXXX"
+                                placeholder="+880 1XXX XXXXXX"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
@@ -185,19 +253,47 @@ export default function Register() {
                     {/* Passwords */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4">
                         <div className="space-y-1">
-                            <label className="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                                <Lock className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
-                                <span>Password <span className="text-red-500">*</span></span>
-                            </label>
-                            <input
-                                type="password"
-                                required
-                                minLength={6}
-                                placeholder="Minimum 6 characters"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
-                            />
+                            <div className="flex items-center justify-between">
+                                <label className="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                                    <Lock className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
+                                    <span>Password <span className="text-red-500">*</span></span>
+                                </label>
+                                {password && (
+                                    <span className={`text-[10px] font-bold font-mono ${passwordStrength.color}`}>
+                                        {passwordStrength.label}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="relative">
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    required
+                                    minLength={6}
+                                    placeholder="Minimum 6 characters"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full px-3 pr-10 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="w-3.5 h-3.5" />
+                                    ) : (
+                                        <Eye className="w-3.5 h-3.5" />
+                                    )}
+                                </button>
+                            </div>
+                            {password && (
+                                <div className="grid grid-cols-3 gap-1 pt-1">
+                                    <div className={`h-1 rounded-full ${passwordStrength.score >= 1 ? passwordStrength.bg : 'bg-slate-200 dark:bg-white/10'}`} />
+                                    <div className={`h-1 rounded-full ${passwordStrength.score >= 2 ? passwordStrength.bg : 'bg-slate-200 dark:bg-white/10'}`} />
+                                    <div className={`h-1 rounded-full ${passwordStrength.score >= 3 ? passwordStrength.bg : 'bg-slate-200 dark:bg-white/10'}`} />
+                                </div>
+                            )}
                         </div>
 
                         <div className="space-y-1">
@@ -205,15 +301,29 @@ export default function Register() {
                                 <Lock className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
                                 <span>Confirm Password <span className="text-red-500">*</span></span>
                             </label>
-                            <input
-                                type="password"
-                                required
-                                minLength={6}
-                                placeholder="Re-enter password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    required
+                                    minLength={6}
+                                    placeholder="Re-enter password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="w-full px-3 pr-10 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                                    aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                                >
+                                    {showConfirmPassword ? (
+                                        <EyeOff className="w-3.5 h-3.5" />
+                                    ) : (
+                                        <Eye className="w-3.5 h-3.5" />
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -247,7 +357,7 @@ export default function Register() {
                                     <img
                                         src={avatarUrl}
                                         alt="Avatar preview"
-                                        className="w-8 h-8 rounded-full object-cover border border-sky-400"
+                                        className="w-10 h-10 rounded-full object-cover border-2 border-[#0284C7] dark:border-[#38BDF8] shadow-sm"
                                     />
                                     <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
                                         <CheckCircle2 className="w-3 h-3" />

@@ -1,10 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import { authClient } from '@/app/lib/auth-client';
 import {
     ArrowLeft,
-    CheckCircle2,
     Eye,
     EyeOff,
     Home,
@@ -13,6 +11,8 @@ import {
     Mail,
     ShieldCheck,
 } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,25 +21,55 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [submittedData, setSubmittedData] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
 
-        const payload = {
-            email: email.trim().toLowerCase(),
-            password,
-            timestamp: new Date().toISOString(),
-        };
+        const toastId = toast.loading('Verifying your credentials...', {
+            position: 'top-right',
+        });
 
-        console.log('Login Payload:', payload);
-        setSubmittedData(payload);
+        try {
+            const { error } = await authClient.signIn.email({
+                email: email.trim().toLowerCase(),
+                password,
+                callbackURL: '/dashboard',
+            });
 
-        setTimeout(() => {
+            if (error) {
+                toast.update(toastId, {
+                    render: error.message || 'Unable to log in. Please try again.',
+                    type: 'error',
+                    isLoading: false,
+                    autoClose: 4000,
+                    closeOnClick: true,
+                });
+                return;
+            }
+
+            toast.update(toastId, {
+                render: 'Login successful! Redirecting...',
+                type: 'success',
+                isLoading: false,
+                autoClose: 1500,
+                closeOnClick: true,
+            });
+
+            setTimeout(() => {
+                window.location.assign('/dashboard');
+            }, 1000);
+        } catch {
+            toast.update(toastId, {
+                render: 'Unable to log in. Please try again.',
+                type: 'error',
+                isLoading: false,
+                autoClose: 4000,
+                closeOnClick: true,
+            });
+        } finally {
             setIsLoading(false);
-            toast.success('Successfully logged in!');
-        }, 800);
+        }
     };
 
     return (
@@ -103,7 +133,7 @@ export default function LoginPage() {
                         <input
                             type="email"
                             required
-                            placeholder="name@domain.com"
+                            placeholder="codebymonir@gmail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
@@ -162,18 +192,6 @@ export default function LoginPage() {
                     </div>
                 </form>
 
-                {/* Debug Payload Display */}
-                {submittedData && (
-                    <div className="p-3.5 sm:p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-left space-y-1.5">
-                        <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
-                            <CheckCircle2 className="w-4 h-4" />
-                            Console Payload Dispatched:
-                        </p>
-                        <pre className="text-[10px] font-mono bg-black/60 text-emerald-300 p-3 rounded-lg overflow-x-auto">
-                            {JSON.stringify(submittedData, null, 2)}
-                        </pre>
-                    </div>
-                )}
             </div>
         </section>
     );

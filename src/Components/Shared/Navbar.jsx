@@ -1,22 +1,23 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { signOut, useSession } from '@/app/lib/auth-client';
 import {
-    Sun,
-    Moon,
-    User,
-    Settings,
-    LogOut,
-    Menu,
-    X,
+    Bell,
     Home as HomeIcon,
     Info,
     LayoutDashboard,
+    LogOut,
     Mail,
-    Bell
+    Menu,
+    Moon,
+    Settings,
+    Sun,
+    User,
+    X
 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Navbar() {
     const [theme, setTheme] = useState('dark');
@@ -25,17 +26,12 @@ export default function Navbar() {
     const [isMobileModalOpen, setIsMobileModalOpen] = useState(false);
     const profileRef = useRef(null);
 
-    // Authentication state
+    // Authentication state from auth-client
+    const { data: sessionData, isPending } = useSession();
 
-    const loginValidation = process.env.NEXT_PUBLIC_LOGIN_VALIDATION;
-    const [isLoggedIn, setIsLoggedIn] = useState(loginValidation);
-
-    // User details placeholder
-    const user = {
-        name: process.env.NEXT_PUBLIC_USER_NAME,
-        email: process.env.NEXT_PUBLIC_USER_EMAIL,
-        avatar: process.env.NEXT_PUBLIC_USER_AVATAR,
-    };
+    // Safely destructure user fields with fallback
+    const { name, email, image } = sessionData?.user || {};
+    const isLoggedIn = Boolean(sessionData?.user);
 
     useEffect(() => {
         setMounted(true);
@@ -85,6 +81,14 @@ export default function Navbar() {
         }
     };
 
+    const handleLogout = async () => {
+        setIsProfileOpen(false);
+        setIsMobileModalOpen(false);
+        if (typeof signOut === 'function') {
+            await signOut();
+        }
+    };
+
     // Nav links with associated Lucide React icon components
     const navLinks = [
         { label: 'Home', href: '/', icon: HomeIcon },
@@ -110,7 +114,7 @@ export default function Navbar() {
                         />
                     </Link>
 
-                    {/* Middle: Desktop Nav Links with Icons */}
+                    {/* Middle: Desktop Nav Links */}
                     <nav className="hidden md:flex items-center gap-7">
                         {navLinks.map((link) => {
                             const Icon = link.icon;
@@ -147,17 +151,17 @@ export default function Navbar() {
                         )}
 
                         {/* Profile Dropdown (Desktop) */}
-                        {isLoggedIn && (
+                        {!isPending && isLoggedIn && (
                             <div className="relative hidden sm:block" ref={profileRef}>
                                 <button
                                     onClick={() => setIsProfileOpen((prev) => !prev)}
                                     className="flex items-center justify-center w-9 h-9 rounded-full border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] bg-[#F0F9FF] dark:bg-[rgba(15,23,42,0.75)] hover:border-[#0284C7] dark:hover:border-[#38BDF8] transition-colors overflow-hidden focus:outline-none"
                                     aria-label="Open profile menu"
                                 >
-                                    {user.avatar ? (
+                                    {image ? (
                                         <Image
-                                            src={user.avatar}
-                                            alt={user.name}
+                                            src={image}
+                                            alt={name || 'User Avatar'}
                                             width={36}
                                             height={36}
                                             className="w-full h-full object-cover"
@@ -172,13 +176,13 @@ export default function Navbar() {
 
                                 {/* Profile Dropdown Box */}
                                 {isProfileOpen && (
-                                    <div className="absolute right-0 mt-2 w-52 rounded-xl py-2 shadow-card-light dark:shadow-card-dark bg-white dark:bg-[rgba(15,23,42,0.95)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] z-50">
+                                    <div className="absolute right-0 mt-2 w-56 rounded-xl py-2 shadow-card-light dark:shadow-card-dark bg-white dark:bg-[rgba(15,23,42,0.95)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] z-50">
                                         <div className="px-4 py-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]">
-                                            <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC]">
-                                                {user.name}
+                                            <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC] truncate">
+                                                {name || 'User'}
                                             </p>
                                             <p className="text-xs text-[#64748B] truncate">
-                                                {user.email}
+                                                {email || 'No email provided'}
                                             </p>
                                         </div>
 
@@ -203,10 +207,7 @@ export default function Navbar() {
 
                                         <div className="border-t border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)] pt-1">
                                             <button
-                                                onClick={() => {
-                                                    setIsProfileOpen(false);
-                                                    setIsLoggedIn(false);
-                                                }}
+                                                onClick={handleLogout}
                                                 className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
                                             >
                                                 <LogOut className="w-4 h-4" />
@@ -217,6 +218,8 @@ export default function Navbar() {
                                 )}
                             </div>
                         )}
+
+                        
 
                         {/* Mobile Menu Trigger Button */}
                         <button
@@ -233,14 +236,12 @@ export default function Navbar() {
             {/* Mobile Menu Modal Overlay */}
             {isMobileModalOpen && (
                 <div className="fixed inset-0 z-50 md:hidden flex items-center justify-center p-4">
-                    {/* Backdrop with Blur */}
                     <div
                         onClick={() => setIsMobileModalOpen(false)}
                         className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-xs transition-opacity duration-300"
                         aria-hidden="true"
                     />
 
-                    {/* Modal Content Box */}
                     <div className="relative w-full max-w-sm rounded-2xl p-6 bg-white dark:bg-[rgba(15,23,42,0.95)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.2)] shadow-card-light dark:shadow-card-dark transition-transform duration-300">
                         {/* Modal Header */}
                         <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)]">
@@ -273,10 +274,10 @@ export default function Navbar() {
                         {isLoggedIn && (
                             <div className="flex items-center gap-3 py-4 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]">
                                 <div className="w-10 h-10 rounded-full overflow-hidden border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] flex items-center justify-center bg-[#F0F9FF] dark:bg-[#0F172A]">
-                                    {user.avatar ? (
+                                    {image ? (
                                         <Image
-                                            src={user.avatar}
-                                            alt={user.name}
+                                            src={image}
+                                            alt={name || 'User Avatar'}
                                             width={40}
                                             height={40}
                                             className="w-full h-full object-cover"
@@ -289,10 +290,12 @@ export default function Navbar() {
                                     )}
                                 </div>
                                 <div className="overflow-hidden">
-                                    <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC]">
-                                        {user.name}
+                                    <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC] truncate">
+                                        {name || 'User'}
                                     </p>
-                                    <p className="text-xs text-[#64748B] truncate">{user.email}</p>
+                                    <p className="text-xs text-[#64748B] truncate">
+                                        {email || 'No email provided'}
+                                    </p>
                                 </div>
                             </div>
                         )}
@@ -316,7 +319,7 @@ export default function Navbar() {
                         </nav>
 
                         {/* User Actions */}
-                        {isLoggedIn && (
+
                             <div className="pt-2 border-t border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)] space-y-1">
                                 <Link
                                     href="/profile"
@@ -335,17 +338,13 @@ export default function Navbar() {
                                     Settings
                                 </Link>
                                 <button
-                                    onClick={() => {
-                                        setIsMobileModalOpen(false);
-                                        setIsLoggedIn(false);
-                                    }}
+                                onClick={handleLogout}
                                     className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
                                 >
                                     <LogOut className="w-4 h-4" />
                                     Log Out
                                 </button>
-                            </div>
-                        )}
+                        </div>
                     </div>
                 </div>
             )}
