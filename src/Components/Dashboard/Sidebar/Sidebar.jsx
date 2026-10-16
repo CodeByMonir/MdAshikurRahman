@@ -175,7 +175,7 @@ export default function DashboardSidebar() {
                         <div className="flex items-center gap-1.5 min-w-0">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                             <span className="text-[10px] font-semibold text-slate-700 dark:text-slate-300 truncate">
-                                NDC Sheikh Russel Lab
+                                NDC Computer Lab
                             </span>
                         </div>
                         <span className="text-[9px] font-mono font-bold text-[#0284C7] dark:text-[#38BDF8] shrink-0">

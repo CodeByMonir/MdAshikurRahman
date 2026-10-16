@@ -1,8 +1,9 @@
+import HeroBackground from "@/Components/Home/HeroBG";
 import Footer from "@/Components/Shared/Footer";
-import Navbar from "@/Components/Shared/Navbar";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import HeroBackground from "@/Components/Home/HeroBG";
+import { AuthProvider } from "@/Context/AuthContext";
+import Navbar from "@/Components/Shared/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +31,14 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        <div className="relative min-h-screen overflow-hidden">
-          <HeroBackground />
-          {children}
-        </div>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <div className="relative min-h-screen overflow-hidden">
+            <HeroBackground />
+            {children}
+          </div>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 'use client';
 
-import { signOut, useSession } from '@/app/lib/auth-client';
+import { signOut } from '@/app/lib/auth-client';
+import { useAuth } from '@/Context/AuthContext';
 import {
     Bell,
     Home as HomeIcon,
@@ -26,12 +27,12 @@ export default function Navbar() {
     const [isMobileModalOpen, setIsMobileModalOpen] = useState(false);
     const profileRef = useRef(null);
 
-    // Authentication state from auth-client
-    const { data: sessionData, isPending } = useSession();
+    // 1. AuthContext থেকে ডাটা এবং মেথড রিসিভ করা
+    const { user, loading, refreshSession } = useAuth();
 
-    // Safely destructure user fields with fallback
-    const { name, email, image } = sessionData?.user || {};
-    const isLoggedIn = Boolean(sessionData?.user);
+    // 2. নিরাপদভাবে ইউজার ডাটা বের করা
+    const { name, email, image } = user || {};
+    const isLoggedIn = Boolean(user);
 
     useEffect(() => {
         setMounted(true);
@@ -47,7 +48,7 @@ export default function Navbar() {
             setTheme('light');
         }
 
-        // Close desktop profile dropdown on click outside
+        // প্রোফাইল ড্রপডাউনের বাইরে ক্লিক করলে তা বন্ধ করার লজিক
         const handleClickOutside = (e) => {
             if (profileRef.current && !profileRef.current.contains(e.target)) {
                 setIsProfileOpen(false);
@@ -57,7 +58,7 @@ export default function Navbar() {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Lock body scroll when mobile modal is open
+    // মোবাইল মেনু ওপেন থাকলে পেছনের পেজ স্ক্রল বন্ধ রাখা
     useEffect(() => {
         if (isMobileModalOpen) {
             document.body.style.overflow = 'hidden';
@@ -81,21 +82,29 @@ export default function Navbar() {
         }
     };
 
+    // 3. লগ-আউট করার পর refreshSession() কল করা যাতে UI সাথে সাথে আপডেট হয়
     const handleLogout = async () => {
         setIsProfileOpen(false);
         setIsMobileModalOpen(false);
-        if (typeof signOut === 'function') {
-            await signOut();
+        try {
+            if (typeof signOut === 'function') {
+                await signOut();
+            }
+            if (typeof refreshSession === 'function') {
+                await refreshSession();
+            }
+        } catch (err) {
+            console.error('Logout failed:', err);
         }
     };
 
-    // Nav links with associated Lucide React icon components
+    // নেভিগেশন লিংক (লগইন থাকলে Dashboard যুক্ত হবে)
     const navLinks = [
         { label: 'Home', href: '/', icon: HomeIcon },
         { label: 'About', href: '/about', icon: Info },
         { label: 'Contact', href: '/contacts', icon: Mail },
         { label: 'Notice', href: '/notice', icon: Bell },
-        ...(isLoggedIn ? [{ label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard }] : []),
+        ...(!loading && isLoggedIn ? [{ label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard }] : []),
     ];
 
     return (
@@ -150,8 +159,8 @@ export default function Navbar() {
                             <div className="w-9 h-9" />
                         )}
 
-                        {/* Profile Dropdown (Desktop) */}
-                        {!isPending && isLoggedIn && (
+                        {/* 4. Auth State Handling (Desktop) - শুধুমাত্র লগইন থাকলে প্রোফাইল আইকন ও ড্রপডাউন দেখাবে */}
+                        {!loading && isLoggedIn && (
                             <div className="relative hidden sm:block" ref={profileRef}>
                                 <button
                                     onClick={() => setIsProfileOpen((prev) => !prev)}
@@ -176,10 +185,10 @@ export default function Navbar() {
 
                                 {/* Profile Dropdown Box */}
                                 {isProfileOpen && (
-                                    <div className="absolute right-0 mt-2 w-56 rounded-xl py-2 shadow-card-light dark:shadow-card-dark bg-white dark:bg-[rgba(15,23,42,0.95)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] z-50">
+                                    <div className="absolute right-0 mt-2 w-56 rounded-xl py-2 shadow-lg bg-white dark:bg-[rgba(15,23,42,0.95)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] z-50">
                                         <div className="px-4 py-2 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]">
                                             <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC] truncate">
-                                                {name || 'User'}
+                                                {name || 'Admin'}
                                             </p>
                                             <p className="text-xs text-[#64748B] truncate">
                                                 {email || 'No email provided'}
@@ -219,8 +228,6 @@ export default function Navbar() {
                             </div>
                         )}
 
-                        
-
                         {/* Mobile Menu Trigger Button */}
                         <button
                             onClick={() => setIsMobileModalOpen(true)}
@@ -242,7 +249,7 @@ export default function Navbar() {
                         aria-hidden="true"
                     />
 
-                    <div className="relative w-full max-w-sm rounded-2xl p-6 bg-white dark:bg-[rgba(15,23,42,0.95)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.2)] shadow-card-light dark:shadow-card-dark transition-transform duration-300">
+                    <div className="relative w-full max-w-sm rounded-2xl p-6 bg-white dark:bg-[rgba(15,23,42,0.95)] backdrop-blur-md border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.2)] shadow-lg transition-transform duration-300">
                         {/* Modal Header */}
                         <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)]">
                             <Link
@@ -270,8 +277,8 @@ export default function Navbar() {
                             </button>
                         </div>
 
-                        {/* Authenticated User Preview */}
-                        {isLoggedIn && (
+                        {/* Authenticated User Preview (Mobile) - শুধুমাত্র লগইন থাকলে দেখাবে */}
+                        {!loading && isLoggedIn && (
                             <div className="flex items-center gap-3 py-4 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]">
                                 <div className="w-10 h-10 rounded-full overflow-hidden border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] flex items-center justify-center bg-[#F0F9FF] dark:bg-[#0F172A]">
                                     {image ? (
@@ -291,7 +298,7 @@ export default function Navbar() {
                                 </div>
                                 <div className="overflow-hidden">
                                     <p className="text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC] truncate">
-                                        {name || 'User'}
+                                        {name || 'Admin'}
                                     </p>
                                     <p className="text-xs text-[#64748B] truncate">
                                         {email || 'No email provided'}
@@ -318,8 +325,8 @@ export default function Navbar() {
                             })}
                         </nav>
 
-                        {/* User Actions */}
-
+                        {/* 5. Mobile User Actions - শুধুমাত্র লগইন থাকলে Profile/Settings/Logout দেখাবে */}
+                        {!loading && isLoggedIn && (
                             <div className="pt-2 border-t border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)] space-y-1">
                                 <Link
                                     href="/profile"
@@ -338,13 +345,14 @@ export default function Navbar() {
                                     Settings
                                 </Link>
                                 <button
-                                onClick={handleLogout}
+                                    onClick={handleLogout}
                                     className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
                                 >
                                     <LogOut className="w-4 h-4" />
                                     Log Out
                                 </button>
-                        </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
