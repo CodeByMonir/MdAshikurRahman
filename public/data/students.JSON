@@ -1,0 +1,24 @@
+[
+  {
+    "id": "std-101",
+    "roll": "101",
+    "name": "Tanjim Ahmed",
+    "registrationNo": "2024881021",
+    "group": "Science",
+    "session": "2025-2026",
+    "phone": "+880 1712-345678",
+    "email": "tanjim.ndc@gmail.com",
+    "status": "Active"
+  },
+  {
+    "id": "std-102",
+    "roll": "102",
+    "name": "Rashedul Islam",
+    "registrationNo": "2024881022",
+    "group": "Humanities",
+    "session": "2025-2026",
+    "phone": "+880 1823-456789",
+    "email": "rashedul.ndc@gmail.com",
+    "status": "Active"
+  }
+]

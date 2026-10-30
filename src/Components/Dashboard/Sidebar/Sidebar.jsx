@@ -71,8 +71,8 @@ export default function DashboardSidebar() {
                                 onClick={() => setMobileOpen(false)}
                                 title={collapsed ? item.label : undefined}
                                 className={`group flex items-center rounded-xl text-xs font-semibold transition-all duration-200 ${collapsed
-                                        ? 'w-10 h-10 justify-center p-0'
-                                        : 'w-full justify-between px-3 py-2'
+                                    ? 'w-10 h-10 justify-center p-0'
+                                    : 'w-full justify-between px-3 py-2'
                                     } ${active
                                         ? 'bg-sky-500/10 border border-[#0284C7]/30 dark:border-[#38BDF8]/30 text-[#0284C7] dark:text-[#38BDF8]'
                                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-white/5 border border-transparent'
@@ -81,8 +81,8 @@ export default function DashboardSidebar() {
                                 <div className={`flex items-center gap-2.5 min-w-0 ${collapsed ? 'justify-center mx-auto' : ''}`}>
                                     <Icon
                                         className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${active
-                                                ? 'text-[#0284C7] dark:text-[#38BDF8]'
-                                                : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200'
+                                            ? 'text-[#0284C7] dark:text-[#38BDF8]'
+                                            : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200'
                                             }`}
                                     />
                                     {!collapsed && (
@@ -93,8 +93,8 @@ export default function DashboardSidebar() {
                                 {!collapsed && item.badge && (
                                     <span
                                         className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full shrink-0 font-mono ${active
-                                                ? 'bg-[#0284C7] dark:bg-[#38BDF8] text-white dark:text-slate-950'
-                                                : 'bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300'
+                                            ? 'bg-[#0284C7] dark:bg-[#38BDF8] text-white dark:text-slate-950'
+                                            : 'bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300'
                                             }`}
                                     >
                                         {item.badge}
@@ -245,13 +245,13 @@ export default function DashboardSidebar() {
 
     return (
         <>
-            {/* Mobile Top Navbar Trigger */}
-            <div className="md:hidden fixed bottom-0 inset-x-0 z-999 h-12 px-3 border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#090D16]/80 backdrop-blur-md flex items-center justify-between">
+            {/* Mobile Bottom Navbar Trigger */}
+            <div className="md:hidden fixed bottom-0 inset-x-0 z-[999] h-12 px-3 border-t border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#090D16]/80 backdrop-blur-md flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <button
                         type="button"
                         onClick={() => setMobileOpen(true)}
-                        className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300"
+                        className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 cursor-pointer"
                         aria-label="Open sidebar"
                     >
                         <Menu className="w-4 h-4" />
@@ -275,7 +275,7 @@ export default function DashboardSidebar() {
 
             {/* Mobile Off-Canvas Drawer */}
             <aside
-                className={`md:hidden mt-10 fixed inset-y-0 left-0 z-[9999] w-64 bg-white/95 dark:bg-[#090D16]/95 border-r border-slate-200 dark:border-white/10 backdrop-blur-xl transform transition-transform duration-300 ease-in-out ${mobileOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`md:hidden fixed inset-y-0 left-0 z-[9999] w-64 bg-white/95 dark:bg-[#090D16]/95 border-r border-slate-200 dark:border-white/10 backdrop-blur-xl transform transition-transform duration-300 ease-in-out ${mobileOpen ? 'translate-x-0' : '-translate-x-full'
                     }`}
             >
                 {sidebarContent}

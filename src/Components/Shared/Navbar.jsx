@@ -27,10 +27,10 @@ export default function Navbar() {
     const [isMobileModalOpen, setIsMobileModalOpen] = useState(false);
     const profileRef = useRef(null);
 
-    // 1. AuthContext থেকে ডাটা এবং মেথড রিসিভ করা
+    // 1. Receive data and methods from AuthContext
     const { user, loading, refreshSession } = useAuth();
 
-    // 2. নিরাপদভাবে ইউজার ডাটা বের করা
+    // 2. Safely extract user data
     const { name, email, image } = user || {};
     const isLoggedIn = Boolean(user);
 
@@ -48,7 +48,7 @@ export default function Navbar() {
             setTheme('light');
         }
 
-        // প্রোফাইল ড্রপডাউনের বাইরে ক্লিক করলে তা বন্ধ করার লজিক
+        // Safely close the profile dropdown when clicking outside
         const handleClickOutside = (e) => {
             if (profileRef.current && !profileRef.current.contains(e.target)) {
                 setIsProfileOpen(false);
@@ -58,7 +58,7 @@ export default function Navbar() {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // মোবাইল মেনু ওপেন থাকলে পেছনের পেজ স্ক্রল বন্ধ রাখা
+    // Hide scroll when mobile menu is open
     useEffect(() => {
         if (isMobileModalOpen) {
             document.body.style.overflow = 'hidden';
@@ -82,7 +82,7 @@ export default function Navbar() {
         }
     };
 
-    // 3. লগ-আউট করার পর refreshSession() কল করা যাতে UI সাথে সাথে আপডেট হয়
+    // 3. Safely call refreshSession() after logout to update the UI
     const handleLogout = async () => {
         setIsProfileOpen(false);
         setIsMobileModalOpen(false);
@@ -98,7 +98,7 @@ export default function Navbar() {
         }
     };
 
-    // নেভিগেশন লিংক (লগইন থাকলে Dashboard যুক্ত হবে)
+    // Navigation links (will include Dashboard if user is logged in)
     const navLinks = [
         { label: 'Home', href: '/', icon: HomeIcon },
         { label: 'About', href: '/about', icon: Info },
@@ -159,7 +159,7 @@ export default function Navbar() {
                             <div className="w-9 h-9" />
                         )}
 
-                        {/* 4. Auth State Handling (Desktop) - শুধুমাত্র লগইন থাকলে প্রোফাইল আইকন ও ড্রপডাউন দেখাবে */}
+                        {/* 4. Auth State Handling (Desktop) - show profile icon and dropdown only when user is logged in */}
                         {!loading && isLoggedIn && (
                             <div className="relative hidden sm:block" ref={profileRef}>
                                 <button
@@ -277,7 +277,7 @@ export default function Navbar() {
                             </button>
                         </div>
 
-                        {/* Authenticated User Preview (Mobile) - শুধুমাত্র লগইন থাকলে দেখাবে */}
+                        {/* Authenticated User Preview (Mobile) - show only when user is logged in */}
                         {!loading && isLoggedIn && (
                             <div className="flex items-center gap-3 py-4 border-b border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)]">
                                 <div className="w-10 h-10 rounded-full overflow-hidden border border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] flex items-center justify-center bg-[#F0F9FF] dark:bg-[#0F172A]">
@@ -325,7 +325,7 @@ export default function Navbar() {
                             })}
                         </nav>
 
-                        {/* 5. Mobile User Actions - শুধুমাত্র লগইন থাকলে Profile/Settings/Logout দেখাবে */}
+                        {/* 5. Mobile User Actions - show only when user is logged in */}
                         {!loading && isLoggedIn && (
                             <div className="pt-2 border-t border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)] space-y-1">
                                 <Link
