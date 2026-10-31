@@ -20,7 +20,7 @@ import {
 import useFetch from '@/hooks/useFetch';
 
 export default function Reviews() {
-    const { data } = useFetch('/data/reviewsData.json');
+    const { data } = useFetch('/data/reviewsData.JSON');
     const reviews = Array.isArray(data) ? data : data?.reviewsData || [];
     const [activeFilter, setActiveFilter] = useState('All');
     const [selectedReview, setSelectedReview] = useState(null);

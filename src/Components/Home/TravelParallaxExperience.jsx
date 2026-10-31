@@ -15,7 +15,7 @@ import {
 import useFetch from '@/hooks/useFetch';
 
 export default function TravelExperienceShowcase() {
-    const { data } = useFetch('/data/travelStories.json');
+    const { data } = useFetch('/data/travelStories.JSON');
     const travelStories = Array.isArray(data) ? data : data?.travelStories || [];
 
     const iconMap = {

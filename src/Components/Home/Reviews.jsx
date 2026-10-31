@@ -14,7 +14,7 @@ import {
 import useFetch from '@/hooks/useFetch';
 
 export default function TestimonialsSection() {
-    const { data } = useFetch('/data/reviewsData.json');
+    const { data } = useFetch('/data/reviewsData.JSON');
     const reviewsData = Array.isArray(data) ? data : data?.reviewsData || [];
 
     return (

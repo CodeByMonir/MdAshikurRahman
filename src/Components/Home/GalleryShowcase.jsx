@@ -26,7 +26,7 @@ export default function GalleryShowcase() {
     const isFirstMount = useRef(true);
 
     // Personal Memoirs & Life Photographs
-    const { data } = useFetch('/data/personalMoments.json');
+    const { data } = useFetch('/data/personalMoments.JSON');
     const personalMoments = Array.isArray(data) ? data : data?.personalMoments || [];
 
 

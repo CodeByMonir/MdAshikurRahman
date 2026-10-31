@@ -21,7 +21,7 @@ export default function GalleryMosaic() {
     const miniTrackRef = useRef(null);
 
     // Institutional Campus Photographs
-    const { data } = useFetch('/data/instituteItems.json');
+    const { data } = useFetch('/data/instituteItems.JSON');
     const instituteItems = Array.isArray(data) ? data : data?.instituteItems || [];
 
     const handlePrev = (e) => {

@@ -1,12 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import useFetch from '@/hooks/useFetch';
 import {
-    ArrowUpDown,
-    CheckCircle2,
     ChevronRight,
-    GraduationCap,
     Loader2,
     Mail,
     Phone,
@@ -14,9 +10,10 @@ import {
     Search,
     UserCheck,
     Users,
-    XCircle,
+    XCircle
 } from 'lucide-react';
-import useFetch from '@/hooks/useFetch';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function StudentsDashboard() {
     const router = useRouter();
