@@ -6,7 +6,6 @@ import { useParams, useRouter } from 'next/navigation';
 import {
     ArrowLeft,
     Check,
-    CheckCircle2,
     Edit3,
     GraduationCap,
     Home,
@@ -16,7 +15,6 @@ import {
     RefreshCw,
     Save,
     ShieldAlert,
-    User,
     UserCheck,
     X,
     XCircle,
@@ -38,7 +36,6 @@ export default function StudentDetailsPage() {
     const [formData, setFormData] = useState({});
     const [showImageModal, setShowImageModal] = useState(false);
 
-    // Locate the student matching the dynamic ID once data loads
     useEffect(() => {
         if (!studentsData) return;
 
@@ -73,7 +70,6 @@ export default function StudentDetailsPage() {
         e.preventDefault();
         setIsSaving(true);
 
-        // Update local memory state (and dispatch to an API route when ready)
         setTimeout(() => {
             setStudent(formData);
             setIsSaving(false);
@@ -487,7 +483,7 @@ export default function StudentDetailsPage() {
             {showImageModal && formData.img && (
                 <div
                     onClick={() => setShowImageModal(false)}
-                    className="fixed inset-0 z-9999 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+                    className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
                 >
                     <div
                         onClick={(e) => e.stopPropagation()}
