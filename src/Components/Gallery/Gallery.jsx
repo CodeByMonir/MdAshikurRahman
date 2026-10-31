@@ -13,230 +13,15 @@ import {
     Calendar,
     Layers,
 } from 'lucide-react';
+import useFetch from '@/hooks/useFetch';
 
 export default function GalleryPage() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(null);
     const miniTrackRef = useRef(null);
 
     // Institutional Campus Photographs
-    const instituteItems = [
-        {
-            id: 1,
-            title: 'College Main Campus & Grounds',
-            subtitle: 'Nayabazar Degree College academic buildings & sprawling campus courtyard',
-            category: 'Campus',
-            location: 'Main Complex',
-            date: 'Nayabazar, Keraniganj',
-            src: '/university.jpg',
-        },
-        {
-            id: 2,
-            title: 'Faculty Assembly & Planning Hub',
-            subtitle: 'Collaborative curriculum workshop sessions with collegiate faculty',
-            category: 'Faculty Hub',
-            location: 'Teachers Lounge',
-            date: 'Academic Planning',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 3,
-            title: 'Computer Lab Practical Session',
-            subtitle: 'Hands-on programming, system diagnostics, and digital pedagogy laboratory',
-            category: 'ICT Labs',
-            location: 'Computer Lab 01',
-            date: 'Student Labs',
-            src: '/university.jpg',
-        },
-        {
-            id: 4,
-            title: 'ICT Master Trainer Regional Hub',
-            subtitle: 'Guiding collegiate teachers on pedagogical multimedia integration',
-            category: 'ICT Labs',
-            location: 'Training Wing',
-            date: 'Upazila Education',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 5,
-            title: 'Annual Academic Seminar & Assembly',
-            subtitle: 'Institutional conferences, faculty exchanges, and student orientations',
-            category: 'Events',
-            location: 'Main Auditorium',
-            date: 'Annual Milestone',
-            src: '/university.jpg',
-        },
-        {
-            id: 6,
-            title: 'Digital Classroom Demonstration',
-            subtitle: 'Smart interactive presentations and computer science instruction',
-            category: 'Classrooms',
-            location: 'Demonstrator Hall',
-            date: 'Academic Session',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 7,
-            title: 'College Administrative Wing',
-            subtitle: 'Principal office, faculty affairs, and student administrative headquarters',
-            category: 'Campus',
-            location: 'Central Building',
-            date: 'College HQ',
-            src: '/university.jpg',
-        },
-        {
-            id: 8,
-            title: 'Central Library & Reference Center',
-            subtitle: 'Extensive archive of academic textbooks, curriculum guides, and journals',
-            category: 'Campus',
-            location: '2nd Floor Wing',
-            date: 'Research Center',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 9,
-            title: 'Science & Electronics Lab',
-            subtitle: 'Hardware troubleshooting, electronic apparatus, and practical experimentation',
-            category: 'ICT Labs',
-            location: 'Science Block',
-            date: 'Practical Center',
-            src: '/university.jpg',
-        },
-        {
-            id: 10,
-            title: 'Campus Open Field & Sports Arena',
-            subtitle: 'Outdoor sports pavilion, annual sports tournaments, and student recreation',
-            category: 'Events',
-            location: 'College Playground',
-            date: 'Recreation Grounds',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 11,
-            title: 'College Shaheed Minar & Heritage',
-            subtitle: 'National mourning, cultural ceremonies, and historic landmark tribute',
-            category: 'Campus',
-            location: 'Courtyard Memorial',
-            date: 'Campus Monument',
-            src: '/university.jpg',
-        },
-        {
-            id: 12,
-            title: 'Department of ICT Demonstrator Unit',
-            subtitle: 'Official demonstrator lab office, maintenance desk, and student support center',
-            category: 'Faculty Hub',
-            location: 'ICT Complex',
-            date: 'Nayabazar College',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 13,
-            title: 'College Main Campus & Grounds',
-            subtitle: 'Nayabazar Degree College academic buildings & sprawling campus courtyard',
-            category: 'Campus',
-            location: 'Main Complex',
-            date: 'Nayabazar, Keraniganj',
-            src: '/university.jpg',
-        },
-        {
-            id: 14,
-            title: 'Faculty Assembly & Planning Hub',
-            subtitle: 'Collaborative curriculum workshop sessions with collegiate faculty',
-            category: 'Faculty Hub',
-            location: 'Teachers Lounge',
-            date: 'Academic Planning',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 15,
-            title: 'Computer Lab Practical Session',
-            subtitle: 'Hands-on programming, system diagnostics, and digital pedagogy laboratory',
-            category: 'ICT Labs',
-            location: 'Computer Lab 01',
-            date: 'Student Labs',
-            src: '/university.jpg',
-        },
-        {
-            id: 16,
-            title: 'ICT Master Trainer Regional Hub',
-            subtitle: 'Guiding collegiate teachers on pedagogical multimedia integration',
-            category: 'ICT Labs',
-            location: 'Training Wing',
-            date: 'Upazila Education',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 17,
-            title: 'Annual Academic Seminar & Assembly',
-            subtitle: 'Institutional conferences, faculty exchanges, and student orientations',
-            category: 'Events',
-            location: 'Main Auditorium',
-            date: 'Annual Milestone',
-            src: '/university.jpg',
-        },
-        {
-            id: 18,
-            title: 'Digital Classroom Demonstration',
-            subtitle: 'Smart interactive presentations and computer science instruction',
-            category: 'Classrooms',
-            location: 'Demonstrator Hall',
-            date: 'Academic Session',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 19,
-            title: 'College Administrative Wing',
-            subtitle: 'Principal office, faculty affairs, and student administrative headquarters',
-            category: 'Campus',
-            location: 'Central Building',
-            date: 'College HQ',
-            src: '/university.jpg',
-        },
-        {
-            id: 20,
-            title: 'Central Library & Reference Center',
-            subtitle: 'Extensive archive of academic textbooks, curriculum guides, and journals',
-            category: 'Campus',
-            location: '2nd Floor Wing',
-            date: 'Research Center',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 21,
-            title: 'Science & Electronics Lab',
-            subtitle: 'Hardware troubleshooting, electronic apparatus, and practical experimentation',
-            category: 'ICT Labs',
-            location: 'Science Block',
-            date: 'Practical Center',
-            src: '/university.jpg',
-        },
-        {
-            id: 22,
-            title: 'Campus Open Field & Sports Arena',
-            subtitle: 'Outdoor sports pavilion, annual sports tournaments, and student recreation',
-            category: 'Events',
-            location: 'College Playground',
-            date: 'Recreation Grounds',
-            src: '/teachers.jpg',
-        },
-        {
-            id: 23,
-            title: 'College Shaheed Minar & Heritage',
-            subtitle: 'National mourning, cultural ceremonies, and historic landmark tribute',
-            category: 'Campus',
-            location: 'Courtyard Memorial',
-            date: 'Campus Monument',
-            src: '/university.jpg',
-        },
-        {
-            id: 24,
-            title: 'Department of ICT Demonstrator Unit',
-            subtitle: 'Official demonstrator lab office, maintenance desk, and student support center',
-            category: 'Faculty Hub',
-            location: 'ICT Complex',
-            date: 'Nayabazar College',
-            src: '/teachers.jpg',
-        },
-    ];
+    const { data } = useFetch('/data/instituteItems.json');
+    const instituteItems = Array.isArray(data) ? data : data?.instituteItems || [];
 
     const handlePrev = (e) => {
         if (e) e.stopPropagation();
@@ -555,7 +340,7 @@ export default function GalleryPage() {
                                             aria-label="Scroll thumbnails left"
                                             className="hidden sm:inline-flex p-1 rounded-md border border-white/20 bg-white/10 hover:bg-white/20 text-white text-[10px] transition-all cursor-pointer shrink-0"
                                         >
-                                            <ChevronLeft className="w-3 h-3" />
+                                            <ChevronLeft className="w-3.5 h-3.5" />
                                         </button>
 
                                         <div
@@ -592,7 +377,7 @@ export default function GalleryPage() {
                                             aria-label="Scroll thumbnails right"
                                             className="hidden sm:inline-flex p-1 rounded-md border border-white/20 bg-white/10 hover:bg-white/20 text-white text-[10px] transition-all cursor-pointer shrink-0"
                                         >
-                                            <ChevronRight className="w-3 h-3" />
+                                            <ChevronRight className="w-3.5 h-3.5" />
                                         </button>
                                     </div>
                                 </div>
