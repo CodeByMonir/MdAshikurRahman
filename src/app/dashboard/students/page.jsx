@@ -20,7 +20,7 @@ import useFetch from '@/hooks/useFetch';
 
 export default function StudentsDashboard() {
     const router = useRouter();
-    const { data: students, isLoading, error } = useFetch('/public/data/students.JSON');
+    const { data: students, isLoading, error } = useFetch('/data/students.JSON');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedGroup, setSelectedGroup] = useState('All');
 

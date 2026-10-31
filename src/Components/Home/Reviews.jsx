@@ -58,7 +58,7 @@ export default function TestimonialsSection() {
                                         <div className="flex items-center gap-3 min-w-0">
                                             <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-300/50 dark:border-white/20 shrink-0">
                                                 <Image
-                                                    src={item.avatar || '/CollegeLogo.jpg'}
+                                                    src={item.avatar || '/img/CollegeLogo.jpg'}
                                                     alt={item.name}
                                                     fill
                                                     sizes="40px"

@@ -155,7 +155,7 @@ export default function Reviews() {
                                         <div className="flex items-center gap-2.5 min-w-0">
                                             <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-slate-300/50 dark:border-white/20 shrink-0">
                                                 <Image
-                                                    src={item.avatar || '/CollegeLogo.jpg'}
+                                                    src={item.avatar || '/img/CollegeLogo.jpg'}
                                                     alt={item.name}
                                                     fill
                                                     sizes="40px"
@@ -258,7 +258,7 @@ export default function Reviews() {
                         <div className="flex items-center gap-3.5 pr-8">
                             <div className="relative w-12 h-12 rounded-full overflow-hidden border border-slate-300 dark:border-white/20 shrink-0">
                                 <Image
-                                    src={selectedReview.avatar || '/CollegeLogo.jpg'}
+                                    src={selectedReview.avatar || '/img/CollegeLogo.jpg'}
                                     alt={selectedReview.name}
                                     fill
                                     sizes="48px"

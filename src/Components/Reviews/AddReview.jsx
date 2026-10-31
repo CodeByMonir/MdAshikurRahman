@@ -165,7 +165,7 @@ const AddReview = () => {
         program: getPreviewProgram(),
         rating: Number(rating) || 5,
         date: getCurrentFormattedDate(),
-        avatar: avatarUrl || '/CollegeLogo.jpg',
+        avatar: avatarUrl || '/img/CollegeLogo.jpg',
         comment: comment || 'Engr. Md. Ashikur Rahman is an exceptional mentor whose guidance and structured approach made complex concepts remarkably intuitive and practical.',
     };
 
