@@ -14,6 +14,7 @@ import {
     MapPin,
     Calendar,
 } from 'lucide-react';
+import useFetch from '@/hooks/useFetch';
 
 export default function GalleryShowcase() {
     const [heroIndex, setHeroIndex] = useState(0);
@@ -25,116 +26,9 @@ export default function GalleryShowcase() {
     const isFirstMount = useRef(true);
 
     // Personal Memoirs & Life Photographs
-    const personalMoments = [
-        {
-            id: 1,
-            title: 'Family Gatherings & Roots',
-            subtitle: 'Joyous moments and shared laughter at home in Boro Joynagar, Keraniganj',
-            tag: 'Life & Roots',
-            location: 'Keraniganj, Dhaka',
-            date: 'Personal Archive',
-            src: '/personal/img1.jpg',
-        },
-        {
-            id: 2,
-            title: 'Moments of Reflection & Reading',
-            subtitle: 'Quiet afternoon reading classics, literature, and technology treatises',
-            tag: 'Leisure & Study',
-            location: 'Home Study',
-            date: 'Leisure Hours',
-            src: '/personal/img2.jpg',
-        },
-        {
-            id: 3,
-            title: 'Undergraduate Memories & Campus Days',
-            subtitle: 'Research discussions, thesis trials, and friendships at UIU',
-            tag: 'Alumni Memoir',
-            location: 'United International University',
-            date: 'Campus Life',
-            src: '/personal/img3.jpg',
-        },
-        {
-            id: 4,
-            title: 'Weekend Cricket Match with Colleagues',
-            subtitle: 'Friendly collegiate sports and bonding outdoors on college grounds',
-            tag: 'Recreation',
-            location: 'Nayabazar Grounds',
-            date: 'Sports Afternoon',
-            src: '/personal/img4.jpg',
-        },
-        {
-            id: 5,
-            title: 'Travel Diaries & Nature Escapes',
-            subtitle: 'Exploring rural heritage, riversides, and peaceful green vistas across Bangladesh',
-            tag: 'Journeys',
-            location: 'Riverway Trails',
-            date: 'Expeditions',
-            src: '/personal/img5.jpg',
-        },
-        {
-            id: 6,
-            title: 'Collegiate Milestones & Celebrations',
-            subtitle: 'Faculty community gatherings, annual conferences, and teacher honors',
-            tag: 'Academic Milestones',
-            location: 'Nayabazar Degree College',
-            date: 'Campus Life',
-            src: '/personal/img6.jpg',
-        },
-        {
-            id: 7,
-            title: 'Family Gatherings & Roots',
-            subtitle: 'Joyous moments and shared laughter at home in Boro Joynagar, Keraniganj',
-            tag: 'Life & Roots',
-            location: 'Keraniganj, Dhaka',
-            date: 'Personal Archive',
-            src: '/personal/img7.jpg',
-        },
-        {
-            id: 8,
-            title: 'Moments of Reflection & Reading',
-            subtitle: 'Quiet afternoon reading classics, literature, and technology treatises',
-            tag: 'Leisure & Study',
-            location: 'Home Study',
-            date: 'Leisure Hours',
-            src: '/personal/img8.jpg',
-        },
-        {
-            id: 9,
-            title: 'Undergraduate Memories & Campus Days',
-            subtitle: 'Research discussions, thesis trials, and friendships at UIU',
-            tag: 'Alumni Memoir',
-            location: 'United International University',
-            date: 'Campus Life',
-            src: '/personal/img9.jpg',
-        },
-        {
-            id: 10,
-            title: 'Weekend Cricket Match with Colleagues',
-            subtitle: 'Friendly collegiate sports and bonding outdoors on college grounds',
-            tag: 'Recreation',
-            location: 'Nayabazar Grounds',
-            date: 'Sports Afternoon',
-            src: '/personal/img10.jpg',
-        },
-        {
-            id: 11,
-            title: 'Travel Diaries & Nature Escapes',
-            subtitle: 'Exploring rural heritage, riversides, and peaceful green vistas across Bangladesh',
-            tag: 'Journeys',
-            location: 'Riverway Trails',
-            date: 'Expeditions',
-            src: '/personal/img11.jpg',
-        },
-        {
-            id: 12,
-            title: 'Collegiate Milestones & Celebrations',
-            subtitle: 'Faculty community gatherings, annual conferences, and teacher honors',
-            tag: 'Academic Milestones',
-            location: 'Nayabazar Degree College',
-            date: 'Campus Life',
-            src: '/personal/img12.jpg',
-        },
-    ];
+    const { data } = useFetch('/data/personalMoments.json');
+    const personalMoments = Array.isArray(data) ? data : data?.personalMoments || [];
+
 
     // Story Timer: Advances every 5 seconds; resets cleanly when timerKey increments
     useEffect(() => {
@@ -450,8 +344,8 @@ export default function GalleryShowcase() {
                                             key={item.id}
                                             onClick={() => handleSelectIndex(idx)}
                                             className={`relative shrink-0 w-20 sm:w-28 h-14 sm:h-18 rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer ${isSelected
-                                                    ? 'border-[#0284C7] dark:border-[#38BDF8] ring-1 ring-sky-400/40 scale-105 shadow-md'
-                                                    : 'border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] opacity-60 hover:opacity-100 hover:border-slate-400'
+                                                ? 'border-[#0284C7] dark:border-[#38BDF8] ring-1 ring-sky-400/40 scale-105 shadow-md'
+                                                : 'border-[#E2E8F0] dark:border-[rgba(56,189,248,0.15)] opacity-60 hover:opacity-100 hover:border-slate-400'
                                                 }`}
                                         >
                                             <Image

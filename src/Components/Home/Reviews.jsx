@@ -11,125 +11,12 @@ import {
     Star,
     Users,
 } from 'lucide-react';
-
-const reviewsData = [
-    {
-        id: 1,
-        name: 'Monir Hossen',
-        role: 'Student',
-        program: 'HSC Commerce (Batch 2021)',
-        rating: 5,
-        date: '5 years ago',
-        avatar: 'https://codebymonir.vercel.app/profile.webp',
-        comment:
-            'He was new when I was student, but his guidance and mentorship helped me to motivate in my life. His supportive nature and dedicated faculty made my academic journey truly enriching.',
-    },
-    {
-        id: 2,
-        name: 'Sumaiya Rahman',
-        role: 'Student',
-        program: 'HSC-2023 Batch (Science)',
-        rating: 5,
-        date: '1 month ago',
-        avatar: '',
-        comment: `Ashik Sir has always been my favorite teacher. I've had a very warm and close relationship with him since the very beginning of my college life. I enjoyed his classes the most during my college days, and even now, I really miss those classes. There was always something special about the way he taught and connected with us.`,
-    },
-    {
-        id: 3,
-        name: 'Sifat Anowar',
-        role: 'Student',
-        program: 'HSC-2024 Batch (Business Studies)',
-        rating: 5,
-        date: '3 weeks ago',
-        avatar: '',
-        comment: `As a student, I wasn't always very attentive to my studies. I was more interested in extracurricular activities, especially drawing and cultural activities. Ashik Sir never discouraged me or showed any annoyance toward these interests. Instead, he always supported and encouraged me.
-        And whenever I tried to seek the truth or understand things for myself, Ashik Sir always tried to guide me in the right direction. I'm truly grateful for his support, encouragement, and guidance throughout my college life.`,
-    },
-    {
-        id: 4,
-        name: 'Mahmuda Akter Munni',
-        role: 'Guardian',
-        program: 'Sister of 2 Students',
-        rating: 5,
-        date: '1 month ago',
-        avatar: '',
-        comment: `My younger brother and sister have also been students of Ashik Sir. I truly feel fortunate to have had the opportunity to entrust their education to a teacher like him. He is a very dedicated and hardworking teacher who genuinely cares about his students and always puts in his best effort for them.`,
-    },
-    {
-        id: 5,
-        name: 'Noni Gopal Saha',
-        role: 'Teacher',
-        program: 'Father of Science Student',
-        rating: 4.5,
-        date: '2 weeks ago',
-        avatar: '',
-        comment: `Ashik was once my student, and today, he has become a teacher himself. It fills my heart with immense pride to see how far he has come. He has also taught my son and still keeps in touch and checks on his progress from time to time.
-        Seeing one of my former students grow into a dedicated and capable teacher gives me a deep sense of peace and satisfaction. It is truly one of the most rewarding feelings a teacher can have.`,
-    },
-    {
-        id: 6,
-        name: 'Hashem Ali',
-        role: 'Teacher',
-        program: 'Colleague of Ashik Sir',
-        rating: 5,
-        date: '4 days ago',
-        avatar: '',
-        comment: `Ashik Sir is a popular teacher, but what makes him truly special is the kind of person he is. He is one of the most polite, warm-hearted, and helpful people I have ever known. I have rarely come across someone as humble, kind, and genuinely caring as him.`,
-    },
-    {
-        id: 7,
-        name: 'Samaniya Aaka',
-        role: 'Student',
-        program: 'HSC-2026 Batch (Business Studies)',
-        rating: 5,
-        date: '4 days ago',
-        avatar: '',
-        comment: `Ashik Sir is an extremely honest and friendly person. We always felt safe and comfortable around him, and we could openly share any personal problems with him without hesitation. He never made us feel uncomfortable or annoyed. Instead, he would listen to us patiently and sincerely and always try to offer helpful advice and solutions.`,
-    },
-    {
-        id: 8,
-        name: 'Shahinur Akter Ratri',
-        role: 'Student',
-        program: 'HSC-2026 Batch (Humanities)',
-        rating: 5,
-        date: '4 days ago',
-        avatar: '',
-        comment: `Ashik Sir is my favorite teacher from my college days. I always attended his classes with great interest and attention. He had a wonderful way of explaining even the most difficult topics in a very simple and understandable manner. I truly enjoyed his classes, and I still miss having him as my teacher.`,
-    },
-    {
-        id: 9,
-        name: 'Tasnim Kabir',
-        role: 'Student',
-        program: 'HSC-2026 Batch (Science)',
-        rating: 5,
-        date: '4 days ago',
-        avatar: '',
-        comment: `Ashik Sir's classes were always full of fun and memorable moments. I used to have a lot of fun and mischief in his classes, and Sir would often joke around and have fun with us too. The time we spent in his classes was not only enjoyable but also very meaningful and valuable. Those moments are still some of my favorite memories.`,
-    },
-    {
-        id: 10,
-        name: 'Mumtahina Momo',
-        role: 'Student',
-        program: 'HSC-2026 Batch (Humanities)',
-        rating: 5,
-        date: '4 days ago',
-        avatar: '',
-        comment: `Ashik Sir is truly the best teacher. He was also the teacher of my elder brother and my cousin, so he has always had a close and warm relationship with our family. We have a lot of respect and affection for him. I always pray for his well-being, success, and happiness.`,
-    },
-    {
-        id: 11,
-        name: 'Tasin Ahmed',
-        role: 'Student',
-        program: 'HSC-2023 Batch (Humanities)',
-        rating: 5,
-        date: '2 months ago',
-        avatar: '',
-        comment: `There's actually a funny story behind how my relationship with Ashik Sir began, but I'd rather keep that story to myself. 😄
-        I've rarely come across a teacher who is as friendly, approachable, caring, and genuine as he is. What I appreciate most about him is how easily he connects with his students and makes them feel comfortable. He is not just a teacher to me; he is someone I genuinely respect and feel lucky to have known.`,
-    },
-];
+import useFetch from '@/hooks/useFetch';
 
 export default function TestimonialsSection() {
+    const { data } = useFetch('/data/reviewsData.json');
+    const reviewsData = Array.isArray(data) ? data : data?.reviewsData || [];
+
     return (
         <section
             id="reviews"
@@ -193,8 +80,8 @@ export default function TestimonialsSection() {
 
                                         <span
                                             className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider shrink-0 bg-transparent ${isStudent
-                                                    ? 'text-[#0284C7] dark:text-[#38BDF8] border border-[#0284C7]/40 dark:border-[#38BDF8]/40'
-                                                    : 'text-emerald-600 dark:text-emerald-400 border border-emerald-500/40 dark:border-emerald-400/40'
+                                                ? 'text-[#0284C7] dark:text-[#38BDF8] border border-[#0284C7]/40 dark:border-[#38BDF8]/40'
+                                                : 'text-emerald-600 dark:text-emerald-400 border border-emerald-500/40 dark:border-emerald-400/40'
                                                 }`}
                                         >
                                             {isStudent ? (
@@ -212,8 +99,8 @@ export default function TestimonialsSection() {
                                             <Star
                                                 key={i}
                                                 className={`w-3.5 h-3.5 ${i < Math.floor(item.rating)
-                                                        ? 'fill-amber-400 text-amber-400'
-                                                        : 'text-slate-300 dark:text-slate-600'
+                                                    ? 'fill-amber-400 text-amber-400'
+                                                    : 'text-slate-300 dark:text-slate-600'
                                                     }`}
                                             />
                                         ))}

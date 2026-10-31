@@ -30,7 +30,7 @@ export default function Hero() {
                     {/* Profile Image Wrapper - Scaled up dimensions */}
                     <div className="relative w-48 h-48 sm:w-60 sm:h-60 lg:w-72 lg:h-72 rounded-2xl overflow-hidden border-2 border-[#E2E8F0] dark:border-[rgba(56,189,248,0.25)] shadow-md mb-4 sm:mb-5 group">
                         <Image
-                            src="/profile.png"
+                            src="/img/profile.png"
                             alt="Profile Photo"
                             fill
                             sizes="(max-width: 640px) 192px, (max-width: 1024px) 240px, 288px"

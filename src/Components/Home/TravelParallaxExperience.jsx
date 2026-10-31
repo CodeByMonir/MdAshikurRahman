@@ -12,59 +12,29 @@ import {
     ChevronRight,
     Sparkles,
 } from 'lucide-react';
-
-const travelStories = [
-    {
-        id: 1,
-        tag: 'Riverway Trails',
-        icon: Wind,
-        accentColor: '#38BDF8',
-        title: 'Drifting Across Padma Waters',
-        subtitle: 'Golden Hour at the Delta Confluence',
-        story:
-            'The engine cuts out, and the river takes over. Across the expansive sandbars, evening light turns the current into liquid copper. Fishermen unfurl handwoven nets against silhouettes of flying herons, leaving nothing behind but ripples and stillness.',
-        location: 'Munshiganj & Padma River',
-        altitude: '12m Elevation',
-        image: '/bg.jpg',
-    },
-    {
-        id: 2,
-        tag: 'Lush High Meadows',
-        icon: Mountain,
-        accentColor: '#4ADE80',
-        title: 'Mist Rising Over Tea Valleys',
-        subtitle: 'Dawn in the Rain-Drenched Hills',
-        story:
-            'Waking before the sun reveals valleys drowned in rolling white fog. Walking along the contours of terraced emerald slopes, the air is sharp and fragrant with damp soil and fresh tea leaves. Every turn is a corridor of pristine green cut through by stone tracks.',
-        location: 'Sreemangal & Lawachara',
-        altitude: '280m Ridgeline',
-        image: '/bg1.jpg',
-    },
-    {
-        id: 3,
-        tag: 'Historic Horizons',
-        icon: Compass,
-        accentColor: '#FBBF24',
-        title: 'Echoes in Forgotten Brick & Stone',
-        subtitle: 'Chasing Heritage Along Ancient Trails',
-        story:
-            'Centuries-old terracotta architecture emerges quietly from wild banyan roots. Walking down ancient river ports and merchant ruins transports you into bygone centuries, where trade winds once steered wooden merchant vessels across the delta.',
-        location: 'Panam Nagar, Sonargaon',
-        altitude: 'Ancient Merchant Route',
-        image: '/bg2.jpg',
-    },
-];
+import useFetch from '@/hooks/useFetch';
 
 export default function TravelExperienceShowcase() {
+    const { data } = useFetch('/data/travelStories.json');
+    const travelStories = Array.isArray(data) ? data : data?.travelStories || [];
+
+    const iconMap = {
+        Wind,
+        Mountain,
+        Compass,
+    };
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const trackRef = useRef(null);
     const isFirstMount = useRef(true);
 
     const handlePrev = () => {
+        if (!travelStories.length) return;
         setCurrentIndex((prev) => (prev - 1 + travelStories.length) % travelStories.length);
     };
 
     const handleNext = () => {
+        if (!travelStories.length) return;
         setCurrentIndex((prev) => (prev + 1) % travelStories.length);
     };
 
@@ -92,7 +62,14 @@ export default function TravelExperienceShowcase() {
     }, [currentIndex]);
 
     const activeStory = travelStories[currentIndex];
-    const IconComponent = activeStory.icon;
+    const IconComponent =
+        activeStory && typeof activeStory.icon === 'string'
+            ? iconMap[activeStory.icon] || Sparkles
+            : activeStory?.icon || Sparkles;
+
+    if (!activeStory) {
+        return null;
+    }
 
     return (
         <section className="relative w-full mx-auto aspect-16/10 sm:aspect-video max-h-145 overflow-hidden rounded-2xl sm:rounded-3xl border border-white/20 select-none bg-black">
@@ -214,8 +191,8 @@ export default function TravelExperienceShowcase() {
                                 onClick={() => setCurrentIndex(idx)}
                                 aria-label={`Go to slide ${idx + 1}`}
                                 className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${isSelected
-                                        ? 'w-5 bg-gradient-to-r from-[#38BDF8] to-[#4ADE80] shadow-[0_0_8px_rgba(56,189,248,0.9)]'
-                                        : 'w-2 bg-white/40 hover:bg-white/75'
+                                    ? 'w-5 bg-gradient-to-r from-[#38BDF8] to-[#4ADE80] shadow-[0_0_8px_rgba(56,189,248,0.9)]'
+                                    : 'w-2 bg-white/40 hover:bg-white/75'
                                     }`}
                             />
                         );
