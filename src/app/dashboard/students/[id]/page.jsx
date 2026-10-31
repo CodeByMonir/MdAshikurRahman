@@ -28,7 +28,7 @@ export default function StudentDetailsPage() {
     const router = useRouter();
     const studentId = params?.id;
 
-    const { data: studentsData, isLoading, error } = useFetch('/data/students.json');
+    const { data: studentsData, isLoading, error } = useFetch('/data/students.JSON');
 
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
