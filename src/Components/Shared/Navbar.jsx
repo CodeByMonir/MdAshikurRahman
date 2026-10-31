@@ -114,7 +114,7 @@ export default function Navbar() {
                     {/* Left: Logo */}
                     <Link href="/" className="flex items-center gap-2">
                         <Image
-                            src="/Logo.webp"
+                            src="/img/Logo.webp"
                             alt="Logo"
                             width={40}
                             height={40}
