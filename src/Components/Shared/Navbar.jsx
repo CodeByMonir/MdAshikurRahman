@@ -197,7 +197,7 @@ export default function Navbar() {
 
                                         <div className="py-1">
                                             <Link
-                                                href="/profile"
+                                                href="/dashboard/profile"
                                                 onClick={() => setIsProfileOpen(false)}
                                                 className="flex items-center gap-2.5 px-4 py-2 text-sm text-[#334155] dark:text-[#94A3B8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] hover:bg-[#F0F9FF] dark:hover:bg-[#0F172A] transition-colors"
                                             >
@@ -205,7 +205,7 @@ export default function Navbar() {
                                                 Profile
                                             </Link>
                                             <Link
-                                                href="/settings"
+                                                href="/dashboard/settings"
                                                 onClick={() => setIsProfileOpen(false)}
                                                 className="flex items-center gap-2.5 px-4 py-2 text-sm text-[#334155] dark:text-[#94A3B8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] hover:bg-[#F0F9FF] dark:hover:bg-[#0F172A] transition-colors"
                                             >
@@ -329,7 +329,7 @@ export default function Navbar() {
                         {!loading && isLoggedIn && (
                             <div className="pt-2 border-t border-[#E2E8F0] dark:border-[rgba(56,189,248,0.1)] space-y-1">
                                 <Link
-                                    href="/profile"
+                                    href="/dashboard/profile"
                                     onClick={() => setIsMobileModalOpen(false)}
                                     className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm text-[#334155] dark:text-[#94A3B8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] hover:bg-[#F0F9FF] dark:hover:bg-[#0F172A] transition-colors"
                                 >
@@ -337,7 +337,7 @@ export default function Navbar() {
                                     Profile
                                 </Link>
                                 <Link
-                                    href="/settings"
+                                    href="/dashboard/settings"
                                     onClick={() => setIsMobileModalOpen(false)}
                                     className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm text-[#334155] dark:text-[#94A3B8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] hover:bg-[#F0F9FF] dark:hover:bg-[#0F172A] transition-colors"
                                 >

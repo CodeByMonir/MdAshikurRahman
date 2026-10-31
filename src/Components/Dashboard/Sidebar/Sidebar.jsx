@@ -8,16 +8,12 @@ import {
     Bell,
     ChevronLeft,
     ChevronRight,
-    GraduationCap,
     Home,
     LayoutDashboard,
     LogOut,
-    Mail,
     Menu,
     MessageSquare,
-    Newspaper,
     Settings,
-    Shield,
     User,
     Users,
     X,
@@ -33,14 +29,10 @@ export default function DashboardSidebar() {
         { label: 'Academic Notices', href: '/dashboard/notices', icon: Bell, badge: '4' },
         { label: 'Student Reviews', href: '/dashboard/reviews', icon: MessageSquare, badge: 'New' },
         { label: 'Achievements', href: '/dashboard/achievements', icon: Award },
-        { label: 'Batch Directory', href: '/dashboard/batches', icon: GraduationCap },
     ];
 
     const managementNav = [
         { label: 'Student Registry', href: '/dashboard/students', icon: Users },
-        { label: 'Faculty & Staff', href: '/dashboard/faculty', icon: Shield },
-        { label: 'Circular Publisher', href: '/dashboard/circulars', icon: Newspaper },
-        { label: 'Inbox Inquiries', href: '/dashboard/messages', icon: Mail, badge: '12' },
     ];
 
     const bottomNav = [

@@ -13,7 +13,7 @@ export const Layout = ({ children }) => {
 
     useEffect(() => {
         if (!isPending && !session?.user) {
-            router.replace('/');
+            router.replace('/unauthorized');
         }
     }, [session, isPending, router]);
 

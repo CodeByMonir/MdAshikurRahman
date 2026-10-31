@@ -17,7 +17,7 @@ export async function middleware(request) {
   const session = await sessionRes.json();
 
   // 2. Define protected route prefixes
-  const protectedRoutes = ["/dashboard", "/profile", "/settings"];
+  const protectedRoutes = ["/dashboard"];
 
   const isProtected = protectedRoutes.some((route) =>
     pathname.startsWith(route),
@@ -32,7 +32,7 @@ export async function middleware(request) {
   }
 
   // 4. (Optional) Prevent logged-in users from visiting auth pages (/login, /register)
-  const authRoutes = ["/login", "/register"];
+  const authRoutes = ["/lInE/login", "/lInE/register"];
   const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
 
   if (isAuthRoute && session?.user) {
