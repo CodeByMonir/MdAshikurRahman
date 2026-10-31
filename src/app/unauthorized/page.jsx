@@ -1,3 +1,4 @@
+import UnauthorizedPage from '@/Components/Authentication/UnAuthorized/Unauthorized';
 import React from 'react';
 
 export const metadata = {
