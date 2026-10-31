@@ -36,6 +36,7 @@ export default function StudentDetailsPage() {
     const [isSaving, setIsSaving] = useState(false);
     const [student, setStudent] = useState(null);
     const [formData, setFormData] = useState({});
+    const [showImageModal, setShowImageModal] = useState(false);
 
     // Locate the student matching the dynamic ID once data loads
     useEffect(() => {
@@ -194,10 +195,28 @@ export default function StudentDetailsPage() {
 
             {/* Profile Overview Card */}
             <div className="p-4 sm:p-6 rounded-2xl border border-slate-300/40 dark:border-white/10 bg-transparent flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-3.5">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] flex items-center justify-center text-white dark:text-slate-950 font-black text-xl shadow-xs shrink-0">
-                        {formData.name?.charAt(0) || 'S'}
-                    </div>
+                <div className="flex items-center gap-4">
+                    {formData.img ? (
+                        <button
+                            type="button"
+                            onClick={() => setShowImageModal(true)}
+                            className="group relative cursor-pointer focus:outline-none"
+                            title="Click to expand photo"
+                        >
+                            <img
+                                src={formData.img}
+                                alt={formData.name || 'Student Avatar'}
+                                className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-[#0284C7]/30 dark:border-[#38BDF8]/30 shadow-md transition-transform duration-200 group-hover:scale-105 shrink-0"
+                            />
+                            <div className="absolute inset-0 rounded-2xl bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] text-white font-semibold">
+                                View
+                            </div>
+                        </button>
+                    ) : (
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-tr from-[#0284C7] to-[#16A34A] dark:from-[#38BDF8] dark:to-[#4ADE80] flex items-center justify-center text-white dark:text-slate-950 font-black text-2xl sm:text-3xl shadow-md shrink-0">
+                            {formData.name?.charAt(0) || 'S'}
+                        </div>
+                    )}
                     <div className="min-w-0 space-y-0.5">
                         <div className="flex items-center gap-2">
                             <h1 className="text-sm sm:text-lg font-bold text-slate-900 dark:text-white truncate">
@@ -205,8 +224,8 @@ export default function StudentDetailsPage() {
                             </h1>
                             <span
                                 className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${formData.status === 'Inactive'
-                                        ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20'
-                                        : 'bg-emerald-500/10 text-emerald-600 dark:text-[#4ADE80] border border-emerald-500/20'
+                                    ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20'
+                                    : 'bg-emerald-500/10 text-emerald-600 dark:text-[#4ADE80] border border-emerald-500/20'
                                     }`}
                             >
                                 {formData.status || 'Active'}
@@ -392,6 +411,25 @@ export default function StudentDetailsPage() {
 
                             <div className="space-y-1">
                                 <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
+                                    Photo URL
+                                </label>
+                                {isEditing ? (
+                                    <input
+                                        type="url"
+                                        placeholder="https://..."
+                                        value={formData.img || ''}
+                                        onChange={(e) => handleInputChange('img', e.target.value)}
+                                        className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                    />
+                                ) : (
+                                    <p className="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">
+                                        {student.img || 'No custom image set'}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
                                     Enrolment Status
                                 </label>
                                 {isEditing ? (
@@ -444,6 +482,39 @@ export default function StudentDetailsPage() {
                     </div>
                 )}
             </form>
+
+            {/* Image Preview Modal */}
+            {showImageModal && formData.img && (
+                <div
+                    onClick={() => setShowImageModal(false)}
+                    className="fixed inset-0 z-9999 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="relative max-w-xl w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden shadow-2xl cursor-default"
+                    >
+                        <div className="flex items-center justify-between p-3 border-b border-slate-200 dark:border-white/10">
+                            <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                                {formData.name} — Profile Photo
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => setShowImageModal(false)}
+                                className="p-1 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                            >
+                                <X className="w-4 h-4" />
+                            </button>
+                        </div>
+                        <div className="p-3 bg-slate-950/40 flex items-center justify-center">
+                            <img
+                                src={formData.img}
+                                alt={formData.name || 'Student Image'}
+                                className="max-h-[70vh] w-auto max-w-full rounded-xl object-contain shadow-md"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

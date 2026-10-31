@@ -96,8 +96,8 @@ export default function StudentsDashboard() {
                             key={group}
                             onClick={() => setSelectedGroup(group)}
                             className={`px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${selectedGroup === group
-                                    ? 'bg-[#0284C7] dark:bg-[#38BDF8] text-white dark:text-slate-950 shadow-xs'
-                                    : 'border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-[#0284C7] dark:hover:border-[#38BDF8]'
+                                ? 'bg-[#0284C7] dark:bg-[#38BDF8] text-white dark:text-slate-950 shadow-xs'
+                                : 'border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-[#0284C7] dark:hover:border-[#38BDF8]'
                                 }`}
                         >
                             {group}
@@ -157,9 +157,17 @@ export default function StudentsDashboard() {
                                         </td>
                                         <td className="py-3.5 px-4 font-semibold text-slate-900 dark:text-slate-100">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-7 h-7 rounded-full bg-sky-500/10 border border-[#0284C7]/20 dark:border-[#38BDF8]/20 flex items-center justify-center font-bold text-[#0284C7] dark:text-[#38BDF8] text-[10px] shrink-0">
-                                                    {student.name?.charAt(0) || 'S'}
-                                                </div>
+                                                {student.img ? (
+                                                    <img
+                                                        src={student.img}
+                                                        alt={student.name || 'Student'}
+                                                        className="w-7 h-7 rounded-full object-cover border border-[#0284C7]/20 dark:border-[#38BDF8]/20 shrink-0"
+                                                    />
+                                                ) : (
+                                                    <div className="w-7 h-7 rounded-full bg-sky-500/10 border border-[#0284C7]/20 dark:border-[#38BDF8]/20 flex items-center justify-center font-bold text-[#0284C7] dark:text-[#38BDF8] text-[10px] shrink-0">
+                                                        {student.name?.charAt(0) || 'S'}
+                                                    </div>
+                                                )}
                                                 <div className="min-w-0">
                                                     <p className="truncate group-hover:text-[#0284C7] dark:group-hover:text-[#38BDF8] transition-colors">
                                                         {student.name}
@@ -197,14 +205,14 @@ export default function StudentsDashboard() {
                                         <td className="py-3.5 px-4 text-center">
                                             <span
                                                 className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${student.status === 'Inactive'
-                                                        ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20'
-                                                        : 'bg-emerald-500/10 text-emerald-600 dark:text-[#4ADE80] border border-emerald-500/20'
+                                                    ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20'
+                                                    : 'bg-emerald-500/10 text-emerald-600 dark:text-[#4ADE80] border border-emerald-500/20'
                                                     }`}
                                             >
                                                 <span
                                                     className={`w-1 h-1 rounded-full ${student.status === 'Inactive'
-                                                            ? 'bg-rose-500'
-                                                            : 'bg-emerald-500'
+                                                        ? 'bg-rose-500'
+                                                        : 'bg-emerald-500'
                                                         }`}
                                                 />
                                                 {student.status || 'Active'}
