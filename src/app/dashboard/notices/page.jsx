@@ -5,16 +5,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
     ArrowLeft,
+    Bell,
     CheckCircle2,
     Construction,
     Home,
     LayoutDashboard,
+    Radio,
     Sparkles,
-    UserCheck,
-    UserCog,
 } from 'lucide-react';
 
-export default function ProfileUnderConstructionPage() {
+export default function NoticesUnderConstructionPage() {
     const router = useRouter();
 
     return (
@@ -28,7 +28,7 @@ export default function ProfileUnderConstructionPage() {
                 {/* Visual Icon Badge */}
                 <div className="inline-flex relative mx-auto">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-[#0284C7]/10 dark:bg-[#38BDF8]/20 border border-[#0284C7]/30 dark:border-[#38BDF8]/30 flex items-center justify-center text-[#0284C7] dark:text-[#38BDF8] shadow-lg shadow-[#0284C7]/10">
-                        <UserCog className="w-8 h-8 sm:w-10 sm:h-10 animate-pulse" />
+                        <Bell className="w-8 h-8 sm:w-10 sm:h-10 animate-bounce" />
                     </div>
                     <span className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-amber-500 text-slate-950 shadow-md">
                         <Construction className="w-3.5 h-3.5" />
@@ -38,36 +38,36 @@ export default function ProfileUnderConstructionPage() {
                 {/* Status Header */}
                 <div className="space-y-2">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#0284C7] dark:text-[#38BDF8] bg-[#0284C7]/10 dark:bg-[#38BDF8]/10 border border-[#0284C7]/20 dark:border-[#38BDF8]/20 font-mono">
-                        <UserCheck className="w-3.5 h-3.5" />
-                        Account Space In Development
+                        <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-500" />
+                        Bulletin Hub In Progress
                     </span>
                     <h1 className="text-xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">
-                        Faculty Profile Manager
+                        Academic Notice Board
                     </h1>
                     <p className="text-[11px] sm:text-xs text-[#64748B] dark:text-[#94A3B8] leading-relaxed max-w-sm mx-auto">
-                        This module is currently being built to manage faculty bio credentials, academic designations, and institutional security keys.
+                        We are engineering the real-time institutional notice delivery module, semester circular archive, and broadcast scheduler.
                     </p>
                 </div>
 
-                {/* Progress / Status Card */}
+                {/* Features in Development Card */}
                 <div className="p-4 rounded-2xl border border-slate-300/40 dark:border-white/10 bg-slate-50/50 dark:bg-white/5 text-left space-y-2.5">
                     <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                             <Sparkles className="w-3 h-3 text-[#0284C7] dark:text-[#38BDF8]" />
-                            Upcoming Profile Controls
+                            Upcoming Notice Controls
                         </span>
                         <span className="text-[10px] font-mono text-[#0284C7] dark:text-[#38BDF8] font-semibold">
-                            Pending Release
+                            Phase 2 Deployment
                         </span>
                     </div>
                     <ul className="text-[11px] text-slate-600 dark:text-slate-300 space-y-1.5">
                         <li className="flex items-center gap-2">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                            <span>Avatar customization & institutional email binding</span>
+                            <span>Urgent exam schedules & practical routine broadcast</span>
                         </li>
                         <li className="flex items-center gap-2">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                            <span>Two-factor authentication (2FA) & active session logs</span>
+                            <span>PDF circular attachment publisher with push alerts</span>
                         </li>
                     </ul>
                 </div>

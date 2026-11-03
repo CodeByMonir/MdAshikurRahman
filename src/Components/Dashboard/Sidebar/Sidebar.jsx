@@ -28,7 +28,6 @@ export default function DashboardSidebar() {
         { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
         { label: 'Academic Notices', href: '/dashboard/notices', icon: Bell, badge: '4' },
         { label: 'Student Reviews', href: '/dashboard/reviews', icon: MessageSquare, badge: 'New' },
-        { label: 'Achievements', href: '/dashboard/achievements', icon: Award },
     ];
 
     const managementNav = [
