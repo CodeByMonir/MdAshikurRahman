@@ -1,20 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import {
     ArrowLeft,
     Award,
-    BookOpen,
     Building2,
     Calendar,
     Check,
+    CheckCircle2,
     Droplet,
     Edit3,
     GraduationCap,
     Heart,
     Home,
+    Image as ImageIcon,
     Loader2,
     Mail,
     MapPin,
@@ -22,9 +23,9 @@ import {
     RefreshCw,
     Save,
     ShieldAlert,
-    Sparkles,
+    Trash2,
+    UploadCloud,
     User,
-    UserCheck,
     X,
     XCircle,
 } from 'lucide-react';
@@ -44,6 +45,13 @@ export default function StudentDetailsPage() {
     const [student, setStudent] = useState(null);
     const [formData, setFormData] = useState({});
     const [showImageModal, setShowImageModal] = useState(false);
+
+    // ImgBB Upload & Live Preview States
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState('');
+    const [isUploadingImg, setIsUploadingImg] = useState(false);
+    const [isImgConfirmed, setIsImgConfirmed] = useState(false);
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         if (!studentsData) return;
@@ -71,7 +79,80 @@ export default function StudentDetailsPage() {
         }));
     };
 
+    // Handle Local File Selection (Blob Preview)
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            toast.error('Please choose a valid image file (PNG, JPG, WEBP).');
+            return;
+        }
+
+        if (previewUrl && previewUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(previewUrl);
+        }
+
+        const objectUrl = URL.createObjectURL(file);
+        setSelectedFile(file);
+        setPreviewUrl(objectUrl);
+        setIsImgConfirmed(false);
+    };
+
+    // Remove or Cancel Draft Photo
+    const handleRemoveImage = () => {
+        if (previewUrl && previewUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(previewUrl);
+        }
+        setSelectedFile(null);
+        setPreviewUrl('');
+        setIsImgConfirmed(false);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
+
+    // ImgBB API Upload Handler
+    const handleConfirmUpload = async () => {
+        if (!selectedFile) return;
+
+        const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+        if (!apiKey) {
+            toast.error('ImgBB API key is missing in environment variables.');
+            return;
+        }
+
+        setIsUploadingImg(true);
+
+        try {
+            const uploadData = new FormData();
+            uploadData.append('image', selectedFile);
+
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                method: 'POST',
+                body: uploadData,
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                const uploadedUrl = data.data.display_url || data.data.url;
+                setFormData((prev) => ({ ...prev, img: uploadedUrl }));
+                setIsImgConfirmed(true);
+                toast.success('Image successfully uploaded to ImgBB!');
+            } else {
+                throw new Error(data.error?.message || 'Failed to upload image to ImgBB');
+            }
+        } catch (err) {
+            console.error('ImgBB Upload Error:', err);
+            toast.error(err.message || 'Image upload failed. Please try again.');
+        } finally {
+            setIsUploadingImg(false);
+        }
+    };
+
     const handleCancelEdit = () => {
+        handleRemoveImage();
         setFormData(student);
         setIsEditing(false);
         toast.info('Changes discarded.');
@@ -79,10 +160,17 @@ export default function StudentDetailsPage() {
 
     const handleSave = (e) => {
         e.preventDefault();
+
+        if (selectedFile && !isImgConfirmed) {
+            toast.warning('Please confirm and upload your selected image before saving changes.');
+            return;
+        }
+
         setIsSaving(true);
 
         setTimeout(() => {
             setStudent(formData);
+            handleRemoveImage();
             setIsSaving(false);
             setIsEditing(false);
             toast.success('Student records updated successfully!');
@@ -136,6 +224,8 @@ export default function StudentDetailsPage() {
         );
     }
 
+    const currentHeroPhoto = previewUrl || formData.img;
+
     return (
         <div className="w-full space-y-6 select-none max-w-6xl mx-auto pb-12">
             <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} theme="colored" />
@@ -176,8 +266,8 @@ export default function StudentDetailsPage() {
                             <button
                                 type="button"
                                 onClick={handleCancelEdit}
-                                disabled={isSaving}
-                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                                disabled={isSaving || isUploadingImg}
+                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer disabled:opacity-50"
                             >
                                 <X className="w-3.5 h-3.5" />
                                 <span>Cancel</span>
@@ -185,7 +275,7 @@ export default function StudentDetailsPage() {
                             <button
                                 type="button"
                                 onClick={handleSave}
-                                disabled={isSaving}
+                                disabled={isSaving || isUploadingImg}
                                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 shadow-xs transition-colors cursor-pointer disabled:opacity-50"
                             >
                                 {isSaving ? (
@@ -203,7 +293,7 @@ export default function StudentDetailsPage() {
             {/* Profile Hero Overview Card */}
             <div className="p-4 sm:p-6 rounded-2xl border border-slate-300/40 dark:border-white/10 bg-white/40 dark:bg-slate-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                    {formData.img ? (
+                    {currentHeroPhoto ? (
                         <button
                             type="button"
                             onClick={() => setShowImageModal(true)}
@@ -211,7 +301,7 @@ export default function StudentDetailsPage() {
                             title="Click to zoom student photo"
                         >
                             <img
-                                src={formData.img}
+                                src={currentHeroPhoto}
                                 alt={formData.name || 'Student Avatar'}
                                 className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-[#0284C7]/30 dark:border-[#38BDF8]/30 shadow-md transition-transform duration-200 group-hover:scale-105"
                             />
@@ -481,8 +571,8 @@ export default function StudentDetailsPage() {
                                 </div>
                             </div>
 
-                            {/* Contact: Phone & Photo URL */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {/* Contact: Phone & ImageBB Upload Section */}
+                            <div className="space-y-3">
                                 <div className="space-y-1">
                                     <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
                                         Mobile No
@@ -502,17 +592,112 @@ export default function StudentDetailsPage() {
                                     )}
                                 </div>
 
-                                <div className="space-y-1">
-                                    <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
-                                        Photo URL
+                                {/* ImgBB Live File Upload / Preview Controls */}
+                                <div className="space-y-2 pt-2 border-t border-slate-200/60 dark:border-white/10">
+                                    <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400 flex items-center justify-between">
+                                        <span>Student Photo (ImgBB Workflow)</span>
+                                        {isImgConfirmed && (
+                                            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-semibold">
+                                                <CheckCircle2 className="w-3 h-3" /> Confirmed &amp; Uploaded
+                                            </span>
+                                        )}
                                     </label>
+
                                     {isEditing ? (
-                                        <input
-                                            type="url"
-                                            value={formData.img || ''}
-                                            onChange={(e) => handleInputChange('img', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
-                                        />
+                                        <>
+                                            <input
+                                                ref={fileInputRef}
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                                className="hidden"
+                                            />
+
+                                            {previewUrl ? (
+                                                <div className="p-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center gap-3.5">
+                                                    <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 shrink-0 shadow-xs">
+                                                        <img
+                                                            src={previewUrl}
+                                                            alt="Draft Preview"
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                        {isImgConfirmed && (
+                                                            <div className="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5">
+                                                                <Check className="w-2.5 h-2.5" />
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="flex-1 space-y-1.5 text-center sm:text-left min-w-0">
+                                                        <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
+                                                            {selectedFile?.name || 'Selected Replacement'}
+                                                        </p>
+                                                        <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                                                            {isImgConfirmed
+                                                                ? 'Uploaded to ImgBB and queued for profile save.'
+                                                                : 'Local preview active. Confirm to upload to ImgBB.'}
+                                                        </p>
+
+                                                        <div className="flex items-center justify-center sm:justify-start gap-2 pt-1">
+                                                            {!isImgConfirmed && (
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={handleConfirmUpload}
+                                                                    disabled={isUploadingImg}
+                                                                    className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[11px] font-semibold text-white bg-sky-600 hover:bg-sky-500 shadow-2xs cursor-pointer disabled:opacity-50"
+                                                                >
+                                                                    {isUploadingImg ? (
+                                                                        <>
+                                                                            <Loader2 className="w-3 h-3 animate-spin" />
+                                                                            <span>Uploading...</span>
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <UploadCloud className="w-3 h-3" />
+                                                                            <span>Confirm &amp; Upload</span>
+                                                                        </>
+                                                                    )}
+                                                                </button>
+                                                            )}
+
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => fileInputRef.current?.click()}
+                                                                disabled={isUploadingImg}
+                                                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer disabled:opacity-50"
+                                                            >
+                                                                <span>Change</span>
+                                                            </button>
+
+                                                            <button
+                                                                type="button"
+                                                                onClick={handleRemoveImage}
+                                                                disabled={isUploadingImg}
+                                                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/30 hover:bg-rose-500/10 cursor-pointer disabled:opacity-50"
+                                                            >
+                                                                <Trash2 className="w-3 h-3" />
+                                                                <span>Cancel Draft</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div
+                                                    onClick={() => fileInputRef.current?.click()}
+                                                    className="border-2 border-dashed border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-slate-50/50 dark:bg-white/5 transition-colors"
+                                                >
+                                                    <div className="w-8 h-8 rounded-full bg-sky-500/10 flex items-center justify-center text-[#0284C7] dark:text-[#38BDF8]">
+                                                        <ImageIcon className="w-4 h-4" />
+                                                    </div>
+                                                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                                        Click to select new photo for ImgBB upload
+                                                    </p>
+                                                    <p className="text-[10px] text-slate-400">
+                                                        PNG, JPG, or WEBP (preview first before uploading)
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </>
                                     ) : (
                                         <p className="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">
                                             {formData.img || 'No custom photo set'}
@@ -543,7 +728,7 @@ export default function StudentDetailsPage() {
                                         <select
                                             value={formData.group || 'Science'}
                                             onChange={(e) => handleInputChange('group', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white cursor-pointer"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white cursor-pointer"
                                         >
                                             <option value="Science">Science</option>
                                             <option value="Humanities">Humanities</option>
@@ -565,7 +750,7 @@ export default function StudentDetailsPage() {
                                             type="text"
                                             value={formData.schoolName || ''}
                                             onChange={(e) => handleInputChange('schoolName', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5 truncate">
@@ -587,7 +772,7 @@ export default function StudentDetailsPage() {
                                             type="text"
                                             value={formData.sscBatch || ''}
                                             onChange={(e) => handleInputChange('sscBatch', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs font-mono text-slate-700 dark:text-slate-300">
@@ -608,7 +793,7 @@ export default function StudentDetailsPage() {
                                             max="5.00"
                                             value={formData.sscGpa || ''}
                                             onChange={(e) => handleInputChange('sscGpa', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs font-mono font-bold text-emerald-600 dark:text-[#4ADE80]">
@@ -629,7 +814,7 @@ export default function StudentDetailsPage() {
                                             type="text"
                                             value={formData.hscBatch || formData.session || ''}
                                             onChange={(e) => handleInputChange('hscBatch', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs font-mono text-slate-700 dark:text-slate-300">
@@ -650,7 +835,7 @@ export default function StudentDetailsPage() {
                                             max="5.00"
                                             value={formData.hscGpa || ''}
                                             onChange={(e) => handleInputChange('hscGpa', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs font-mono font-bold text-emerald-600 dark:text-[#4ADE80]">
@@ -673,7 +858,7 @@ export default function StudentDetailsPage() {
                                             max="100"
                                             value={formData.ictMark ?? ''}
                                             onChange={(e) => handleInputChange('ictMark', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs font-mono font-extrabold text-[#0284C7] dark:text-[#38BDF8] flex items-center gap-1.5">
@@ -691,7 +876,7 @@ export default function StudentDetailsPage() {
                                         <select
                                             value={formData.status || 'Active'}
                                             onChange={(e) => handleInputChange('status', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white cursor-pointer"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white cursor-pointer"
                                         >
                                             <option value="Active">Active</option>
                                             <option value="Inactive">Inactive</option>
@@ -714,7 +899,7 @@ export default function StudentDetailsPage() {
                                         type="email"
                                         value={formData.email || ''}
                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                        className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                        className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                     />
                                 ) : (
                                     <p className="text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5 truncate">
@@ -737,14 +922,14 @@ export default function StudentDetailsPage() {
                             <button
                                 type="button"
                                 onClick={handleCancelEdit}
-                                disabled={isSaving}
-                                className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer"
+                                disabled={isSaving || isUploadingImg}
+                                className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer disabled:opacity-50"
                             >
                                 Discard
                             </button>
                             <button
                                 type="submit"
-                                disabled={isSaving}
+                                disabled={isSaving || isUploadingImg}
                                 className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 shadow-xs cursor-pointer disabled:opacity-50"
                             >
                                 {isSaving ? (
@@ -760,7 +945,7 @@ export default function StudentDetailsPage() {
             </form>
 
             {/* Image Preview Modal */}
-            {showImageModal && formData.img && (
+            {showImageModal && currentHeroPhoto && (
                 <div
                     onClick={() => setShowImageModal(false)}
                     className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
@@ -783,7 +968,7 @@ export default function StudentDetailsPage() {
                         </div>
                         <div className="p-3 bg-slate-950/40 flex items-center justify-center">
                             <img
-                                src={formData.img}
+                                src={currentHeroPhoto}
                                 alt={formData.name || 'Student Image'}
                                 className="max-h-[70vh] w-auto max-w-full rounded-xl object-contain shadow-md"
                             />

@@ -1,16 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
     ArrowLeft,
     Check,
+    CheckCircle2,
     GraduationCap,
     Home,
+    Image as ImageIcon,
     Loader2,
     RotateCcw,
     Sparkles,
+    Trash2,
+    UploadCloud,
     User,
     UserPlus,
 } from 'lucide-react';
@@ -46,6 +50,13 @@ export default function AddStudentPage() {
     const [formData, setFormData] = useState(initialFormData);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // ImageBB Preview & Temporary State
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState('');
+    const [isUploadingImg, setIsUploadingImg] = useState(false);
+    const [isImgConfirmed, setIsImgConfirmed] = useState(false);
+    const fileInputRef = useRef(null);
+
     const handleInputChange = (field, value) => {
         setFormData((prev) => ({
             ...prev,
@@ -53,13 +64,96 @@ export default function AddStudentPage() {
         }));
     };
 
+    // Handle Local File Selection (Temporary Object URL for preview)
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            toast.error('Please select a valid image file (PNG, JPG, WEBP).');
+            return;
+        }
+
+        // Clean up previous blob URL if exists
+        if (previewUrl && previewUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(previewUrl);
+        }
+
+        const objectUrl = URL.createObjectURL(file);
+        setSelectedFile(file);
+        setPreviewUrl(objectUrl);
+        setIsImgConfirmed(false);
+        setFormData((prev) => ({ ...prev, img: '' }));
+    };
+
+    // Remove or Change selected image
+    const handleRemoveImage = () => {
+        if (previewUrl && previewUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(previewUrl);
+        }
+        setSelectedFile(null);
+        setPreviewUrl('');
+        setIsImgConfirmed(false);
+        setFormData((prev) => ({ ...prev, img: '' }));
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
+
+    // Upload to ImgBB only after user clicks "Confirm & Upload"
+    const handleConfirmUpload = async () => {
+        if (!selectedFile) return;
+
+        const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+        if (!apiKey) {
+            toast.error('ImgBB API key is missing in environment variables.');
+            return;
+        }
+
+        setIsUploadingImg(true);
+
+        try {
+            const uploadData = new FormData();
+            uploadData.append('image', selectedFile);
+
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                method: 'POST',
+                body: uploadData,
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                const uploadedUrl = data.data.display_url || data.data.url;
+                setFormData((prev) => ({ ...prev, img: uploadedUrl }));
+                setIsImgConfirmed(true);
+                toast.success('Image successfully uploaded to ImgBB!');
+            } else {
+                throw new Error(data.error?.message || 'Failed to upload to ImgBB');
+            }
+        } catch (err) {
+            console.error('ImgBB Upload Error:', err);
+            toast.error(err.message || 'Image upload failed. Please try again.');
+        } finally {
+            setIsUploadingImg(false);
+        }
+    };
+
     const handleReset = () => {
+        handleRemoveImage();
         setFormData(initialFormData);
         toast.info('Form cleared.');
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Warning if an image was selected but not confirmed/uploaded
+        if (selectedFile && !isImgConfirmed) {
+            toast.warning('Please confirm and upload your selected image before submitting.');
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {
@@ -310,17 +404,109 @@ export default function AddStudentPage() {
                                 </div>
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
-                                    Photo URL (Image link)
+                            {/* ImageBB Upload & Live Preview System */}
+                            <div className="space-y-2 pt-1 border-t border-slate-200/60 dark:border-white/10">
+                                <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400 flex items-center justify-between">
+                                    <span>Student Photo (ImgBB Upload)</span>
+                                    {isImgConfirmed && (
+                                        <span className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-semibold">
+                                            <CheckCircle2 className="w-3 h-3" /> Confirmed &amp; Uploaded
+                                        </span>
+                                    )}
                                 </label>
+
                                 <input
-                                    type="url"
-                                    placeholder="https://images.unsplash.com/..."
-                                    value={formData.img}
-                                    onChange={(e) => handleInputChange('img', e.target.value)}
-                                    className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                    className="hidden"
                                 />
+
+                                {previewUrl ? (
+                                    <div className="p-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center gap-3.5">
+                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 shrink-0 shadow-xs">
+                                            <img
+                                                src={previewUrl}
+                                                alt="Preview"
+                                                className="w-full h-full object-cover"
+                                            />
+                                            {isImgConfirmed && (
+                                                <div className="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5">
+                                                    <Check className="w-2.5 h-2.5" />
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className="flex-1 space-y-1.5 text-center sm:text-left min-w-0">
+                                            <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
+                                                {selectedFile?.name || 'Selected Image'}
+                                            </p>
+                                            <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                                                {isImgConfirmed
+                                                    ? 'Image successfully stored on ImgBB.'
+                                                    : 'Previewing locally. Confirm to upload to ImgBB.'}
+                                            </p>
+
+                                            <div className="flex items-center justify-center sm:justify-start gap-2 pt-1">
+                                                {!isImgConfirmed ? (
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleConfirmUpload}
+                                                        disabled={isUploadingImg}
+                                                        className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[11px] font-semibold text-white bg-sky-600 hover:bg-sky-500 shadow-2xs cursor-pointer disabled:opacity-50"
+                                                    >
+                                                        {isUploadingImg ? (
+                                                            <>
+                                                                <Loader2 className="w-3 h-3 animate-spin" />
+                                                                <span>Uploading...</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <UploadCloud className="w-3 h-3" />
+                                                                <span>Confirm &amp; Upload</span>
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                ) : null}
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() => fileInputRef.current?.click()}
+                                                    disabled={isUploadingImg}
+                                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer disabled:opacity-50"
+                                                >
+                                                    <span>Change</span>
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={handleRemoveImage}
+                                                    disabled={isUploadingImg}
+                                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/30 hover:bg-rose-500/10 cursor-pointer disabled:opacity-50"
+                                                >
+                                                    <Trash2 className="w-3 h-3" />
+                                                    <span>Remove</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="border-2 border-dashed border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-slate-50/50 dark:bg-white/5 transition-colors"
+                                    >
+                                        <div className="w-8 h-8 rounded-full bg-sky-500/10 flex items-center justify-center text-[#0284C7] dark:text-[#38BDF8]">
+                                            <ImageIcon className="w-4 h-4" />
+                                        </div>
+                                        <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                            Click to browse student photo
+                                        </p>
+                                        <p className="text-[10px] text-slate-400">
+                                            PNG, JPG or WEBP (preview first before uploading)
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

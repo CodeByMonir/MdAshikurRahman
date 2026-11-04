@@ -4,7 +4,8 @@ import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Award,
-    ChevronRight,
+    ArrowDownWideNarrow,
+    ArrowUpNarrowWide,
     Droplet,
     GraduationCap,
     Loader2,
@@ -12,7 +13,6 @@ import {
     Phone,
     RefreshCw,
     Search,
-    SlidersHorizontal,
     UserCheck,
     UserPlus,
     Users,
@@ -56,27 +56,22 @@ export default function StudentsDashboard() {
     const { data: students, isLoading, error } = useFetch('/data/students.json');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedGroup, setSelectedGroup] = useState('All');
-    const [minGpaFilter, setMinGpaFilter] = useState('All');
+    const [gpaSortOrder, setGpaSortOrder] = useState('default');
 
     const studentList = useMemo(() => {
         return Array.isArray(students) ? students : students?.students || [];
     }, [students]);
 
-    // Comprehensive search spanning identity, location, contacts, SSC/HSC batches & GPA
+    // Comprehensive search spanning identity, location, contacts, SSC/HSC batches & GPA with sorting
     const filteredStudents = useMemo(() => {
         const query = searchQuery.trim().toLowerCase();
 
-        return studentList.filter((student) => {
+        const filtered = studentList.filter((student) => {
             const matchesGroup =
                 selectedGroup === 'All' ||
                 student.group?.toLowerCase() === selectedGroup.toLowerCase();
 
-            // GPA filter comparison (checks HSC first, falls back to SSC)
-            const activeGpa = parseFloat(student.hscGpa || student.sscGpa || 0);
-            const matchesGpaThreshold =
-                minGpaFilter === 'All' || activeGpa >= parseFloat(minGpaFilter);
-
-            if (!matchesGroup || !matchesGpaThreshold) return false;
+            if (!matchesGroup) return false;
             if (!query) return true;
 
             const fieldsToMatch = [
@@ -102,7 +97,21 @@ export default function StudentsDashboard() {
                 (field) => field && String(field).toLowerCase().includes(query)
             );
         });
-    }, [studentList, searchQuery, selectedGroup, minGpaFilter]);
+
+        if (gpaSortOrder === 'default') return filtered;
+
+        return [...filtered].sort((a, b) => {
+            const gpaA = parseFloat(a.hscGpa || a.sscGpa || 0);
+            const gpaB = parseFloat(b.hscGpa || b.sscGpa || 0);
+
+            if (gpaSortOrder === 'high-to-low') {
+                return gpaB - gpaA;
+            } else if (gpaSortOrder === 'low-to-high') {
+                return gpaA - gpaB;
+            }
+            return 0;
+        });
+    }, [studentList, searchQuery, selectedGroup, gpaSortOrder]);
 
     const handleRowClick = (id) => {
         router.push(`/dashboard/students/${id}`);
@@ -167,22 +176,24 @@ export default function StudentsDashboard() {
                     )}
                 </div>
 
-                {/* Filter Controls: Groups & GPA Cut-offs */}
+                {/* Filter Controls: Groups & GPA Sorting */}
                 <div className="flex flex-wrap items-center gap-2">
-                    {/* Minimum GPA Select Dropdown */}
-                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-slate-800/80 text-xs">
-                        <SlidersHorizontal className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" />
-                        <span className="text-[11px] font-semibold text-slate-500">Min GPA:</span>
+                    {/* Vibrant Styled GPA High to Low / Low to High Sorting Control */}
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-sky-500/30 dark:border-sky-400/30 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-indigo-500/10 dark:from-sky-500/20 dark:via-blue-500/20 dark:to-indigo-500/20 text-xs shadow-2xs">
+                        {gpaSortOrder === 'low-to-high' ? (
+                            <ArrowUpNarrowWide className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
+                        ) : (
+                            <ArrowDownWideNarrow className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
+                        )}
+                        <span className="text-[11px] font-bold text-[#0284C7] dark:text-[#38BDF8] tracking-tight">GPA Order:</span>
                         <select
-                            value={minGpaFilter}
-                            onChange={(e) => setMinGpaFilter(e.target.value)}
-                            className="bg-transparent text-slate-800 dark:text-slate-200 font-bold text-xs focus:outline-none cursor-pointer"
+                            value={gpaSortOrder}
+                            onChange={(e) => setGpaSortOrder(e.target.value)}
+                            className="bg-sky-500/10 dark:bg-sky-950/60 text-[#0284C7] dark:text-[#38BDF8] font-bold text-xs px-2 py-0.5 rounded-lg border border-sky-400/30 focus:outline-none focus:ring-1 focus:ring-[#0284C7] cursor-pointer"
                         >
-                            <option value="All">All</option>
-                            <option value="5.00">GPA 5.00</option>
-                            <option value="4.80">&gt;= 4.80</option>
-                            <option value="4.50">&gt;= 4.50</option>
-                            <option value="4.00">&gt;= 4.00</option>
+                            <option value="default" className="bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200">Default (Unsorted)</option>
+                            <option value="high-to-low" className="bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200">High to Low (5.00 → 0)</option>
+                            <option value="low-to-high" className="bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200">Low to High (0 → 5.00)</option>
                         </select>
                     </div>
 
@@ -219,12 +230,12 @@ export default function StudentsDashboard() {
 
             {/* Data Representation View */}
             {isLoading ? (
-                <div className="min-h-[340px] flex flex-col items-center justify-center gap-2 border border-slate-200/80 dark:border-white/10 rounded-2xl p-8 bg-white/40 dark:bg-slate-900/40">
+                <div className="min-h-85 flex flex-col items-center justify-center gap-2 border border-slate-200/80 dark:border-white/10 rounded-2xl p-8 bg-white/40 dark:bg-slate-900/40">
                     <Loader2 className="w-6 h-6 animate-spin text-[#0284C7] dark:text-[#38BDF8]" />
                     <p className="text-xs font-semibold text-slate-500">Synchronizing student records...</p>
                 </div>
             ) : error ? (
-                <div className="min-h-[260px] flex flex-col items-center justify-center gap-2 border border-rose-500/30 rounded-2xl p-8 bg-rose-500/5 text-center">
+                <div className="min-h-65 flex flex-col items-center justify-center gap-2 border border-rose-500/30 rounded-2xl p-8 bg-rose-500/5 text-center">
                     <XCircle className="w-8 h-8 text-rose-500" />
                     <h3 className="text-sm font-bold text-slate-900 dark:text-white">Unable to Fetch Directory</h3>
                     <p className="text-xs text-rose-600 dark:text-rose-400 max-w-sm">{error}</p>
@@ -237,7 +248,7 @@ export default function StudentsDashboard() {
                     </button>
                 </div>
             ) : filteredStudents.length === 0 ? (
-                <div className="min-h-[240px] flex flex-col items-center justify-center border border-slate-200/80 dark:border-white/10 rounded-2xl p-8 text-center text-slate-400">
+                <div className="min-h-60 flex flex-col items-center justify-center border border-slate-200/80 dark:border-white/10 rounded-2xl p-8 text-center text-slate-400">
                     <Users className="w-8 h-8 mb-2 opacity-50" />
                     <p className="text-xs font-medium">No students matched your search criteria.</p>
                 </div>
@@ -325,7 +336,7 @@ export default function StudentsDashboard() {
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 dark:border-white/5">
+                                    <div className="pt-2 border-t border-slate-200/60 dark:border-white/5">
                                         <div className="text-[11px] font-mono">
                                             {hasHscGpa ? (
                                                 <span className="inline-flex items-center gap-1 font-bold px-2.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-[#4ADE80] border border-emerald-500/20">
@@ -339,11 +350,6 @@ export default function StudentsDashboard() {
                                                 <span className="text-slate-400 text-[10px]">GPA: Pending</span>
                                             )}
                                         </div>
-
-                                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#0284C7] dark:text-[#38BDF8]">
-                                            <span>Profile</span>
-                                            <ChevronRight className="w-3.5 h-3.5" />
-                                        </span>
                                     </div>
                                 </div>
                             );
@@ -362,7 +368,6 @@ export default function StudentsDashboard() {
                                         <th className="py-3.5 px-4">Contact Phone</th>
                                         <th className="py-3.5 px-4">Batches (SSC / HSC)</th>
                                         <th className="py-3.5 px-4 text-center">GPA (SSC / HSC)</th>
-                                        <th className="py-3.5 px-4 text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200/60 dark:divide-white/5">
@@ -425,7 +430,7 @@ export default function StudentsDashboard() {
 
                                                 {/* Address / Village */}
                                                 <td className="py-3.5 px-4 text-slate-600 dark:text-slate-300 text-[11px]">
-                                                    <div className="flex items-center gap-1.5 max-w-[190px]">
+                                                    <div className="flex items-center gap-1.5 max-w-47.5">
                                                         <MapPin className="w-3 h-3 text-[#0284C7] dark:text-[#38BDF8] shrink-0" />
                                                         <span className="truncate">
                                                             <HighlightText text={student.villageName || 'N/A'} query={searchQuery} />
@@ -474,14 +479,6 @@ export default function StudentsDashboard() {
                                                         <span className="text-[10px] text-slate-500 dark:text-slate-400">
                                                             SSC: <strong className="font-bold text-slate-700 dark:text-slate-200"><HighlightText text={student.sscGpa || 'N/A'} query={searchQuery} /></strong>
                                                         </span>
-                                                    </div>
-                                                </td>
-
-                                                {/* Action */}
-                                                <td className="py-3.5 px-4 text-right">
-                                                    <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0284C7] dark:text-[#38BDF8] group-hover:translate-x-0.5 transition-transform">
-                                                        <span>Profile</span>
-                                                        <ChevronRight className="w-3.5 h-3.5" />
                                                     </div>
                                                 </td>
                                             </tr>
