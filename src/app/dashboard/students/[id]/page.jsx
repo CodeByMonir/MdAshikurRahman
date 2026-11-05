@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import {
+    AlertTriangle,
     ArrowLeft,
     Award,
     Building2,
@@ -42,6 +43,8 @@ export default function StudentDetailsPage() {
 
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [student, setStudent] = useState(null);
     const [formData, setFormData] = useState({});
     const [showImageModal, setShowImageModal] = useState(false);
@@ -158,6 +161,16 @@ export default function StudentDetailsPage() {
         toast.info('Changes discarded.');
     };
 
+    const handleConfirmDelete = async () => {
+        setIsDeleting(true);
+        setTimeout(() => {
+            setIsDeleting(false);
+            setShowDeleteModal(false);
+            toast.success('Student record deleted successfully!');
+            router.push('/dashboard/students');
+        }, 600);
+    };
+
     const handleSave = (e) => {
         e.preventDefault();
 
@@ -253,14 +266,25 @@ export default function StudentDetailsPage() {
 
                 <div className="flex items-center gap-2">
                     {!isEditing ? (
-                        <button
-                            type="button"
-                            onClick={() => setIsEditing(true)}
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-[#0284C7] dark:bg-[#38BDF8] dark:text-slate-950 shadow-xs hover:opacity-90 transition-opacity cursor-pointer"
-                        >
-                            <Edit3 className="w-3.5 h-3.5" />
-                            <span>Edit Profile</span>
-                        </button>
+                        <>
+                            <button
+                                type="button"
+                                onClick={() => setIsEditing(true)}
+                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-[#0284C7] dark:bg-[#38BDF8] dark:text-slate-950 shadow-xs hover:opacity-90 transition-opacity cursor-pointer"
+                            >
+                                <Edit3 className="w-3.5 h-3.5" />
+                                <span>Edit Profile</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => setShowDeleteModal(true)}
+                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-rose-600 hover:bg-rose-500 shadow-xs transition-colors cursor-pointer"
+                            >
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span>Delete</span>
+                            </button>
+                        </>
                     ) : (
                         <div className="flex items-center gap-1.5">
                             <button
@@ -497,7 +521,7 @@ export default function StudentDetailsPage() {
                                             type="date"
                                             value={formData.birthDate || ''}
                                             onChange={(e) => handleInputChange('birthDate', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white [color-scheme:light] dark:[color-scheme:dark]"
                                         />
                                     ) : (
                                         <p className="text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
@@ -515,7 +539,7 @@ export default function StudentDetailsPage() {
                                         <select
                                             value={formData.bloodGroup || 'A+'}
                                             onChange={(e) => handleInputChange('bloodGroup', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white cursor-pointer"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white cursor-pointer"
                                         >
                                             {['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].map((bg) => (
                                                 <option key={bg} value={bg}>{bg}</option>
@@ -541,7 +565,7 @@ export default function StudentDetailsPage() {
                                             type="text"
                                             value={formData.villageName || ''}
                                             onChange={(e) => handleInputChange('villageName', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5 truncate">
@@ -560,7 +584,7 @@ export default function StudentDetailsPage() {
                                             type="text"
                                             value={formData.hobby || ''}
                                             onChange={(e) => handleInputChange('hobby', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                            className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
                                         />
                                     ) : (
                                         <p className="text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5 truncate">
@@ -571,140 +595,123 @@ export default function StudentDetailsPage() {
                                 </div>
                             </div>
 
-                            {/* Contact: Phone & ImageBB Upload Section */}
-                            <div className="space-y-3">
-                                <div className="space-y-1">
-                                    <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
-                                        Mobile No
-                                    </label>
-                                    {isEditing ? (
-                                        <input
-                                            type="tel"
-                                            value={formData.mobileNo || formData.phone || ''}
-                                            onChange={(e) => handleInputChange('mobileNo', e.target.value)}
-                                            className="w-full px-3 py-1.5 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
-                                        />
-                                    ) : (
-                                        <p className="text-xs font-mono text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                                            <Phone className="w-3 h-3 text-[#0284C7] dark:text-[#38BDF8]" />
-                                            <span>{formData.mobileNo || formData.phone || 'N/A'}</span>
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* ImgBB Live File Upload / Preview Controls */}
-                                <div className="space-y-2 pt-2 border-t border-slate-200/60 dark:border-white/10">
-                                    <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400 flex items-center justify-between">
-                                        <span>Student Photo (ImgBB Workflow)</span>
-                                        {isImgConfirmed && (
-                                            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-semibold">
-                                                <CheckCircle2 className="w-3 h-3" /> Confirmed &amp; Uploaded
-                                            </span>
-                                        )}
-                                    </label>
-
-                                    {isEditing ? (
-                                        <>
-                                            <input
-                                                ref={fileInputRef}
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={handleFileChange}
-                                                className="hidden"
-                                            />
-
-                                            {previewUrl ? (
-                                                <div className="p-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center gap-3.5">
-                                                    <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 shrink-0 shadow-xs">
-                                                        <img
-                                                            src={previewUrl}
-                                                            alt="Draft Preview"
-                                                            className="w-full h-full object-cover"
-                                                        />
-                                                        {isImgConfirmed && (
-                                                            <div className="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5">
-                                                                <Check className="w-2.5 h-2.5" />
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div className="flex-1 space-y-1.5 text-center sm:text-left min-w-0">
-                                                        <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
-                                                            {selectedFile?.name || 'Selected Replacement'}
-                                                        </p>
-                                                        <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                                                            {isImgConfirmed
-                                                                ? 'Uploaded to ImgBB and queued for profile save.'
-                                                                : 'Local preview active. Confirm to upload to ImgBB.'}
-                                                        </p>
-
-                                                        <div className="flex items-center justify-center sm:justify-start gap-2 pt-1">
-                                                            {!isImgConfirmed && (
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={handleConfirmUpload}
-                                                                    disabled={isUploadingImg}
-                                                                    className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[11px] font-semibold text-white bg-sky-600 hover:bg-sky-500 shadow-2xs cursor-pointer disabled:opacity-50"
-                                                                >
-                                                                    {isUploadingImg ? (
-                                                                        <>
-                                                                            <Loader2 className="w-3 h-3 animate-spin" />
-                                                                            <span>Uploading...</span>
-                                                                        </>
-                                                                    ) : (
-                                                                        <>
-                                                                            <UploadCloud className="w-3 h-3" />
-                                                                            <span>Confirm &amp; Upload</span>
-                                                                        </>
-                                                                    )}
-                                                                </button>
-                                                            )}
-
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => fileInputRef.current?.click()}
-                                                                disabled={isUploadingImg}
-                                                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer disabled:opacity-50"
-                                                            >
-                                                                <span>Change</span>
-                                                            </button>
-
-                                                            <button
-                                                                type="button"
-                                                                onClick={handleRemoveImage}
-                                                                disabled={isUploadingImg}
-                                                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/30 hover:bg-rose-500/10 cursor-pointer disabled:opacity-50"
-                                                            >
-                                                                <Trash2 className="w-3 h-3" />
-                                                                <span>Cancel Draft</span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <div
-                                                    onClick={() => fileInputRef.current?.click()}
-                                                    className="border-2 border-dashed border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-slate-50/50 dark:bg-white/5 transition-colors"
-                                                >
-                                                    <div className="w-8 h-8 rounded-full bg-sky-500/10 flex items-center justify-center text-[#0284C7] dark:text-[#38BDF8]">
-                                                        <ImageIcon className="w-4 h-4" />
-                                                    </div>
-                                                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                                        Click to select new photo for ImgBB upload
-                                                    </p>
-                                                    <p className="text-[10px] text-slate-400">
-                                                        PNG, JPG, or WEBP (preview first before uploading)
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </>
-                                    ) : (
-                                        <p className="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">
-                                            {formData.img || 'No custom photo set'}
-                                        </p>
-                                    )}
-                                </div>
+                            {/* Contact: Phone */}
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
+                                    Mobile No
+                                </label>
+                                {isEditing ? (
+                                    <input
+                                        type="tel"
+                                        value={formData.mobileNo || formData.phone || ''}
+                                        onChange={(e) => handleInputChange('mobileNo', e.target.value)}
+                                        className="w-full px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-[#0284C7] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white"
+                                    />
+                                ) : (
+                                    <p className="text-xs font-mono text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                                        <Phone className="w-3 h-3 text-[#0284C7] dark:text-[#38BDF8]" />
+                                        <span>{formData.mobileNo || formData.phone || 'N/A'}</span>
+                                    </p>
+                                )}
                             </div>
+
+                            {/* ImgBB Upload Control (No raw URL links displayed) */}
+                            {isEditing && (
+                                <div className="space-y-2 pt-2 border-t border-slate-200/60 dark:border-white/10">
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                        className="hidden"
+                                    />
+
+                                    {previewUrl ? (
+                                        <div className="p-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center gap-3.5">
+                                            <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 shrink-0 shadow-xs">
+                                                <img
+                                                    src={previewUrl}
+                                                    alt="Draft Preview"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                {isImgConfirmed && (
+                                                    <div className="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5">
+                                                        <Check className="w-2.5 h-2.5" />
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="flex-1 space-y-1.5 text-center sm:text-left min-w-0">
+                                                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
+                                                    {selectedFile?.name || 'Selected Replacement'}
+                                                </p>
+                                                <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                                                    {isImgConfirmed
+                                                        ? 'Uploaded to ImgBB and ready to save.'
+                                                        : 'Local preview active. Confirm to upload to ImgBB.'}
+                                                </p>
+
+                                                <div className="flex items-center justify-center sm:justify-start gap-2 pt-1">
+                                                    {!isImgConfirmed && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={handleConfirmUpload}
+                                                            disabled={isUploadingImg}
+                                                            className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[11px] font-semibold text-white bg-sky-600 hover:bg-sky-500 shadow-2xs cursor-pointer disabled:opacity-50"
+                                                        >
+                                                            {isUploadingImg ? (
+                                                                <>
+                                                                    <Loader2 className="w-3 h-3 animate-spin" />
+                                                                    <span>Uploading...</span>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <UploadCloud className="w-3 h-3" />
+                                                                    <span>Confirm &amp; Upload</span>
+                                                                </>
+                                                            )}
+                                                        </button>
+                                                    )}
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => fileInputRef.current?.click()}
+                                                        disabled={isUploadingImg}
+                                                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer disabled:opacity-50"
+                                                    >
+                                                        <span>Change</span>
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleRemoveImage}
+                                                        disabled={isUploadingImg}
+                                                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/30 hover:bg-rose-500/10 cursor-pointer disabled:opacity-50"
+                                                    >
+                                                        <Trash2 className="w-3 h-3" />
+                                                        <span>Cancel Draft</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="border-2 border-dashed border-slate-200 dark:border-white/10 hover:border-[#0284C7] dark:hover:border-[#38BDF8] rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-slate-50/50 dark:bg-white/5 transition-colors"
+                                        >
+                                            <div className="w-8 h-8 rounded-full bg-sky-500/10 flex items-center justify-center text-[#0284C7] dark:text-[#38BDF8]">
+                                                <ImageIcon className="w-4 h-4" />
+                                            </div>
+                                            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                                Click to select new photo for ImgBB upload
+                                            </p>
+                                            <p className="text-[10px] text-slate-400">
+                                                PNG, JPG, or WEBP (preview first before uploading)
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -944,11 +951,73 @@ export default function StudentDetailsPage() {
                 )}
             </form>
 
+            {/* Delete Confirmation Modal */}
+            {showDeleteModal && (
+                <div
+                    onClick={() => {
+                        if (!isDeleting) setShowDeleteModal(false);
+                    }}
+                    className="fixed inset-0 z-9999 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 cursor-pointer"
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="relative max-w-sm w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl p-5 shadow-2xl space-y-4 cursor-default animate-in fade-in zoom-in-95 duration-150"
+                    >
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0">
+                                <AlertTriangle className="w-5 h-5" />
+                            </div>
+                            <div className="min-w-0">
+                                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                    Delete Student Record?
+                                </h3>
+                                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                                    This action cannot be undone.
+                                </p>
+                            </div>
+                        </div>
+
+                        <p className="text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-white/5 p-3 rounded-xl border border-slate-200/80 dark:border-white/5">
+                            Are you sure you want to permanently remove <strong className="text-slate-900 dark:text-white">{student?.name}</strong> (<span className="font-mono text-[#0284C7] dark:text-[#38BDF8]">{student?.id}</span>) from the academic directory?
+                        </p>
+
+                        <div className="flex items-center justify-end gap-2 pt-1">
+                            <button
+                                type="button"
+                                onClick={() => setShowDeleteModal(false)}
+                                disabled={isDeleting}
+                                className="px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer disabled:opacity-50 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleConfirmDelete}
+                                disabled={isDeleting}
+                                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold text-white bg-rose-600 hover:bg-rose-500 shadow-xs cursor-pointer disabled:opacity-50 transition-colors"
+                            >
+                                {isDeleting ? (
+                                    <>
+                                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                        <span>Deleting...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Trash2 className="w-3.5 h-3.5" />
+                                        <span>Confirm Delete</span>
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Image Preview Modal */}
             {showImageModal && currentHeroPhoto && (
                 <div
                     onClick={() => setShowImageModal(false)}
-                    className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+                    className="fixed inset-0 z-9999 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
                 >
                     <div
                         onClick={(e) => e.stopPropagation()}
